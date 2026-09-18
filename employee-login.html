@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Staff login for Link Cordoba Hostel operations.">
+  <title>Staff login | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="employee-login-page">
+  <main class="employee-login-shell">
+    <button class="language-toggle employee-language-toggle" type="button" data-language-toggle>ES</button>
+    <section class="employee-login-card">
+      <a class="employee-brand" href="index.html"><span class="brand-mark">LC</span><span>Link Cordoba Hostel</span></a>
+      <div class="employee-login-heading">
+        <p class="dashboard-kicker">Team workspace</p>
+        <h1>Welcome back.</h1>
+        <p>Sign in to manage the hostel, your team and today&apos;s operations.</p>
+      </div>
+      <form class="employee-form" action="employee-dashboard.html" method="post">
+        <label for="employee-email">Work email</label>
+        <input id="employee-email" name="user" type="email" placeholder="name@linkcordoba.com" autocomplete="username" required>
+        <label for="employee-password">Password</label>
+        <input id="employee-password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+        <div class="employee-form-options">
+          <label class="employee-remember"><input type="checkbox"><span>Remember me</span></label>
+          <a href="#">Forgot password?</a>
+        </div>
+        <a class="button employee-button" href="employee-dashboard.html">Sign in <span aria-hidden="true">→</span></a>
+      </form>
+      <a class="employee-back" href="index.html"><span aria-hidden="true">←</span> Back to public site</a>
+    </section>
+    <aside class="employee-login-aside">
+      <div class="employee-aside-top"><span class="aside-status-dot"></span> Operations dashboard</div>
+      <div class="employee-aside-message"><span class="aside-line"></span><p>Everything<br>in one place.</p><small>Rooms · Guests · Team · Reports</small></div>
+      <div class="employee-aside-footer"><span>LC / 01</span><span>Staff only</span></div>
+    </aside>
+  </main>
+</body>
+<script src="language.js"></script>
+</html>

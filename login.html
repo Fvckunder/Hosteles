@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Log in to your Link Cordoba HostelS guest account.">
+  <title>Member login | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+  <header class="site-header login-header">
+    <a class="brand" href="index.html" aria-label="Link Cordoba Hostel home"><span class="brand-mark">LC</span><span>Link Cordoba Hostel</span></a>
+    <div class="login-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to home</a></div>
+  </header>
+  <main class="login-main">
+    <section class="login-panel">
+      <div class="login-intro"><p class="eyebrow">Welcome back</p><h1>Your next story<br><em>starts here.</em></h1><p>Log in to manage your booking, see your stay details and keep in touch with the Link community.</p></div>
+      <form class="login-form" action="#" method="post">
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+        <div class="password-label"><label for="password">Password</label><a href="#">Forgot password?</a></div>
+        <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+        <label class="remember"><input type="checkbox" name="remember"><span>Keep me signed in</span></label>
+        <button class="button button-primary button-full" type="submit">Log in <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="signup-prompt">New to Link Cordoba Hostel? <a href="#">Create an account</a></p>
+      <a class="staff-access" href="employee-login.html">Are you a team member? Staff login <span aria-hidden="true">↗</span></a>
+    </section>
+    <aside class="login-aside"><div class="aside-image"></div><div class="aside-quote"><span>“</span><p>The best journeys<br>bring us home.</p><small>— Link Cordoba Hostel guestbook</small></div></aside>
+  </main>
+</body>
+<script src="language.js"></script>
+</html>

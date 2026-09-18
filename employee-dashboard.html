@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Link Cordoba Hostel employee dashboard.">
+  <title>Dashboard | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-page">
+  <aside class="dashboard-sidebar">
+    <a class="employee-brand" href="employee-dashboard.html"><span class="brand-mark">LC</span><span>Link Cordoba<br>Hostel</span></a>
+    <nav class="dashboard-nav" aria-label="Employee modules">
+      <p class="dashboard-nav-label">Workspace</p>
+      <a class="dashboard-nav-link active" href="employee-dashboard.html"><span class="nav-icon">▦</span> Overview</a>
+      <a class="dashboard-nav-link" href="#reservations"><span class="nav-icon">□</span> Reservations <span class="nav-count">12</span></a>
+      <a class="dashboard-nav-link" href="#guests"><span class="nav-icon">○</span> Guests</a>
+      <a class="dashboard-nav-link" href="#rooms"><span class="nav-icon">◇</span> Rooms &amp; beds</a>
+      <p class="dashboard-nav-label dashboard-nav-label-spaced">Management</p>
+      <a class="dashboard-nav-link" href="#team"><span class="nav-icon">△</span> Team</a>
+      <a class="dashboard-nav-link" href="#reports"><span class="nav-icon">≡</span> Reports</a>
+      <a class="dashboard-nav-link" href="#settings"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="profile-mini"><span class="profile-avatar">MG</span><span><strong>María Gómez</strong><small>Administrator</small></span><span class="profile-more">•••</span></div><a class="logout-link" href="employee-login.html">Sign out <span aria-hidden="true">↗</span></a></div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dashboard-header"><div><p class="dashboard-kicker">Saturday, September 5, 2026</p><h1>Good morning, María.</h1></div><div class="dashboard-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><button class="icon-button" type="button" aria-label="Notifications">♧<span class="notification-dot"></span></button><a class="dashboard-help" href="#">Help centre</a></div></header>
+    <section class="dashboard-content">
+      <div class="dashboard-alert"><div class="alert-symbol">!</div><div><strong>Today&apos;s focus</strong><p>High turnover day. 18 check-ins and 14 check-outs are expected.</p></div><a href="#reservations">View schedule <span aria-hidden="true">→</span></a></div>
+      <div class="dashboard-section-heading"><div><p class="dashboard-kicker">Overview</p><h2>At a glance</h2></div><button class="date-filter" type="button">Today <span aria-hidden="true">⌄</span></button></div>
+      <div class="stat-grid">
+        <article class="stat-card"><div class="stat-card-top"><span>Occupancy</span><span class="stat-icon stat-icon-coral">◒</span></div><strong>82<span>%</span></strong><p><span class="trend-up">↑ 6.4%</span> vs last week</p><div class="mini-bars" aria-hidden="true"><i style="height:35%"></i><i style="height:48%"></i><i style="height:43%"></i><i style="height:65%"></i><i style="height:58%"></i><i style="height:78%"></i><i style="height:82%"></i></div></article>
+        <article class="stat-card"><div class="stat-card-top"><span>Arrivals today</span><span class="stat-icon stat-icon-sage">↘</span></div><strong>18</strong><p><span class="stat-neutral">8 direct</span> · 10 online</p><div class="stat-progress"><span style="width:68%"></span></div><small>68% checked in</small></article>
+        <article class="stat-card"><div class="stat-card-top"><span>Departures today</span><span class="stat-icon stat-icon-yellow">↗</span></div><strong>14</strong><p><span class="trend-up">9 completed</span> · 5 remaining</p><div class="stat-progress"><span class="progress-yellow" style="width:64%"></span></div><small>Ready for housekeeping</small></article>
+        <article class="stat-card"><div class="stat-card-top"><span>Revenue this month</span><span class="stat-icon stat-icon-blue">$</span></div><strong>€24.8<span>k</span></strong><p><span class="trend-up">↑ 12.8%</span> vs August</p><div class="revenue-line" aria-hidden="true"><span></span></div></article>
+      </div>
+      <div class="dashboard-lower-grid">
+        <section class="dashboard-panel schedule-panel" id="reservations"><div class="panel-heading"><div><p class="dashboard-kicker">Live schedule</p><h2>Today&apos;s activity</h2></div><a href="#reservations">See all <span aria-hidden="true">→</span></a></div><div class="schedule-list"><div class="schedule-row"><span class="schedule-time">09:00</span><span class="schedule-marker marker-coral"></span><div><strong>Early check-out</strong><p>Room 204 · James Wilson</p></div><span class="schedule-tag tag-done">Done</span></div><div class="schedule-row"><span class="schedule-time">11:30</span><span class="schedule-marker marker-sage"></span><div><strong>Group arrival</strong><p>8 guests · Booking #LC-4821</p></div><span class="schedule-tag tag-ready">Upcoming</span></div><div class="schedule-row"><span class="schedule-time">14:00</span><span class="schedule-marker marker-yellow"></span><div><strong>Room inspection</strong><p>Rooms 101–108 · Housekeeping</p></div><span class="schedule-tag tag-ready">Upcoming</span></div><div class="schedule-row"><span class="schedule-time">18:45</span><span class="schedule-marker marker-blue"></span><div><strong>Late arrival</strong><p>Maria Rossi · Room 306</p></div><span class="schedule-tag tag-neutral">Note</span></div></div></section>
+        <section class="dashboard-panel occupancy-panel" id="rooms"><div class="panel-heading"><div><p class="dashboard-kicker">Rooms &amp; beds</p><h2>Availability</h2></div><a href="#rooms">Manage <span aria-hidden="true">→</span></a></div><div class="occupancy-visual"><div class="occupancy-ring"><strong>48</strong><span>of 58 beds</span></div><div class="occupancy-legend"><p><span class="legend-dot legend-occupied"></span>Occupied <strong>48</strong></p><p><span class="legend-dot legend-available"></span>Available <strong>10</strong></p><p><span class="legend-dot legend-cleaning"></span>Cleaning <strong>4</strong></p></div></div><div class="occupancy-footer"><span>Next availability</span><strong>Room 207 · 2 beds</strong></div></section>
+      </div>
+    </section>
+  </main>
+</body>
+<script src="language.js"></script>
+</html>
