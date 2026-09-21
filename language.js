@@ -1,4 +1,5 @@
 (() => {
+  // Traducciones temporales del cliente. Después mover estas cadenas a recursos .resx de ASP.NET Core.
   const translations = {
     es: {
       common: {
@@ -98,8 +99,11 @@
   const pageName = document.body.classList.contains('login-page') ? 'login' : document.body.classList.contains('employee-login-page') ? 'employeeLogin' : document.body.classList.contains('dashboard-page') ? 'dashboard' : 'index';
   const languageKey = 'hostel-language';
   const toggle = document.querySelector('[data-language-toggle]');
-  const getLanguage = () => localStorage.getItem(languageKey) || 'en';
+  const getLanguage = () => localStorage.getItem(languageKey) || 'es';
+  const currentLanguage = getLanguage();
+  document.documentElement.lang = currentLanguage;
 
+  // El botón muestra el idioma que se activará en el siguiente clic.
   function updateToggle(language) {
     if (!toggle) return;
     toggle.textContent = language === 'en' ? 'ES' : 'EN';
@@ -117,6 +121,7 @@
       dashboard: ['Dashboard | Link Cordoba Hostel', 'Panel | Link Cordoba Hostel']
     };
     if (language === 'es') {
+      // Los selectores relacionan el contenido con su traducción sin duplicar las páginas HTML.
       Object.entries(translations.es.common).forEach(([english, spanish]) => {
         document.querySelectorAll('a, span').forEach((element) => {
           if (element.innerHTML.trim() === english) element.innerHTML = spanish;
@@ -137,6 +142,7 @@
       });
       document.title = titles[pageName][1];
     } else {
+      document.documentElement.lang = 'en';
       document.title = titles[pageName][0];
       window.location.reload();
       return;
@@ -144,12 +150,14 @@
     updateToggle(language);
   }
 
+  // Conserva la preferencia al navegar entre las páginas estáticas del prototipo.
   if (toggle) toggle.addEventListener('click', () => {
     const nextLanguage = getLanguage() === 'en' ? 'es' : 'en';
     localStorage.setItem(languageKey, nextLanguage);
     translate(nextLanguage);
   });
 
-  if (getLanguage() === 'es') translate('es');
+  // El español es el idioma inicial del proyecto.
+  if (currentLanguage === 'es') translate('es');
   else updateToggle('en');
 })();

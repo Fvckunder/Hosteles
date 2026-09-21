@@ -10,6 +10,7 @@
   --sans: "DM Sans", Verdana, sans-serif;
 }
 
+/* Reinicio base y elementos compartidos del sitio público. */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; overflow-x: hidden; color: var(--ink); background: var(--paper); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
@@ -71,6 +72,7 @@ em { color: var(--coral); font-style: normal; }
 .footer-grid a { color: #bbc1b9; font-size: 13px; line-height: 2; }
 .footer-label { margin-top: 0 !important; color: var(--coral) !important; font-size: 10px !important; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
 .footer-bottom { display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid rgba(247, 245, 239, .2); color: #879188; font-size: 11px; }
+/* Pantalla de autenticación de huéspedes. */
 .login-page { min-height: 100vh; background: var(--cream); }
 .login-header { width: min(1240px, calc(100% - 80px)); }
 .login-main { display: grid; grid-template-columns: 1fr 1fr; width: min(1240px, calc(100% - 80px)); min-height: calc(100vh - 91px); margin: 0 auto; background: var(--paper); }
@@ -99,6 +101,7 @@ em { color: var(--coral); font-style: normal; }
 .back-link span { margin-right: 8px; color: var(--coral); }
 .staff-access { display: block; max-width: 380px; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
 .staff-access span { margin-left: 5px; color: var(--coral); }
+/* Componentes de autenticación del personal y del dashboard privado. */
 .employee-login-page { min-height: 100vh; color: #24312e; background: #e7ece8; }
 .employee-login-shell { display: grid; grid-template-columns: minmax(440px, 560px) minmax(420px, 1fr); width: min(1180px, calc(100% - 80px)); min-height: 700px; margin: 0 auto; padding: 52px 0; }
 .employee-language-toggle { position: absolute; top: 20px; right: 20px; }
@@ -133,6 +136,7 @@ em { color: var(--coral); font-style: normal; }
 .employee-aside-message p { margin: 0 0 22px; color: #fff; font-size: clamp(43px, 5vw, 70px); font-weight: 600; line-height: 1.02; letter-spacing: -.06em; }
 .employee-aside-message small { color: #b8c9bf; font-size: 11px; letter-spacing: .04em; }
 .employee-aside-footer { display: flex; justify-content: space-between; color: #9fb3a8; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+/* Estructura del dashboard: barra lateral, cabecera, métricas y paneles operativos. */
 .dashboard-page { display: flex; min-height: 100vh; color: #27352f; background: #f4f7f4; }
 .dashboard-sidebar { display: flex; flex: 0 0 235px; flex-direction: column; min-height: 100vh; padding: 32px 19px 23px; border-right: 1px solid #e0e7e2; background: #fff; }
 .dashboard-sidebar .employee-brand { padding: 0 11px; line-height: 1.2; }

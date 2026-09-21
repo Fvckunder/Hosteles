@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="login-page">
+  <!-- Acceso de huéspedes. El formulario debe conectarse al endpoint de identidad. -->
   <header class="site-header login-header">
     <a class="brand" href="index.html" aria-label="Link Cordoba Hostel home"><span class="brand-mark">LC</span><span>Link Cordoba Hostel</span></a>
     <div class="login-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to home</a></div>
@@ -18,7 +19,7 @@
   <main class="login-main">
     <section class="login-panel">
       <div class="login-intro"><p class="eyebrow">Welcome back</p><h1>Your next story<br><em>starts here.</em></h1><p>Log in to manage your booking, see your stay details and keep in touch with the Link community.</p></div>
-      <form class="login-form" action="#" method="post">
+      <form class="login-form" action="#" method="post" data-backend="guest-authentication">
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
         <div class="password-label"><label for="password">Password</label><a href="#">Forgot password?</a></div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="employee-login-page">
+  <!-- Acceso del personal. Sustituir la navegación del prototipo por un endpoint POST seguro. -->
   <main class="employee-login-shell">
     <button class="language-toggle employee-language-toggle" type="button" data-language-toggle>ES</button>
     <section class="employee-login-card">
@@ -20,7 +21,7 @@
         <h1>Welcome back.</h1>
         <p>Sign in to manage the hostel, your team and today&apos;s operations.</p>
       </div>
-      <form class="employee-form" action="employee-dashboard.html" method="post">
+      <form class="employee-form" action="/account/staff/login" method="post" data-backend="staff-authentication">
         <label for="employee-email">Work email</label>
         <input id="employee-email" name="user" type="email" placeholder="name@linkcordoba.com" autocomplete="username" required>
         <label for="employee-password">Password</label>
@@ -29,6 +30,7 @@
           <label class="employee-remember"><input type="checkbox"><span>Remember me</span></label>
           <a href="#">Forgot password?</a>
         </div>
+        <!-- Solo para el prototipo. En ASP.NET será un botón submit cuando exista la autenticación. -->
         <a class="button employee-button" href="employee-dashboard.html">Sign in <span aria-hidden="true">→</span></a>
       </form>
       <a class="employee-back" href="index.html"><span aria-hidden="true">←</span> Back to public site</a>
@@ -39,6 +41,6 @@
       <div class="employee-aside-footer"><span>LC / 01</span><span>Staff only</span></div>
     </aside>
   </main>
+  <script src="language.js"></script>
 </body>
-<script src="language.js"></script>
 </html>
