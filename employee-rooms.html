@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage hostel rooms and beds.">
+  <title>Rooms &amp; beds | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-page" data-page="rooms">
+  <aside class="dashboard-sidebar">
+    <a class="employee-brand" href="employee-dashboard.html"><span class="brand-mark">LC</span><span>Link Cordoba<br>Hostel</span></a>
+    <nav class="dashboard-nav" aria-label="Employee modules">
+      <p class="dashboard-nav-label">Workspace</p>
+      <a class="dashboard-nav-link" href="employee-dashboard.html"><span class="nav-icon">▦</span> Overview</a>
+      <a class="dashboard-nav-link" href="employee-reservation-new.html"><span class="nav-icon">＋</span> New reservation</a>
+      <a class="dashboard-nav-link" href="employee-reservation-calendar.html"><span class="nav-icon">▦</span> Booking calendar</a>
+      <a class="dashboard-nav-link" href="#guests" data-module="guests"><span class="nav-icon">○</span> Guests</a>
+      <a class="dashboard-nav-link active" href="employee-rooms.html" aria-current="page"><span class="nav-icon">◇</span> Rooms &amp; beds</a>
+      <p class="dashboard-nav-label dashboard-nav-label-spaced">Management</p>
+      <a class="dashboard-nav-link" href="#team" data-module="team"><span class="nav-icon">△</span> Team</a>
+      <a class="dashboard-nav-link" href="#reports" data-module="reports"><span class="nav-icon">≡</span> Reports</a>
+      <a class="dashboard-nav-link" href="#settings" data-module="settings"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="profile-mini"><span class="profile-avatar">MG</span><span><strong>María Gómez</strong><small>Administrator</small></span><span class="profile-more">•••</span></div><a class="logout-link" href="employee-login.html">Sign out <span aria-hidden="true">↗</span></a></div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dashboard-header module-header"><div><p class="module-kicker">Inventory</p><h1>Rooms &amp; beds</h1></div><div class="dashboard-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="dashboard-help" href="employee-reservation-calendar.html">View calendar</a></div></header>
+    <section class="module-content">
+      <div class="module-heading"><div><p class="module-kicker">Property setup</p><h2>Manage rooms</h2><p>Edit capacity, room type and operational status.</p></div><span class="module-status">12 rooms</span></div>
+      <div class="module-columns">
+        <form class="module-form module-panel room-edit-form" action="#" method="post" data-backend="room-management">
+          <fieldset class="module-fieldset"><legend>Edit room</legend><div class="module-form-grid"><label class="module-field-full"><span>Select room</span><select name="roomId"><option>Room 102</option><option>Room 204</option><option>Room 306</option></select></label><label><span>Room name or number</span><input name="name" type="text" value="Room 102" required></label><label><span>Room type</span><select name="type"><option>Shared dorm</option><option>Private double</option><option>Private single</option></select></label><label><span>Bed capacity</span><input name="capacity" type="number" min="1" value="6" required></label><label><span>Floor</span><input name="floor" type="number" min="0" value="1"></label><label><span>Nightly rate (€)</span><input name="rate" type="number" min="0" step="0.01" value="28.00"></label><label><span>Status</span><select name="status"><option>Available</option><option>Maintenance</option><option>Out of service</option></select></label><label class="module-field-full"><span>Notes</span><textarea name="notes" rows="3" placeholder="Room details or maintenance notes"></textarea></label></div></fieldset>
+          <div class="module-form-actions"><button class="button button-primary" type="submit">Save room <span aria-hidden="true">→</span></button><span class="module-form-note">Backend connection pending</span></div>
+        </form>
+        <section class="module-panel room-list-panel"><div class="panel-heading"><div><p class="module-kicker">Room inventory</p><h2>Current rooms</h2></div></div><div class="room-table-wrap"><table class="room-table"><thead><tr><th>Room</th><th>Type</th><th>Beds</th><th>Status</th></tr></thead><tbody><tr><td><strong>102</strong><small>First floor</small></td><td>Shared dorm</td><td>6</td><td><span class="room-status status-available">Available</span></td></tr><tr><td><strong>204</strong><small>Second floor</small></td><td>Private double</td><td>2</td><td><span class="room-status status-occupied">Occupied</span></td></tr><tr><td><strong>306</strong><small>Third floor</small></td><td>Private single</td><td>1</td><td><span class="room-status status-maintenance">Maintenance</span></td></tr><tr><td><strong>101</strong><small>First floor</small></td><td>Shared dorm</td><td>8</td><td><span class="room-status status-available">Available</span></td></tr></tbody></table></div><p class="module-form-note room-list-note">Showing sample inventory</p></section>
+      </div>
+    </section>
+  </main>
+  <script src="language.js"></script>
+</body>
+</html>

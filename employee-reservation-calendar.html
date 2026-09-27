@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View the hostel reservation calendar.">
+  <title>Booking calendar | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-page" data-page="reservationCalendar">
+  <aside class="dashboard-sidebar">
+    <a class="employee-brand" href="employee-dashboard.html"><span class="brand-mark">LC</span><span>Link Cordoba<br>Hostel</span></a>
+    <nav class="dashboard-nav" aria-label="Employee modules">
+      <p class="dashboard-nav-label">Workspace</p>
+      <a class="dashboard-nav-link" href="employee-dashboard.html"><span class="nav-icon">▦</span> Overview</a>
+      <a class="dashboard-nav-link" href="employee-reservation-new.html"><span class="nav-icon">＋</span> New reservation</a>
+      <a class="dashboard-nav-link active" href="employee-reservation-calendar.html" aria-current="page"><span class="nav-icon">▦</span> Booking calendar</a>
+      <a class="dashboard-nav-link" href="#guests" data-module="guests"><span class="nav-icon">○</span> Guests</a>
+      <a class="dashboard-nav-link" href="employee-rooms.html"><span class="nav-icon">◇</span> Rooms &amp; beds</a>
+      <p class="dashboard-nav-label dashboard-nav-label-spaced">Management</p>
+      <a class="dashboard-nav-link" href="#team" data-module="team"><span class="nav-icon">△</span> Team</a>
+      <a class="dashboard-nav-link" href="#reports" data-module="reports"><span class="nav-icon">≡</span> Reports</a>
+      <a class="dashboard-nav-link" href="#settings" data-module="settings"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="profile-mini"><span class="profile-avatar">MG</span><span><strong>María Gómez</strong><small>Administrator</small></span><span class="profile-more">•••</span></div><a class="logout-link" href="employee-login.html">Sign out <span aria-hidden="true">↗</span></a></div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dashboard-header module-header"><div><p class="module-kicker">Reservations</p><h1>Booking calendar</h1></div><div class="dashboard-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="dashboard-help" href="employee-reservation-new.html">＋ New reservation</a></div></header>
+    <section class="module-content">
+      <div class="module-heading"><div><p class="module-kicker">Availability overview</p><h2>September 2026</h2><p>Reservation calendar · all rooms</p></div></div>
+      <section class="module-panel calendar-panel" aria-label="Reservation calendar for September 2026">
+        <div class="calendar-grid calendar-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+        <div class="calendar-grid calendar-days">
+          <div class="calendar-day is-muted"><span class="calendar-date">31</span></div><div class="calendar-day"><span class="calendar-date">1</span><span class="calendar-event event-coral">Rossi · 204</span></div><div class="calendar-day"><span class="calendar-date">2</span><span class="calendar-event event-coral">Rossi · 204</span><span class="calendar-event event-sage">Wilson · 102</span></div><div class="calendar-day"><span class="calendar-date">3</span><span class="calendar-event event-coral">Rossi · 204</span><span class="calendar-event event-sage">Wilson · 102</span></div><div class="calendar-day"><span class="calendar-date">4</span><span class="calendar-event event-sage">Wilson · 102</span></div><div class="calendar-day"><span class="calendar-date">5</span><span class="calendar-event event-yellow">Group · 306</span></div><div class="calendar-day"><span class="calendar-date">6</span><span class="calendar-event event-yellow">Group · 306</span></div>
+          <div class="calendar-day"><span class="calendar-date">7</span></div><div class="calendar-day"><span class="calendar-date">8</span><span class="calendar-event event-blue">Garcia · 204</span></div><div class="calendar-day"><span class="calendar-date">9</span><span class="calendar-event event-blue">Garcia · 204</span></div><div class="calendar-day"><span class="calendar-date">10</span><span class="calendar-event event-blue">Garcia · 204</span><span class="calendar-event event-sage">Kim · 101</span></div><div class="calendar-day"><span class="calendar-date">11</span><span class="calendar-event event-sage">Kim · 101</span></div><div class="calendar-day"><span class="calendar-date">12</span></div><div class="calendar-day"><span class="calendar-date">13</span></div>
+          <div class="calendar-day"><span class="calendar-date">14</span></div><div class="calendar-day"><span class="calendar-date">15</span><span class="calendar-event event-coral">Miller · 306</span></div><div class="calendar-day"><span class="calendar-date">16</span><span class="calendar-event event-coral">Miller · 306</span></div><div class="calendar-day"><span class="calendar-date">17</span><span class="calendar-event event-coral">Miller · 306</span></div><div class="calendar-day"><span class="calendar-date">18</span><span class="calendar-event event-yellow">Lopez · 102</span></div><div class="calendar-day"><span class="calendar-date">19</span><span class="calendar-event event-yellow">Lopez · 102</span></div><div class="calendar-day"><span class="calendar-date">20</span><span class="calendar-event event-yellow">Lopez · 102</span></div>
+          <div class="calendar-day"><span class="calendar-date">21</span></div><div class="calendar-day"><span class="calendar-date">22</span></div><div class="calendar-day"><span class="calendar-date">23</span><span class="calendar-event event-sage">Bianchi · 204</span></div><div class="calendar-day"><span class="calendar-date">24</span><span class="calendar-event event-sage">Bianchi · 204</span></div><div class="calendar-day"><span class="calendar-date">25</span><span class="calendar-event event-sage">Bianchi · 204</span></div><div class="calendar-day"><span class="calendar-date">26</span><span class="calendar-event event-blue">Taylor · 101</span></div><div class="calendar-day"><span class="calendar-date">27</span><span class="calendar-event event-blue">Taylor · 101</span></div>
+          <div class="calendar-day"><span class="calendar-date">28</span><span class="calendar-event event-blue">Taylor · 101</span></div><div class="calendar-day"><span class="calendar-date">29</span></div><div class="calendar-day"><span class="calendar-date">30</span></div><div class="calendar-day is-muted"><span class="calendar-date">1</span></div><div class="calendar-day is-muted"><span class="calendar-date">2</span></div><div class="calendar-day is-muted"><span class="calendar-date">3</span></div><div class="calendar-day is-muted"><span class="calendar-date">4</span></div>
+        </div>
+      </section>
+      <div class="calendar-legend"><span><i class="legend-swatch event-coral"></i>Confirmed</span><span><i class="legend-swatch event-sage"></i>Checked in</span><span><i class="legend-swatch event-yellow"></i>Pending</span><span><i class="legend-swatch event-blue"></i>Online</span><p>Sample bookings · calendar data pending</p></div>
+    </section>
+  </main>
+  <script src="language.js"></script>
+</body>
+</html>

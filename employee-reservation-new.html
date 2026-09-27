@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create a manual hostel reservation.">
+  <title>New reservation | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-page" data-page="newReservation">
+  <aside class="dashboard-sidebar">
+    <a class="employee-brand" href="employee-dashboard.html"><span class="brand-mark">LC</span><span>Link Cordoba<br>Hostel</span></a>
+    <nav class="dashboard-nav" aria-label="Employee modules">
+      <p class="dashboard-nav-label">Workspace</p>
+      <a class="dashboard-nav-link" href="employee-dashboard.html"><span class="nav-icon">▦</span> Overview</a>
+      <a class="dashboard-nav-link active" href="employee-reservation-new.html" aria-current="page"><span class="nav-icon">＋</span> New reservation</a>
+      <a class="dashboard-nav-link" href="employee-reservation-calendar.html"><span class="nav-icon">▦</span> Booking calendar</a>
+      <a class="dashboard-nav-link" href="#guests" data-module="guests"><span class="nav-icon">○</span> Guests</a>
+      <a class="dashboard-nav-link" href="employee-rooms.html"><span class="nav-icon">◇</span> Rooms &amp; beds</a>
+      <p class="dashboard-nav-label dashboard-nav-label-spaced">Management</p>
+      <a class="dashboard-nav-link" href="#team" data-module="team"><span class="nav-icon">△</span> Team</a>
+      <a class="dashboard-nav-link" href="#reports" data-module="reports"><span class="nav-icon">≡</span> Reports</a>
+      <a class="dashboard-nav-link" href="#settings" data-module="settings"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="profile-mini"><span class="profile-avatar">MG</span><span><strong>María Gómez</strong><small>Administrator</small></span><span class="profile-more">•••</span></div><a class="logout-link" href="employee-login.html">Sign out <span aria-hidden="true">↗</span></a></div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dashboard-header"><div><p class="module-kicker">Reservations</p><h1>New reservation</h1></div><div class="dashboard-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="dashboard-help" href="employee-reservation-calendar.html">Booking calendar</a></div></header>
+    <section class="module-content">
+      <div class="module-heading"><div><p class="module-kicker">Front desk</p><h2>Enter booking details</h2><p>Create a walk-in or phone reservation. This form is a visual placeholder.</p></div><span class="module-status">Draft</span></div>
+      <form class="module-form" action="#" method="post" data-backend="manual-reservation">
+        <fieldset class="module-fieldset"><legend>Guest details</legend><div class="module-form-grid"><label>Full name<input name="guestName" type="text" placeholder="Guest full name" required></label><label>Email address<input name="email" type="email" placeholder="guest@example.com"></label><label>Phone number<input name="phone" type="tel" placeholder="+34 600 000 000"></label><label>Number of guests<input name="guestCount" type="number" min="1" value="1" required></label></div></fieldset>
+        <fieldset class="module-fieldset"><legend>Stay details</legend><div class="module-form-grid"><label>Check-in<input name="checkIn" type="date" required></label><label>Check-out<input name="checkOut" type="date" required></label><label>Room or bed<select name="room" required><option value="">Select availability</option><option>Room 102 · 1 bed</option><option>Room 204 · 2 beds</option><option>Room 306 · 1 bed</option></select></label><label>Booking source<select name="source"><option>Walk-in</option><option>Phone</option><option>Email</option><option>Other</option></select></label><label class="module-field-full">Notes<textarea name="notes" rows="3" placeholder="Requests or arrival notes"></textarea></label></div></fieldset>
+        <div class="module-form-actions"><button class="button button-primary" type="submit">Save reservation <span aria-hidden="true">→</span></button><a class="module-cancel" href="employee-dashboard.html">Cancel</a><span class="module-form-note">Backend connection pending</span></div>
+      </form>
+    </section>
+  </main>
+  <script src="language.js"></script>
+</body>
+</html>

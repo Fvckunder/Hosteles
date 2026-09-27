@@ -10,6 +10,9 @@ Este proyecto es un prototipo estático. Los archivos HTML muestran las pantalla
 | `login.html` | Acceso de huéspedes | `Views/Account/Login.cshtml` |
 | `employee-login.html` | Acceso separado para empleados | `Views/Staff/Login.cshtml` |
 | `employee-dashboard.html` | Inicio del área privada | `Views/Staff/Dashboard.cshtml` |
+| `employee-reservation-new.html` | Alta manual de reserva | `Views/Staff/Reservations/Create.cshtml` |
+| `employee-reservation-calendar.html` | Calendario mensual de reservas | `Views/Staff/Reservations/Calendar.cshtml` |
+| `employee-rooms.html` | Edición e inventario de habitaciones | `Views/Staff/Rooms/Index.cshtml` |
 | `styles.css` | Estilos compartidos | `wwwroot/css/site.css` |
 | `language.js` | Cambio de idioma del prototipo | Servicio de localización de ASP.NET Core |
 
@@ -25,6 +28,8 @@ El dashboard ya contiene los puntos de navegación. Cada módulo debería conver
 - **Configuración**: `Areas/Staff/Pages/Settings/` o `Views/Staff/Settings/`
 
 Los atributos `data-module` de la navegación identifican cada módulo. Los `href="#..."` son anclas temporales del prototipo y deberán sustituirse por rutas reales.
+
+El prototipo separa el alta manual y el calendario mensual de reservas en pantallas distintas, y ofrece una vista de edición e inventario de habitaciones. Sus formularios y datos son demostrativos: todavía no guardan cambios ni consultan disponibilidad real.
 
 ## Componentes que deben conectarse al backend
 

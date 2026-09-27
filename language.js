@@ -1,4 +1,39 @@
 (() => {
+  const themeKey = 'hostel-theme';
+  const savedTheme = localStorage.getItem(themeKey);
+  const initialTheme = savedTheme === 'dark' ? 'dark' : 'light';
+  document.documentElement.dataset.theme = initialTheme;
+
+  const languageButton = document.querySelector('[data-language-toggle]');
+  const controlGroup = document.createElement('div');
+  controlGroup.className = 'theme-language-controls';
+  const themeDock = document.createElement('div');
+  themeDock.className = 'theme-dock';
+  themeDock.innerHTML = '<button class="theme-switch" type="button" role="switch" data-theme-toggle><span class="theme-switch-sun" aria-hidden="true">☼</span><span class="theme-switch-moon" aria-hidden="true">⏾</span><span class="theme-switch-thumb" aria-hidden="true"></span></button>';
+  if (languageButton) {
+    languageButton.parentNode.insertBefore(controlGroup, languageButton);
+    controlGroup.append(themeDock, languageButton);
+    if (languageButton.classList.contains('employee-language-toggle')) controlGroup.classList.add('employee-language-controls');
+  } else {
+    document.body.append(controlGroup);
+    controlGroup.append(themeDock);
+  }
+
+  const themeToggle = themeDock.querySelector('[data-theme-toggle]');
+  function updateTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    themeToggle.setAttribute('aria-checked', String(theme === 'dark'));
+    const label = theme === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro';
+    const englishLabel = theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+    themeToggle.setAttribute('aria-label', document.documentElement.lang === 'es' ? label : englishLabel);
+    themeToggle.title = themeToggle.getAttribute('aria-label');
+  }
+  themeToggle.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(themeKey, nextTheme);
+    updateTheme(nextTheme);
+  });
+
   // Traducciones temporales del cliente. Después mover estas cadenas a recursos .resx de ASP.NET Core.
   const translations = {
     es: {
@@ -70,7 +105,7 @@
           '.dashboard-header h1': ['Good morning, María.', 'Buenos días, María.'],
           '.dashboard-help': ['Help centre', 'Centro de ayuda'],
           '.dashboard-nav-label': ['Workspace', 'Espacio de trabajo', 'Management', 'Gestión'],
-          '.dashboard-nav-link': ['<span class="nav-icon">▦</span> Overview', '<span class="nav-icon">▦</span> Resumen', '<span class="nav-icon">□</span> Reservations <span class="nav-count">12</span>', '<span class="nav-icon">□</span> Reservas <span class="nav-count">12</span>', '<span class="nav-icon">○</span> Guests', '<span class="nav-icon">○</span> Huéspedes', '<span class="nav-icon">◇</span> Rooms &amp; beds', '<span class="nav-icon">◇</span> Habitaciones y camas', '<span class="nav-icon">△</span> Team', '<span class="nav-icon">△</span> Equipo', '<span class="nav-icon">≡</span> Reports', '<span class="nav-icon">≡</span> Informes', '<span class="nav-icon">⚙</span> Settings', '<span class="nav-icon">⚙</span> Ajustes'],
+          '.dashboard-nav-link': ['<span class="nav-icon">▦</span> Overview', '<span class="nav-icon">▦</span> Resumen', '<span class="nav-icon">＋</span> New reservation', '<span class="nav-icon">＋</span> Nueva reserva', '<span class="nav-icon">▦</span> Booking calendar <span class="nav-count" data-backend="reservation-count">12</span>', '<span class="nav-icon">▦</span> Calendario de reservas <span class="nav-count" data-backend="reservation-count">12</span>', '<span class="nav-icon">○</span> Guests', '<span class="nav-icon">○</span> Huéspedes', '<span class="nav-icon">◇</span> Rooms &amp; beds', '<span class="nav-icon">◇</span> Habitaciones y camas', '<span class="nav-icon">△</span> Team', '<span class="nav-icon">△</span> Equipo', '<span class="nav-icon">≡</span> Reports', '<span class="nav-icon">≡</span> Informes', '<span class="nav-icon">⚙</span> Settings', '<span class="nav-icon">⚙</span> Ajustes'],
           '.profile-mini strong': ['María Gómez', 'María Gómez'],
           '.profile-mini small': ['Administrator', 'Administradora'],
           '.dashboard-alert strong': ["Today's focus", 'Prioridad de hoy'],
@@ -96,12 +131,13 @@
     }
   };
 
-  const pageName = document.body.classList.contains('login-page') ? 'login' : document.body.classList.contains('employee-login-page') ? 'employeeLogin' : document.body.classList.contains('dashboard-page') ? 'dashboard' : 'index';
+  const pageName = document.body.dataset.page || (document.body.classList.contains('login-page') ? 'login' : document.body.classList.contains('employee-login-page') ? 'employeeLogin' : document.body.classList.contains('dashboard-page') ? 'dashboard' : 'index');
   const languageKey = 'hostel-language';
   const toggle = document.querySelector('[data-language-toggle]');
   const getLanguage = () => localStorage.getItem(languageKey) || 'es';
   const currentLanguage = getLanguage();
   document.documentElement.lang = currentLanguage;
+  updateTheme(initialTheme);
 
   // El botón muestra el idioma que se activará en el siguiente clic.
   function updateToggle(language) {
@@ -118,7 +154,10 @@
       index: ['Link Cordoba Hostel | Stay curious', 'Link Cordoba Hostel | Vive con curiosidad'],
       login: ['Member login | Link Cordoba Hostel', 'Acceso de huésped | Link Cordoba Hostel'],
       employeeLogin: ['Staff login | Link Cordoba Hostel', 'Acceso del personal | Link Cordoba Hostel'],
-      dashboard: ['Dashboard | Link Cordoba Hostel', 'Panel | Link Cordoba Hostel']
+      dashboard: ['Dashboard | Link Cordoba Hostel', 'Panel | Link Cordoba Hostel'],
+      newReservation: ['New reservation | Link Cordoba Hostel', 'Nueva reserva | Link Cordoba Hostel'],
+      reservationCalendar: ['Booking calendar | Link Cordoba Hostel', 'Calendario de reservas | Link Cordoba Hostel'],
+      rooms: ['Rooms & beds | Link Cordoba Hostel', 'Habitaciones y camas | Link Cordoba Hostel']
     };
     if (language === 'es') {
       // Los selectores relacionan el contenido con su traducción sin duplicar las páginas HTML.
@@ -140,6 +179,43 @@
           }
         });
       });
+      if (document.body.dataset.page) {
+        const moduleTranslations = {
+          'Workspace': 'Espacio de trabajo', 'Management': 'Gestión', 'Overview': 'Resumen', 'New reservation': 'Nueva reserva', '＋ New reservation': '＋ Nueva reserva',
+          'Booking calendar': 'Calendario de reservas', 'Guests': 'Huéspedes', 'Rooms & beds': 'Habitaciones y camas', 'Team': 'Equipo', 'Reports': 'Informes', 'Settings': 'Ajustes', 'Sign out': 'Cerrar sesión',
+          'Reservations': 'Reservas', 'Front desk': 'Recepción', 'Enter booking details': 'Datos de la reserva', 'Create a walk-in or phone reservation. This form is a visual placeholder.': 'Formulario provisional para reservas presenciales o por teléfono.',
+          'Draft': 'Borrador', 'Guest details': 'Datos del huésped', 'Stay details': 'Datos de la estancia', 'Full name': 'Nombre completo', 'Email address': 'Correo electrónico', 'Phone number': 'Teléfono',
+          'Number of guests': 'Número de huéspedes', 'Check-in': 'Entrada', 'Check-out': 'Salida', 'Room or bed': 'Habitación o cama', 'Select availability': 'Seleccionar disponibilidad',
+          'Room 102 · 1 bed': 'Habitación 102 · 1 cama', 'Room 204 · 2 beds': 'Habitación 204 · 2 camas', 'Room 306 · 1 bed': 'Habitación 306 · 1 cama', 'Booking source': 'Origen de la reserva',
+          'Walk-in': 'Presencial', 'Phone': 'Teléfono', 'Email': 'Correo electrónico', 'Other': 'Otro', 'Notes': 'Notas', 'Requests or arrival notes': 'Solicitudes o notas de llegada', 'Save reservation': 'Guardar reserva', 'Cancel': 'Cancelar',
+          'Backend connection pending': 'Conexión con el servidor pendiente', 'Availability overview': 'Vista de disponibilidad', 'September 2026': 'Septiembre de 2026',
+          'Reservation calendar · all rooms': 'Calendario de reservas · todas las habitaciones', 'Today': 'Hoy', 'Mon': 'Lun', 'Tue': 'Mar', 'Wed': 'Mié', 'Thu': 'Jue', 'Fri': 'Vie', 'Sat': 'Sáb', 'Sun': 'Dom',
+          'Confirmed': 'Confirmada', 'Checked in': 'Registrada', 'Pending': 'Pendiente', 'Online': 'En línea', 'Sample bookings · calendar data pending': 'Reservas de ejemplo · datos pendientes',
+          'Inventory': 'Inventario', 'View calendar': 'Ver calendario', 'Property setup': 'Gestión del alojamiento', 'Manage rooms': 'Gestionar habitaciones',
+          'Edit capacity, room type and operational status.': 'Modifica la capacidad, el tipo de habitación y el estado operativo.', '12 rooms': '12 habitaciones', 'Edit room': 'Editar habitación',
+          'Select room': 'Seleccionar habitación', 'Room name or number': 'Nombre o número', 'Room type': 'Tipo de habitación', 'Shared dorm': 'Dormitorio compartido',
+          'Private double': 'Doble privada', 'Private single': 'Individual privada', 'Bed capacity': 'Capacidad de camas', 'Floor': 'Planta', 'Nightly rate (€)': 'Tarifa por noche (€)',
+          'Status': 'Estado', 'Available': 'Disponible', 'Maintenance': 'Mantenimiento', 'Out of service': 'Fuera de servicio', 'Room details or maintenance notes': 'Detalles o notas de mantenimiento', 'Room 102': 'Habitación 102', 'Room 204': 'Habitación 204', 'Room 306': 'Habitación 306',
+          'Save room': 'Guardar habitación', 'Room inventory': 'Inventario de habitaciones', 'Current rooms': 'Habitaciones actuales', 'Room': 'Habitación', 'Type': 'Tipo', 'Beds': 'Camas',
+          'First floor': 'Primera planta', 'Second floor': 'Segunda planta', 'Third floor': 'Tercera planta', 'Occupied': 'Ocupada', 'Showing sample inventory': 'Inventario de ejemplo'
+        };
+        const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        let textNode;
+        while ((textNode = textWalker.nextNode())) {
+          const sourceText = textNode.nodeValue.trim();
+          if (moduleTranslations[sourceText]) {
+            const leadingSpace = textNode.nodeValue.match(/^\s*/)[0];
+            const trailingSpace = textNode.nodeValue.match(/\s*$/)[0];
+            textNode.nodeValue = `${leadingSpace}${moduleTranslations[sourceText]}${trailingSpace}`;
+          }
+        }
+        const placeholders = { 'Guest full name': 'Nombre completo del huésped', 'guest@example.com': 'huesped@ejemplo.com', 'Requests or arrival notes': 'Solicitudes o notas de llegada', 'Room details or maintenance notes': 'Detalles o notas de mantenimiento', '+34 600 000 000': '+34 600 000 000' };
+        document.querySelectorAll('[placeholder]').forEach((field) => {
+          if (placeholders[field.placeholder]) field.placeholder = placeholders[field.placeholder];
+        });
+        const roomName = document.querySelector('[name="name"]');
+        if (roomName && roomName.value === 'Room 102') roomName.value = 'Habitación 102';
+      }
       document.title = titles[pageName][1];
     } else {
       document.documentElement.lang = 'en';
