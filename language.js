@@ -74,14 +74,59 @@
           'label[for="email"]': ['Email address', 'Correo electrónico'],
           'label[for="password"]': ['Password', 'Contraseña'],
           '#password': ['Enter your password', 'Introduce tu contraseña'],
-          '.password-label a': ['Forgot password?', '¿Olvidaste tu contraseña?'],
-          '.remember span': ['Keep me signed in', 'Mantener la sesión iniciada'],
           '.login-form button': ['Log in <span aria-hidden="true">→</span>', 'Iniciar sesión <span aria-hidden="true">→</span>'],
-          '.signup-prompt': ['New to Link Cordoba Hostel? <a href="#">Create an account</a>', '¿Nuevo en Link Cordoba Hostel? <a href="#">Crea una cuenta</a>'],
+          '.login-reservation-link': ['Make a reservation <span aria-hidden="true">→</span>', 'Hacer una reserva <span aria-hidden="true">→</span>'],
+          '.signup-prompt': ['Need a guest profile? <a href="#signup-dialog" data-open-signup>Register your details</a>', '¿Necesitas un perfil de huésped? <a href="#signup-dialog" data-open-signup>Registra tus datos</a>'],
+          '.signup-dialog .eyebrow': ['Guest registration', 'Registro de huéspedes'],
+          '.signup-dialog h2': ['Register your guest profile', 'Registra tu perfil de huésped'],
+          '.signup-description': ['Register your guest details. Guest sign-in is not available yet.', 'Registra tus datos de huésped. El acceso de huéspedes todavía no está disponible.'],
+          'label[for="signup-first-name"]': ['First name', 'Nombre'],
+          'label[for="signup-last-name"]': ['Last name', 'Apellido'],
+          'label[for="signup-document-type"]': ['Document type', 'Tipo de documento'],
+          '#signup-document-type option': ['DNI', 'DNI', 'Passport', 'Pasaporte'],
+          '[data-document-number-label]': ['DNI number', 'Número de DNI'],
+          'label[for="signup-email"]': ['Email address', 'Correo electrónico'],
+          'label[for="signup-phone"]': ['Phone number', 'Teléfono'],
+          '#signup-phone-country': ['Phone country code', 'Código telefónico del país'],
+          '.signup-cancel': ['Cancel', 'Cancelar'],
+          '.signup-actions .button': ['Register profile <span aria-hidden="true">→</span>', 'Registrar perfil <span aria-hidden="true">→</span>'],
           '.staff-access': ['Are you a team member? Staff login <span aria-hidden="true">↗</span>', '¿Eres parte del equipo? Acceso del personal <span aria-hidden="true">↗</span>'],
           '.back-link': ['<span aria-hidden="true">←</span> Back to home', '<span aria-hidden="true">←</span> Volver al inicio'],
           '.aside-quote p': ['The best journeys<br>bring us home.', 'Los mejores viajes<br>nos llevan a casa.'],
           '.aside-quote small': ['— Link Cordoba Hostel guestbook', '— Libro de visitas de Link Cordoba Hostel']
+        },
+        guestReservation: {
+          '.guest-reservation-header .back-link': ['<span aria-hidden="true">←</span> Back to login', '<span aria-hidden="true">←</span> Volver al acceso'],
+          '.guest-reservation-intro .eyebrow': ['Guest services', 'Atención a huéspedes'],
+          '.guest-reservation-intro h1': ['Plan your <em>stay.</em>', 'Planifica tu <em>estancia.</em>'],
+          '.guest-reservation-intro > p:last-child': ['Share a few details so our team can check your request and prepare for your arrival.', 'Déjanos algunos datos para revisar tu solicitud y preparar tu llegada.'],
+          '.guest-reservation-form > .module-fieldset > legend': ['Guest details', 'Datos del huésped', 'Stay details', 'Datos de la estancia', 'Vehicle and requests', 'Vehículo y solicitudes'],
+          'label[for="first-name"] span': ['First name', 'Nombre'],
+          'label[for="last-name"] span': ['Last name', 'Apellido'],
+          'label[for="document-type"] span': ['Document type', 'Tipo de documento'],
+          '#document-type option': ['Select document type', 'Selecciona un documento', 'National ID (DNI)', 'DNI', 'Foreigner ID (NIE)', 'NIE', 'Passport', 'Pasaporte'],
+          'label[for="document-number"] span': ['Document number', 'Número de documento'],
+          'label[for="phone"] span': ['Phone number', 'Teléfono'],
+          'label[for="guest-email"] span': ['Email address', 'Correo electrónico'],
+          'label[for="residence-city"] span': ['City of residence', 'Ciudad de residencia'],
+          'label[for="residence-country"] span': ['Country of residence', 'País de residencia'],
+          'label[for="check-in"] span': ['Check-in', 'Llegada'],
+          'label[for="check-out"] span': ['Check-out', 'Salida'],
+          'label[for="guest-count"] span': ['Number of guests', 'Cantidad de huéspedes'],
+          'label[for="room-preference"] span': ['Room preference', 'Preferencia de habitación'],
+          '#room-preference option': ['No preference', 'Sin preferencia', 'Private room', 'Habitación privada', 'Shared room', 'Habitación compartida'],
+          'label[for="arrival-time"] span': ['Estimated arrival time', 'Hora estimada de llegada'],
+          '.vehicle-choice legend': ['Will you arrive by vehicle?', '¿Llegarás en vehículo?'],
+          '.vehicle-option span': ['Yes', 'Sí', 'No', 'No'],
+          'label[for="vehicle-plate"] span': ['License plate', 'Matrícula'],
+          'label[for="special-requests"] span': ['Special requests or accessibility needs', 'Solicitudes o necesidades de accesibilidad'],
+          '.privacy-consent span': ['I agree to the use of these details to manage my reservation request.', 'Acepto que estos datos se utilicen para gestionar mi solicitud de reserva.'],
+          '.guest-reservation-submit': ['Send reservation request <span aria-hidden="true">→</span>', 'Enviar solicitud de reserva <span aria-hidden="true">→</span>'],
+          '.guest-reservation-cancel': ['Cancel <span aria-hidden="true">←</span>', 'Cancelar <span aria-hidden="true">←</span>'],
+          '.guest-reservation-form .module-form-note': ['Your request is not confirmed until the team contacts you.', 'La solicitud no se confirma hasta que el equipo contacte contigo.'],
+          '#residence-country': ['e.g. Spain', 'Ej.: España'],
+          '#vehicle-plate': ['Vehicle registration', 'Matrícula del vehículo'],
+          '#special-requests': ['Arrival notes, accessibility needs or other details', 'Notas de llegada, accesibilidad u otros detalles']
         },
         employeeLogin: {
           '.dashboard-kicker': ['Team workspace', 'Espacio del equipo'],
@@ -91,8 +136,6 @@
           'label[for="employee-password"]': ['Password', 'Contraseña'],
           '#employee-email': ['name@linkcordoba.com', 'nombre@linkcordoba.com'],
           '#employee-password': ['Enter your password', 'Introduce tu contraseña'],
-          '.employee-remember span': ['Remember me', 'Recordarme'],
-          '.employee-form-options > a': ['Forgot password?', '¿Olvidaste tu contraseña?'],
           '.employee-button': ['Sign in <span aria-hidden="true">→</span>', 'Entrar <span aria-hidden="true">→</span>'],
           '.employee-back': ['<span aria-hidden="true">←</span> Back to public site', '<span aria-hidden="true">←</span> Volver al sitio público'],
           '.employee-aside-top': ['<span class="aside-status-dot"></span> Operations dashboard', '<span class="aside-status-dot"></span> Panel de operaciones'],
@@ -153,76 +196,174 @@
     const titles = {
       index: ['Link Cordoba Hostel | Stay curious', 'Link Cordoba Hostel | Vive con curiosidad'],
       login: ['Member login | Link Cordoba Hostel', 'Acceso de huésped | Link Cordoba Hostel'],
+      guestReservation: ['Request a reservation | Link Cordoba Hostel', 'Solicitar una reserva | Link Cordoba Hostel'],
       employeeLogin: ['Staff login | Link Cordoba Hostel', 'Acceso del personal | Link Cordoba Hostel'],
       dashboard: ['Dashboard | Link Cordoba Hostel', 'Panel | Link Cordoba Hostel'],
       newReservation: ['New reservation | Link Cordoba Hostel', 'Nueva reserva | Link Cordoba Hostel'],
       reservationCalendar: ['Booking calendar | Link Cordoba Hostel', 'Calendario de reservas | Link Cordoba Hostel'],
       rooms: ['Rooms & beds | Link Cordoba Hostel', 'Habitaciones y camas | Link Cordoba Hostel']
     };
-    if (language === 'es') {
-      // Los selectores relacionan el contenido con su traducción sin duplicar las páginas HTML.
-      Object.entries(translations.es.common).forEach(([english, spanish]) => {
-        document.querySelectorAll('a, span').forEach((element) => {
-          if (element.innerHTML.trim() === english) element.innerHTML = spanish;
-        });
+
+    Object.entries(translations.es.common).forEach(([english, spanish]) => {
+      document.querySelectorAll('a, span, button, p, h1, h2, h3, label, small, strong, div').forEach((element) => {
+        const currentText = element.innerHTML.trim();
+        if (currentText === english || currentText === spanish) {
+          element.innerHTML = language === 'es' ? spanish : english;
+        }
       });
-      if (page) Object.entries(page).forEach(([selector, values]) => {
+    });
+
+    if (page) {
+      Object.entries(page).forEach(([selector, values]) => {
         const elements = document.querySelectorAll(selector);
         elements.forEach((element, index) => {
           const pairIndex = index * 2;
-          if (values[pairIndex + 1]) {
-            element.innerHTML = values[pairIndex + 1];
-            if (element.matches('input')) element.placeholder = values[pairIndex + 1];
-          } else if (values[1]) {
-            element.innerHTML = values[1];
-            if (element.matches('input')) element.placeholder = values[1];
+          const englishValue = values[pairIndex] || values[0];
+          const spanishValue = values[pairIndex + 1] || values[1];
+          const target = language === 'es' ? spanishValue : englishValue;
+          if (element.matches('input, textarea')) {
+            element.placeholder = target;
+          } else {
+            element.innerHTML = target;
           }
         });
       });
-      if (document.body.dataset.page) {
-        const moduleTranslations = {
-          'Workspace': 'Espacio de trabajo', 'Management': 'Gestión', 'Overview': 'Resumen', 'New reservation': 'Nueva reserva', '＋ New reservation': '＋ Nueva reserva',
-          'Booking calendar': 'Calendario de reservas', 'Guests': 'Huéspedes', 'Rooms & beds': 'Habitaciones y camas', 'Team': 'Equipo', 'Reports': 'Informes', 'Settings': 'Ajustes', 'Sign out': 'Cerrar sesión',
-          'Reservations': 'Reservas', 'Front desk': 'Recepción', 'Enter booking details': 'Datos de la reserva', 'Create a walk-in or phone reservation. This form is a visual placeholder.': 'Formulario provisional para reservas presenciales o por teléfono.',
-          'Draft': 'Borrador', 'Guest details': 'Datos del huésped', 'Stay details': 'Datos de la estancia', 'Full name': 'Nombre completo', 'Email address': 'Correo electrónico', 'Phone number': 'Teléfono',
-          'Number of guests': 'Número de huéspedes', 'Check-in': 'Entrada', 'Check-out': 'Salida', 'Room or bed': 'Habitación o cama', 'Select availability': 'Seleccionar disponibilidad',
-          'Room 102 · 1 bed': 'Habitación 102 · 1 cama', 'Room 204 · 2 beds': 'Habitación 204 · 2 camas', 'Room 306 · 1 bed': 'Habitación 306 · 1 cama', 'Booking source': 'Origen de la reserva',
-          'Walk-in': 'Presencial', 'Phone': 'Teléfono', 'Email': 'Correo electrónico', 'Other': 'Otro', 'Notes': 'Notas', 'Requests or arrival notes': 'Solicitudes o notas de llegada', 'Save reservation': 'Guardar reserva', 'Cancel': 'Cancelar',
-          'Backend connection pending': 'Conexión con el servidor pendiente', 'Availability overview': 'Vista de disponibilidad', 'September 2026': 'Septiembre de 2026',
-          'Reservation calendar · all rooms': 'Calendario de reservas · todas las habitaciones', 'Today': 'Hoy', 'Mon': 'Lun', 'Tue': 'Mar', 'Wed': 'Mié', 'Thu': 'Jue', 'Fri': 'Vie', 'Sat': 'Sáb', 'Sun': 'Dom',
-          'Confirmed': 'Confirmada', 'Checked in': 'Registrada', 'Pending': 'Pendiente', 'Online': 'En línea', 'Sample bookings · calendar data pending': 'Reservas de ejemplo · datos pendientes',
-          'Inventory': 'Inventario', 'View calendar': 'Ver calendario', 'Property setup': 'Gestión del alojamiento', 'Manage rooms': 'Gestionar habitaciones',
-          'Edit capacity, room type and operational status.': 'Modifica la capacidad, el tipo de habitación y el estado operativo.', '12 rooms': '12 habitaciones', 'Edit room': 'Editar habitación',
-          'Select room': 'Seleccionar habitación', 'Room name or number': 'Nombre o número', 'Room type': 'Tipo de habitación', 'Shared dorm': 'Dormitorio compartido',
-          'Private double': 'Doble privada', 'Private single': 'Individual privada', 'Bed capacity': 'Capacidad de camas', 'Floor': 'Planta', 'Nightly rate (€)': 'Tarifa por noche (€)',
-          'Status': 'Estado', 'Available': 'Disponible', 'Maintenance': 'Mantenimiento', 'Out of service': 'Fuera de servicio', 'Room details or maintenance notes': 'Detalles o notas de mantenimiento', 'Room 102': 'Habitación 102', 'Room 204': 'Habitación 204', 'Room 306': 'Habitación 306',
-          'Save room': 'Guardar habitación', 'Room inventory': 'Inventario de habitaciones', 'Current rooms': 'Habitaciones actuales', 'Room': 'Habitación', 'Type': 'Tipo', 'Beds': 'Camas',
-          'First floor': 'Primera planta', 'Second floor': 'Segunda planta', 'Third floor': 'Tercera planta', 'Occupied': 'Ocupada', 'Showing sample inventory': 'Inventario de ejemplo'
-        };
-        const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-        let textNode;
-        while ((textNode = textWalker.nextNode())) {
-          const sourceText = textNode.nodeValue.trim();
-          if (moduleTranslations[sourceText]) {
-            const leadingSpace = textNode.nodeValue.match(/^\s*/)[0];
-            const trailingSpace = textNode.nodeValue.match(/\s*$/)[0];
-            textNode.nodeValue = `${leadingSpace}${moduleTranslations[sourceText]}${trailingSpace}`;
-          }
-        }
-        const placeholders = { 'Guest full name': 'Nombre completo del huésped', 'guest@example.com': 'huesped@ejemplo.com', 'Requests or arrival notes': 'Solicitudes o notas de llegada', 'Room details or maintenance notes': 'Detalles o notas de mantenimiento', '+34 600 000 000': '+34 600 000 000' };
-        document.querySelectorAll('[placeholder]').forEach((field) => {
-          if (placeholders[field.placeholder]) field.placeholder = placeholders[field.placeholder];
-        });
-        const roomName = document.querySelector('[name="name"]');
-        if (roomName && roomName.value === 'Room 102') roomName.value = 'Habitación 102';
-      }
-      document.title = titles[pageName][1];
-    } else {
-      document.documentElement.lang = 'en';
-      document.title = titles[pageName][0];
-      window.location.reload();
-      return;
     }
+    if (pageName === 'login') {
+      document.querySelector('.signup-close')?.setAttribute('aria-label', language === 'es' ? 'Cerrar' : 'Close');
+    }
+
+    if (document.body.dataset.page || document.body.classList.contains('dashboard-page')) {
+      const moduleTranslations = {
+        'Workspace': { en: 'Workspace', es: 'Espacio de trabajo' },
+        'Management': { en: 'Management', es: 'Gestión' },
+        'Overview': { en: 'Overview', es: 'Resumen' },
+        'At a glance': { en: 'At a glance', es: 'Resumen general' },
+        'New reservation': { en: 'New reservation', es: 'Nueva reserva' },
+        '＋ New reservation': { en: '＋ New reservation', es: '＋ Nueva reserva' },
+        'Booking calendar': { en: 'Booking calendar', es: 'Calendario de reservas' },
+        'Guests': { en: 'Guests', es: 'Huéspedes' },
+        'Rooms & beds': { en: 'Rooms & beds', es: 'Habitaciones y camas' },
+        'Team': { en: 'Team', es: 'Equipo' },
+        'Reports': { en: 'Reports', es: 'Informes' },
+        'Settings': { en: 'Settings', es: 'Ajustes' },
+        'Sign out': { en: 'Sign out', es: 'Cerrar sesión' },
+        'Reservations': { en: 'Reservations', es: 'Reservas' },
+        'Front desk': { en: 'Front desk', es: 'Recepción' },
+        'Enter booking details': { en: 'Enter booking details', es: 'Datos de la reserva' },
+        'Create a walk-in or phone reservation. This form is a visual placeholder.': { en: 'Create a walk-in or phone reservation. This form is a visual placeholder.', es: 'Formulario provisional para reservas presenciales o por teléfono.' },
+        'Draft': { en: 'Draft', es: 'Borrador' },
+        'Guest details': { en: 'Guest details', es: 'Datos del huésped' },
+        'Stay details': { en: 'Stay details', es: 'Datos de la estancia' },
+        'Full name': { en: 'Full name', es: 'Nombre completo' },
+        'Email address': { en: 'Email address', es: 'Correo electrónico' },
+        'Phone number': { en: 'Phone number', es: 'Teléfono' },
+        'Number of guests': { en: 'Number of guests', es: 'Número de huéspedes' },
+        'Check-in': { en: 'Check-in', es: 'Entrada' },
+        'Check-out': { en: 'Check-out', es: 'Salida' },
+        'Room or bed': { en: 'Room or bed', es: 'Habitación o cama' },
+        'Select availability': { en: 'Select availability', es: 'Seleccionar disponibilidad' },
+        'Room 102 · 1 bed': { en: 'Room 102 · 1 bed', es: 'Habitación 102 · 1 cama' },
+        'Room 204 · 2 beds': { en: 'Room 204 · 2 beds', es: 'Habitación 204 · 2 camas' },
+        'Room 306 · 1 bed': { en: 'Room 306 · 1 bed', es: 'Habitación 306 · 1 cama' },
+        'Booking source': { en: 'Booking source', es: 'Origen de la reserva' },
+        'Walk-in': { en: 'Walk-in', es: 'Presencial' },
+        'Phone': { en: 'Phone', es: 'Teléfono' },
+        'Email': { en: 'Email', es: 'Correo electrónico' },
+        'Other': { en: 'Other', es: 'Otro' },
+        'Notes': { en: 'Notes', es: 'Notas' },
+        'Requests or arrival notes': { en: 'Requests or arrival notes', es: 'Solicitudes o notas de llegada' },
+        'Save reservation': { en: 'Save reservation', es: 'Guardar reserva' },
+        'Cancel': { en: 'Cancel', es: 'Cancelar' },
+        'Backend connection pending': { en: 'Backend connection pending', es: 'Conexión con el servidor pendiente' },
+        'Availability overview': { en: 'Availability overview', es: 'Vista de disponibilidad' },
+        'September 2026': { en: 'September 2026', es: 'Septiembre de 2026' },
+        'Reservation calendar · all rooms': { en: 'Reservation calendar · all rooms', es: 'Calendario de reservas · todas las habitaciones' },
+        'Today': { en: 'Today', es: 'Hoy' },
+        "Today's activity": { en: "Today's activity", es: 'Actividad de hoy' },
+        'Availability': { en: 'Availability', es: 'Disponibilidad' },
+        'of 58 beds': { en: 'of 58 beds', es: 'de 58 camas' },
+        'Mon': { en: 'Mon', es: 'Lun' },
+        'Tue': { en: 'Tue', es: 'Mar' },
+        'Wed': { en: 'Wed', es: 'Mié' },
+        'Thu': { en: 'Thu', es: 'Jue' },
+        'Fri': { en: 'Fri', es: 'Vie' },
+        'Sat': { en: 'Sat', es: 'Sáb' },
+        'Sun': { en: 'Sun', es: 'Dom' },
+        'Confirmed': { en: 'Confirmed', es: 'Confirmada' },
+        'Checked in': { en: 'Checked in', es: 'Registrada' },
+        'Pending': { en: 'Pending', es: 'Pendiente' },
+        'Online': { en: 'Online', es: 'En línea' },
+        'Sample bookings · calendar data pending': { en: 'Sample bookings · calendar data pending', es: 'Reservas de ejemplo · datos pendientes' },
+        'Inventory': { en: 'Inventory', es: 'Inventario' },
+        'View calendar': { en: 'View calendar', es: 'Ver calendario' },
+        'Property setup': { en: 'Property setup', es: 'Gestión del alojamiento' },
+        'Manage rooms': { en: 'Manage rooms', es: 'Gestionar habitaciones' },
+        'Edit capacity, room type and operational status.': { en: 'Edit capacity, room type and operational status.', es: 'Modifica la capacidad, el tipo de habitación y el estado operativo.' },
+        '12 rooms': { en: '12 rooms', es: '12 habitaciones' },
+        'Edit room': { en: 'Edit room', es: 'Editar habitación' },
+        'Select room': { en: 'Select room', es: 'Seleccionar habitación' },
+        'Room name or number': { en: 'Room name or number', es: 'Nombre o número' },
+        'Room type': { en: 'Room type', es: 'Tipo de habitación' },
+        'Shared dorm': { en: 'Shared dorm', es: 'Dormitorio compartido' },
+        'Private double': { en: 'Private double', es: 'Doble privada' },
+        'Private single': { en: 'Private single', es: 'Individual privada' },
+        'Bed capacity': { en: 'Bed capacity', es: 'Capacidad de camas' },
+        'Floor': { en: 'Floor', es: 'Planta' },
+        'Nightly rate (€)': { en: 'Nightly rate (€)', es: 'Tarifa por noche (€)' },
+        'Status': { en: 'Status', es: 'Estado' },
+        'Available': { en: 'Available', es: 'Disponible' },
+        'Maintenance': { en: 'Maintenance', es: 'Mantenimiento' },
+        'Out of service': { en: 'Out of service', es: 'Fuera de servicio' },
+        'Room details or maintenance notes': { en: 'Room details or maintenance notes', es: 'Detalles o notas de mantenimiento' },
+        'Room 102': { en: 'Room 102', es: 'Habitación 102' },
+        'Room 204': { en: 'Room 204', es: 'Habitación 204' },
+        'Room 306': { en: 'Room 306', es: 'Habitación 306' },
+        'Save room': { en: 'Save room', es: 'Guardar habitación' },
+        'Room inventory': { en: 'Room inventory', es: 'Inventario de habitaciones' },
+        'Current rooms': { en: 'Current rooms', es: 'Habitaciones actuales' },
+        'Room': { en: 'Room', es: 'Habitación' },
+        'Type': { en: 'Type', es: 'Tipo' },
+        'Beds': { en: 'Beds', es: 'Camas' },
+        'First floor': { en: 'First floor', es: 'Primera planta' },
+        'Second floor': { en: 'Second floor', es: 'Segunda planta' },
+        'Third floor': { en: 'Third floor', es: 'Tercera planta' },
+        'Occupied': { en: 'Occupied', es: 'Ocupada' },
+        'Showing sample inventory': { en: 'Showing sample inventory', es: 'Inventario de ejemplo' }
+      };
+
+      const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let textNode;
+      while ((textNode = textWalker.nextNode())) {
+        const sourceText = (textNode.nodeValue || '').trim();
+        const entry = Object.entries(moduleTranslations).find(([key, map]) => key === sourceText || map.es === sourceText || map.en === sourceText);
+        if (entry) {
+          const [, map] = entry;
+          const targetText = language === 'es' ? map.es : map.en;
+          const leadingSpace = (textNode.nodeValue || '').match(/^\s*/)[0];
+          const trailingSpace = (textNode.nodeValue || '').match(/\s*$/)[0];
+          textNode.nodeValue = `${leadingSpace}${targetText}${trailingSpace}`;
+        }
+      }
+
+      const placeholders = {
+        'Guest full name': { en: 'Guest full name', es: 'Nombre completo del huésped' },
+        'guest@example.com': { en: 'guest@example.com', es: 'huesped@ejemplo.com' },
+        'Requests or arrival notes': { en: 'Requests or arrival notes', es: 'Solicitudes o notas de llegada' },
+        'Room details or maintenance notes': { en: 'Room details or maintenance notes', es: 'Detalles o notas de mantenimiento' },
+        '+34 600 000 000': { en: '+34 600 000 000', es: '+34 600 000 000' }
+      };
+      document.querySelectorAll('[placeholder]').forEach((field) => {
+        if (placeholders[field.placeholder]) {
+          field.placeholder = placeholders[field.placeholder][language === 'es' ? 'es' : 'en'];
+        }
+      });
+      const roomName = document.querySelector('[name="name"]');
+      if (roomName && roomName.value === 'Room 102' && language === 'es') roomName.value = 'Habitación 102';
+      if (roomName && roomName.value === 'Habitación 102' && language === 'en') roomName.value = 'Room 102';
+    }
+
+    document.title = titles[pageName][language === 'es' ? 1 : 0];
     updateToggle(language);
   }
 
@@ -233,7 +374,10 @@
     translate(nextLanguage);
   });
 
-  // El español es el idioma inicial del proyecto.
-  if (currentLanguage === 'es') translate('es');
-  else updateToggle('en');
+  // Si el usuario eligió inglés antes, lo respetamos; si no, arrancamos en español.
+  if (currentLanguage === 'en') {
+    translate('en');
+  } else {
+    translate('es');
+  }
 })();

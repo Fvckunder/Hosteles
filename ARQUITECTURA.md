@@ -8,6 +8,7 @@ Este proyecto es un prototipo estático. Los archivos HTML muestran las pantalla
 | --- | --- | --- |
 | `index.html` | Landing pública del hostel | `Views/Home/Index.cshtml` o `Pages/Index.cshtml` |
 | `login.html` | Acceso de huéspedes | `Views/Account/Login.cshtml` |
+| `guest-reservation.html` | Solicitud de reserva de huéspedes | `Views/Reservations/Request.cshtml` |
 | `employee-login.html` | Acceso separado para empleados | `Views/Staff/Login.cshtml` |
 | `employee-dashboard.html` | Inicio del área privada | `Views/Staff/Dashboard.cshtml` |
 | `employee-reservation-new.html` | Alta manual de reserva | `Views/Staff/Reservations/Create.cshtml` |
@@ -35,10 +36,14 @@ El prototipo separa el alta manual y el calendario mensual de reservas en pantal
 
 ### Autenticación
 
-- `login.html`: enviar correo y contraseña al endpoint de huéspedes.
-- `employee-login.html`: enviar credenciales al endpoint `/account/staff/login`.
-- Recordar sesión, cierre de sesión, recuperación de contraseña y autorización por rol.
-- No enviar credenciales mediante enlaces ni parámetros en la URL. El enlace actual de acceso del personal es solo una demostración visual.
+- `employee-login.html`: envía `{ email, password }` a `POST /api/Auth/Login` y solo navega al dashboard si la API responde correctamente.
+- `login.html`: el contrato actual no define autenticación de huéspedes; el endpoint de login opera sobre `USERS`, que representa al personal.
+- El alta del diálogo de `login.html` crea un perfil con `POST /api/Guests`; no crea credenciales ni habilita el inicio de sesión. El teléfono se envía en formato internacional E.164 y el país como `countryCode` ISO-3166-1 alpha-2.
+- El esquema define `country_id` como clave foránea numérica de `COUNTRIES`, no como código telefónico. El backend debe aceptar `countryCode` y resolverlo al `country_id`, o publicar un catálogo que permita al cliente enviar la FK real.
+- La API debe publicarse bajo el mismo origen o configurarse en `<meta name="api-base-url">` de las páginas de acceso. En despliegue entre orígenes, habilitar CORS y cookies con credenciales según la estrategia de sesión.
+- El contrato de login descrito no incluye token ni define cookies/sesión. Antes de proteger el dashboard, acordar con el backend cómo persistir y validar la autenticación.
+- Recuperación de contraseña, alta de países, sesión persistente y autorización por rol requieren endpoints/contratos adicionales.
+- No enviar credenciales mediante enlaces ni parámetros en la URL.
 
 ### Dashboard
 
@@ -55,6 +60,7 @@ Los elementos marcados con `data-backend` son datos dinámicos:
 ### Operaciones de negocio
 
 - Crear, editar, cancelar y consultar reservas.
+- Recibir solicitudes de reserva con datos de contacto, documento, residencia, fechas, huéspedes, vehículo y necesidades de llegada.
 - Registrar check-in y check-out.
 - Asignar habitaciones y camas.
 - Actualizar estados de limpieza y mantenimiento.

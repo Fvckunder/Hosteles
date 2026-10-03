@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Log in to your Link Cordoba HostelS guest account.">
+  <meta name="api-base-url" content="">
+  <meta name="description" content="Log in to your Link Cordoba Hostel guest account.">
   <title>Member login | Link Cordoba Hostel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@25.12.4/build/css/intlTelInput.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="login-page">
@@ -19,19 +21,216 @@
   <main class="login-main">
     <section class="login-panel">
       <div class="login-intro"><p class="eyebrow">Welcome back</p><h1>Your next story<br><em>starts here.</em></h1><p>Log in to manage your booking, see your stay details and keep in touch with the Link community.</p></div>
-      <form class="login-form" action="#" method="post" data-backend="guest-authentication">
+      <form class="login-form" data-guest-login-unavailable>
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
-        <div class="password-label"><label for="password">Password</label><a href="#">Forgot password?</a></div>
+        <div class="password-label"><label for="password">Password</label></div>
         <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
-        <label class="remember"><input type="checkbox" name="remember"><span>Keep me signed in</span></label>
+        <p class="api-form-status" data-guest-login-status role="status" aria-live="polite"></p>
         <button class="button button-primary button-full" type="submit">Log in <span aria-hidden="true">→</span></button>
       </form>
-      <p class="signup-prompt">New to Link Cordoba Hostel? <a href="#">Create an account</a></p>
+      <a class="button button-primary button-full login-reservation-link" href="guest-reservation.html">Make a reservation <span aria-hidden="true">→</span></a>
+      <p class="signup-prompt">Need a guest profile? <a href="#signup-dialog" data-open-signup>Register your details</a></p>
       <a class="staff-access" href="employee-login.html">Are you a team member? Staff login <span aria-hidden="true">↗</span></a>
     </section>
     <aside class="login-aside"><div class="aside-image"></div><div class="aside-quote"><span>“</span><p>The best journeys<br>bring us home.</p><small>— Link Cordoba Hostel guestbook</small></div></aside>
   </main>
+  <dialog class="signup-dialog" id="signup-dialog" aria-labelledby="signup-title">
+    <div class="signup-dialog-heading">
+      <div><p class="eyebrow">Guest registration</p><h2 id="signup-title">Register your guest profile</h2></div>
+      <button class="signup-close" type="button" data-close-signup aria-label="Close">×</button>
+    </div>
+    <p class="signup-description">Register your guest details. Guest sign-in is not available yet.</p>
+    <form class="signup-form" data-guest-registration>
+      <label for="signup-first-name">First name</label>
+      <input id="signup-first-name" name="firstName" type="text" autocomplete="given-name" required>
+      <label for="signup-last-name">Last name</label>
+      <input id="signup-last-name" name="lastName" type="text" autocomplete="family-name" required>
+      <label for="signup-document-type">Document type</label>
+      <select id="signup-document-type" name="documentType" required>
+        <option value="dni">DNI</option>
+        <option value="passport">Passport</option>
+      </select>
+      <label for="signup-document-number" data-document-number-label>DNI number</label>
+      <input id="signup-document-number" name="documentNumber" type="text" autocomplete="off" required>
+      <label for="signup-email">Email address</label>
+      <input id="signup-email" name="email" type="email" autocomplete="email" required>
+      <label for="signup-phone">Phone number</label>
+      <div class="phone-input-row">
+        <select id="signup-phone-country" name="countryCode" aria-label="Phone country code">
+          <option value="ES" data-dial-code="+34" selected>🇪🇸 ES +34</option>
+          <option value="AR" data-dial-code="+54">🇦🇷 AR +54</option>
+          <option value="BO" data-dial-code="+591">🇧🇴 BO +591</option>
+          <option value="BR" data-dial-code="+55">🇧🇷 BR +55</option>
+          <option value="CL" data-dial-code="+56">🇨🇱 CL +56</option>
+          <option value="CO" data-dial-code="+57">🇨🇴 CO +57</option>
+          <option value="CR" data-dial-code="+506">🇨🇷 CR +506</option>
+          <option value="CU" data-dial-code="+53">🇨🇺 CU +53</option>
+          <option value="DO" data-dial-code="+1">🇩🇴 DO +1</option>
+          <option value="EC" data-dial-code="+593">🇪🇨 EC +593</option>
+          <option value="SV" data-dial-code="+503">🇸🇻 SV +503</option>
+          <option value="GT" data-dial-code="+502">🇬🇹 GT +502</option>
+          <option value="HN" data-dial-code="+504">🇭🇳 HN +504</option>
+          <option value="MX" data-dial-code="+52">🇲🇽 MX +52</option>
+          <option value="NI" data-dial-code="+505">🇳🇮 NI +505</option>
+          <option value="PA" data-dial-code="+507">🇵🇦 PA +507</option>
+          <option value="PY" data-dial-code="+595">🇵🇾 PY +595</option>
+          <option value="PE" data-dial-code="+51">🇵🇪 PE +51</option>
+          <option value="UY" data-dial-code="+598">🇺🇾 UY +598</option>
+          <option value="VE" data-dial-code="+58">🇻🇪 VE +58</option>
+          <option value="US" data-dial-code="+1">🇺🇸 US +1</option>
+          <option value="CA" data-dial-code="+1">🇨🇦 CA +1</option>
+          <option value="AD" data-dial-code="+376">🇦🇩 AD +376</option>
+          <option value="AT" data-dial-code="+43">🇦🇹 AT +43</option>
+          <option value="BE" data-dial-code="+32">🇧🇪 BE +32</option>
+          <option value="CH" data-dial-code="+41">🇨🇭 CH +41</option>
+          <option value="DE" data-dial-code="+49">🇩🇪 DE +49</option>
+          <option value="DK" data-dial-code="+45">🇩🇰 DK +45</option>
+          <option value="FI" data-dial-code="+358">🇫🇮 FI +358</option>
+          <option value="FR" data-dial-code="+33">🇫🇷 FR +33</option>
+          <option value="GB" data-dial-code="+44">🇬🇧 GB +44</option>
+          <option value="GR" data-dial-code="+30">🇬🇷 GR +30</option>
+          <option value="IE" data-dial-code="+353">🇮🇪 IE +353</option>
+          <option value="IT" data-dial-code="+39">🇮🇹 IT +39</option>
+          <option value="NL" data-dial-code="+31">🇳🇱 NL +31</option>
+          <option value="NO" data-dial-code="+47">🇳🇴 NO +47</option>
+          <option value="PL" data-dial-code="+48">🇵🇱 PL +48</option>
+          <option value="PT" data-dial-code="+351">🇵🇹 PT +351</option>
+          <option value="RU" data-dial-code="+7">🇷🇺 RU +7</option>
+          <option value="SE" data-dial-code="+46">🇸🇪 SE +46</option>
+          <option value="TR" data-dial-code="+90">🇹🇷 TR +90</option>
+          <option value="UA" data-dial-code="+380">🇺🇦 UA +380</option>
+          <option value="EG" data-dial-code="+20">🇪🇬 EG +20</option>
+          <option value="MA" data-dial-code="+212">🇲🇦 MA +212</option>
+          <option value="NG" data-dial-code="+234">🇳🇬 NG +234</option>
+          <option value="ZA" data-dial-code="+27">🇿🇦 ZA +27</option>
+          <option value="CN" data-dial-code="+86">🇨🇳 CN +86</option>
+          <option value="IN" data-dial-code="+91">🇮🇳 IN +91</option>
+          <option value="JP" data-dial-code="+81">🇯🇵 JP +81</option>
+          <option value="KR" data-dial-code="+82">🇰🇷 KR +82</option>
+          <option value="PH" data-dial-code="+63">🇵🇭 PH +63</option>
+          <option value="TH" data-dial-code="+66">🇹🇭 TH +66</option>
+          <option value="AU" data-dial-code="+61">🇦🇺 AU +61</option>
+          <option value="NZ" data-dial-code="+64">🇳🇿 NZ +64</option>
+        </select>
+        <input id="signup-phone" name="phone" type="tel" autocomplete="tel-national">
+      </div>
+      <p class="signup-status" data-signup-status role="status" aria-live="polite"></p>
+      <div class="signup-actions"><button class="signup-cancel" type="button" data-close-signup>Cancel</button><button class="button button-primary" type="submit">Register profile <span aria-hidden="true">→</span></button></div>
+    </form>
+  </dialog>
 </body>
 <script src="language.js"></script>
+<script src="api.js"></script>
+<script src="https://unpkg.com/intl-tel-input@25.12.4/build/js/intlTelInput.min.js"></script>
+<script>
+  const signupDialog = document.querySelector('#signup-dialog');
+  const signupForm = signupDialog.querySelector('[data-guest-registration]');
+  const signupStatus = signupForm.querySelector('[data-signup-status]');
+  const signupButton = signupForm.querySelector('button[type="submit"]');
+  const documentTypeInput = signupForm.querySelector('#signup-document-type');
+  const documentNumberInput = signupForm.querySelector('#signup-document-number');
+  const documentNumberLabel = signupForm.querySelector('[data-document-number-label]');
+  const phoneInput = signupForm.querySelector('#signup-phone');
+  const phoneCountryInput = signupForm.querySelector('#signup-phone-country');
+  let phoneWidget = null;
+
+  if (typeof window.intlTelInput === 'function') {
+    phoneWidget = window.intlTelInput(phoneInput, {
+      initialCountry: 'es',
+      preferredCountries: ['es', 'ar', 'mx', 'co', 'cl', 'us', 'gb'],
+      separateDialCode: true,
+      loadUtils: () => import('https://unpkg.com/intl-tel-input@25.12.4/build/js/utils.js')
+    });
+    phoneCountryInput.hidden = true;
+    phoneInput.closest('.phone-input-row').classList.add('has-tel-widget');
+  }
+
+  function updateDocumentNumberLabel() {
+    const isSpanish = document.documentElement.lang === 'es';
+    const documentName = documentTypeInput.value === 'dni'
+      ? (isSpanish ? 'DNI' : 'DNI')
+      : (isSpanish ? 'Pasaporte' : 'Passport');
+    documentNumberLabel.textContent = isSpanish ? `Número de ${documentName}` : `${documentName} number`;
+  }
+
+  function updatePhoneCountryLabel() {
+    phoneCountryInput.setAttribute('aria-label', document.documentElement.lang === 'es' ? 'Código telefónico del país' : 'Phone country code');
+  }
+
+  updateDocumentNumberLabel();
+  updatePhoneCountryLabel();
+
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('[data-open-signup]')) {
+      event.preventDefault();
+      signupStatus.textContent = '';
+      delete signupStatus.dataset.state;
+      signupForm.reset();
+      updateDocumentNumberLabel();
+      signupDialog.showModal();
+      signupForm.querySelector('#signup-first-name').focus();
+    }
+    if (event.target.closest('[data-close-signup]')) signupDialog.close();
+  });
+
+  documentTypeInput.addEventListener('change', updateDocumentNumberLabel);
+  document.querySelector('[data-language-toggle]').addEventListener('click', () => requestAnimationFrame(() => {
+    updateDocumentNumberLabel();
+    updatePhoneCountryLabel();
+  }));
+  document.querySelector('[data-guest-login-unavailable]').addEventListener('submit', (event) => {
+    event.preventDefault();
+    document.querySelector('[data-guest-login-status]').textContent = document.documentElement.lang === 'es'
+      ? 'El backend definido todavía no permite iniciar sesión como huésped.'
+      : 'The current backend contract does not support guest sign-in yet.';
+  });
+  signupForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(signupForm);
+    signupStatus.textContent = document.documentElement.lang === 'es' ? 'Registrando…' : 'Registering…';
+    signupButton.disabled = true;
+    try {
+      const nationalPhone = formData.get('phone').replace(/\D/g, '');
+      let phone = null;
+      let countryCode = phoneCountryInput.value;
+      if (nationalPhone && phoneWidget) {
+        await phoneWidget.promise;
+        const selectedCountry = phoneWidget.getSelectedCountryData();
+        phone = phoneWidget.getNumber() || `+${selectedCountry.dialCode}${nationalPhone}`;
+        countryCode = selectedCountry.iso2.toUpperCase();
+      } else if (nationalPhone) {
+        const selectedCountry = phoneCountryInput.selectedOptions[0];
+        phone = `${selectedCountry.dataset.dialCode}${nationalPhone}`;
+      }
+      await window.hostelApi.request('/api/Guests', {
+        method: 'POST',
+        body: {
+          firstName: formData.get('firstName').trim(),
+          lastName: formData.get('lastName').trim(),
+          dni: formData.get('documentType') === 'dni' ? formData.get('documentNumber').trim() : null,
+          passport: formData.get('documentType') === 'passport' ? formData.get('documentNumber').trim() : null,
+          email: formData.get('email').trim(),
+          phone,
+          countryCode
+        }
+      });
+      signupStatus.dataset.state = 'success';
+      signupStatus.textContent = document.documentElement.lang === 'es'
+        ? 'Perfil de huésped registrado. El inicio de sesión para huéspedes aún no está disponible.'
+        : 'Guest profile created. Guest sign-in is not available yet.';
+      signupForm.reset();
+      updateDocumentNumberLabel();
+    } catch (error) {
+      signupStatus.dataset.state = 'error';
+      signupStatus.textContent = error.message;
+    } finally {
+      signupButton.disabled = false;
+    }
+  });
+  signupDialog.addEventListener('click', (event) => {
+    if (event.target === signupDialog) signupDialog.close();
+  });
+</script>
 </html>

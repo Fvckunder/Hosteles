@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="api-base-url" content="">
   <meta name="description" content="Staff login for Link Cordoba Hostel operations.">
   <title>Staff login | Link Cordoba Hostel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +12,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="employee-login-page">
-  <!-- Acceso del personal. Sustituir la navegación del prototipo por un endpoint POST seguro. -->
+  <!-- Acceso de demostración; reemplazar por autenticación real al conectar el backend. -->
   <main class="employee-login-shell">
     <button class="language-toggle employee-language-toggle" type="button" data-language-toggle>ES</button>
     <section class="employee-login-card">
@@ -21,17 +22,13 @@
         <h1>Welcome back.</h1>
         <p>Sign in to manage the hostel, your team and today&apos;s operations.</p>
       </div>
-      <form class="employee-form" action="/account/staff/login" method="post" data-backend="staff-authentication">
+      <form class="employee-form" data-api-login>
         <label for="employee-email">Work email</label>
-        <input id="employee-email" name="user" type="email" placeholder="name@linkcordoba.com" autocomplete="username" required>
+        <input id="employee-email" name="email" type="email" placeholder="name@linkcordoba.com" autocomplete="username" required>
         <label for="employee-password">Password</label>
-        <input id="employee-password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
-        <div class="employee-form-options">
-          <label class="employee-remember"><input type="checkbox"><span>Remember me</span></label>
-          <a href="#">Forgot password?</a>
-        </div>
-        <!-- Solo para el prototipo. En ASP.NET será un botón submit cuando exista la autenticación. -->
-        <a class="button employee-button" href="employee-dashboard.html">Sign in <span aria-hidden="true">→</span></a>
+        <input id="employee-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+        <p class="api-form-status" data-login-status role="status" aria-live="polite"></p>
+        <button class="button employee-button" type="submit">Sign in <span aria-hidden="true">→</span></button>
       </form>
       <a class="employee-back" href="index.html"><span aria-hidden="true">←</span> Back to public site</a>
     </section>
@@ -42,5 +39,35 @@
     </aside>
   </main>
   <script src="language.js"></script>
+  <script src="api.js"></script>
+  <script>
+    const loginForm = document.querySelector('[data-api-login]');
+    const loginStatus = loginForm.querySelector('[data-login-status]');
+    const loginButton = loginForm.querySelector('button[type="submit"]');
+
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const isSpanish = document.documentElement.lang === 'es';
+      loginStatus.textContent = '';
+      loginButton.disabled = true;
+      loginStatus.textContent = isSpanish ? 'Verificando acceso…' : 'Signing in…';
+
+      try {
+        const formData = new FormData(loginForm);
+        await window.hostelApi.request('/api/Auth/Login', {
+          method: 'POST',
+          body: {
+            email: formData.get('email'),
+            password: formData.get('password')
+          }
+        });
+        window.location.href = 'employee-dashboard.html';
+      } catch (error) {
+        loginStatus.textContent = error.message;
+      } finally {
+        loginButton.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>

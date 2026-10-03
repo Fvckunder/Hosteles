@@ -109,11 +109,37 @@ em { color: var(--coral); font-style: normal; }
 .password-label a { color: var(--coral); font-size: 11px; }
 .login-form input[type=email], .login-form input[type=password] { width: 100%; height: 49px; padding: 0 14px; border: 1px solid var(--line); border-radius: 0; outline: none; color: var(--ink); background: transparent; font: 13px var(--sans); }
 .login-form input:focus { border-color: var(--coral); }
+.api-form-status { min-height: 18px; margin: 8px 0 14px; color: var(--coral); font-size: 11px; line-height: 1.5; }
+.api-form-status[data-state="success"], .signup-status[data-state="success"] { color: #47765d; }
+.api-form-status:empty { display: none; }
+.employee-button:disabled, .signup-actions .button:disabled { cursor: wait; opacity: .65; }
 .remember { display: flex !important; justify-content: start !important; align-items: center; gap: 9px; margin: 19px 0 27px; color: var(--muted); font-size: 11px !important; font-weight: 500 !important; }
 .remember input { accent-color: var(--coral); }
 .button-full { width: 100%; }
 .signup-prompt { margin: 22px 0 0; color: var(--muted); font-size: 12px; }
 .signup-prompt a { color: var(--coral); font-weight: 700; }
+.login-reservation-link { max-width: 380px; margin-top: 14px; }
+.signup-dialog { width: min(480px, calc(100% - 32px)); max-height: min(720px, calc(100% - 32px)); padding: 34px; border: 1px solid var(--line); color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(20, 31, 25, .28); }
+.signup-dialog::backdrop { background: rgba(20, 31, 25, .62); backdrop-filter: blur(3px); }
+.signup-dialog-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.signup-dialog-heading .eyebrow { margin-bottom: 9px; }
+.signup-dialog h2 { margin: 0; font-size: 32px; }
+.signup-close { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--line); color: var(--muted); background: transparent; font: 24px/1 var(--sans); cursor: pointer; }
+.signup-description { margin: 13px 0 24px; color: var(--muted); font-size: 13px; }
+.signup-form { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.signup-form label { margin-top: 8px; font-size: 12px; font-weight: 700; }
+.signup-form input, .signup-form select { width: 100%; height: 45px; padding: 0 12px; border: 1px solid var(--line); border-radius: 0; outline: none; color: var(--ink); background: transparent; font: 13px var(--sans); }
+.signup-form input:focus, .signup-form select:focus { border-color: var(--coral); }
+.phone-input-row { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px; }
+.phone-input-row select { min-width: 0; padding: 0 8px; }
+.phone-input-row.has-tel-widget { grid-template-columns: minmax(0, 1fr); }
+.phone-input-row .iti { width: 100%; }
+.signup-status { min-height: 18px; margin: 5px 0 0; color: var(--coral); font-size: 11px; }
+.signup-actions { display: flex; justify-content: flex-end; align-items: center; gap: 17px; margin-top: 4px; }
+.signup-actions .button { min-height: 45px; }
+.signup-cancel { padding: 8px 0; border: 0; color: var(--muted); background: transparent; font: 600 12px var(--sans); cursor: pointer; }
+html[data-theme="dark"] .signup-dialog { border-color: var(--line); }
+html[data-theme="dark"] .signup-form input, html[data-theme="dark"] .signup-form select { color: var(--ink); }
 .login-aside { position: relative; min-height: 620px; overflow: hidden; background: var(--sage); }
 .aside-image { position: absolute; inset: 0; background-image: linear-gradient(0deg, rgba(31,41,36,.25), transparent 50%), url("https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=85"); background-position: center; background-size: cover; }
 .aside-quote { position: absolute; left: 10%; bottom: 11%; color: #fff; }
@@ -124,6 +150,31 @@ em { color: var(--coral); font-style: normal; }
 .back-link span { margin-right: 8px; color: var(--coral); }
 .staff-access { display: block; max-width: 380px; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
 .staff-access span { margin-left: 5px; color: var(--coral); }
+.guest-reservation-page { min-height: 100vh; background: var(--cream); }
+.guest-reservation-header { width: min(1080px, calc(100% - 80px)); }
+.guest-reservation-main { width: min(920px, calc(100% - 80px)); margin: 30px auto 80px; }
+.guest-reservation-intro { max-width: 650px; margin-bottom: 28px; }
+.guest-reservation-intro .eyebrow { margin-bottom: 12px; }
+.guest-reservation-intro h1 { margin-bottom: 16px; font-size: clamp(42px, 5vw, 58px); }
+.guest-reservation-intro > p:last-child { max-width: 560px; margin: 0; color: var(--muted); font-size: 14px; }
+.guest-reservation-form { padding: 28px; }
+.guest-reservation-form .module-fieldset { margin-bottom: 22px; }
+.guest-reservation-form .module-form-grid { gap: 17px 20px; }
+.guest-reservation-form .module-form-grid label { gap: 7px; }
+.guest-reservation-form .vehicle-choice { grid-column: 1 / -1; min-width: 0; margin: 0; padding: 0; border: 0; }
+.guest-reservation-form .vehicle-choice legend { margin-bottom: 10px; color: #68776e; font-size: 11px; font-weight: 600; }
+.vehicle-options { display: flex; align-items: center; gap: 18px; }
+.vehicle-option { display: inline-flex; align-items: center; gap: 7px; color: #68776e; font-size: 12px; cursor: pointer; }
+.vehicle-option input, .privacy-consent input { accent-color: var(--coral); }
+.vehicle-plate-field[hidden] { display: none; }
+.privacy-consent { display: flex; align-items: flex-start; gap: 9px; grid-column: 1 / -1; color: #68776e; font-size: 11px; font-weight: 500 !important; line-height: 1.5; }
+.privacy-consent input { flex: 0 0 auto; margin: 2px 0 0; }
+.guest-reservation-status { grid-column: 1 / -1; min-height: 18px; margin: 0; color: #b35b45; font-size: 11px; }
+.guest-reservation-form .module-form-actions { flex-wrap: wrap; }
+.guest-reservation-form .module-form-note { flex-basis: 100%; margin: 0; }
+html[data-theme="dark"] .guest-reservation-form .vehicle-choice legend,
+html[data-theme="dark"] .vehicle-option,
+html[data-theme="dark"] .privacy-consent { color: #a2afa5; }
 /* Componentes de autenticación del personal y del dashboard privado. */
 .employee-login-page { min-height: 100vh; color: #24312e; background: #e7ece8; }
 .employee-login-shell { display: grid; grid-template-columns: minmax(440px, 560px) minmax(420px, 1fr); width: min(1180px, calc(100% - 80px)); min-height: 700px; margin: 0 auto; padding: 52px 0; }
@@ -373,6 +424,9 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
   .footer-grid > div:first-child { grid-column: 1 / -1; }
   .login-main { display: block; }
   .login-panel { padding: 65px 30px 75px; }
+  .signup-dialog { padding: 27px 22px; }
+  .guest-reservation-header, .guest-reservation-main { width: min(100% - 40px, 600px); }
+  .guest-reservation-main { margin-top: 20px; }
   .login-aside { min-height: 430px; }
   .employee-login-shell { grid-template-columns: 1fr; width: min(100% - 40px, 560px); padding: 20px 0; }
   .employee-login-card { min-height: 650px; padding: 42px 38px; }
@@ -411,6 +465,9 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
   .login-header .back-link { font-size: 0; }
   .login-header .back-link span { font-size: 20px; }
   .login-panel { padding: 55px 22px 65px; }
+  .guest-reservation-header, .guest-reservation-main { width: calc(100% - 32px); }
+  .guest-reservation-main { margin-bottom: 45px; }
+  .guest-reservation-form { padding: 20px 17px; }
   .employee-login-shell { width: calc(100% - 24px); padding: 12px 0; }
   .employee-login-card { min-height: 630px; padding: 32px 25px; }
   .employee-login-aside { min-height: 300px; padding: 25px; }
