@@ -1,0 +1,12 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Node (por si acaso)
+node_modules/
+
+# Archivos temporales
+*.log
