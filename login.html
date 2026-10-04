@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="login-page">
-  <!-- Acceso de huéspedes. El formulario debe conectarse al endpoint de identidad. -->
+  <!-- El formulario envía las credenciales a POST /api/Auth/Login mediante auth.js. -->
   <header class="site-header login-header">
     <a class="brand" href="index.html" aria-label="Link Cordoba Hostel home"><span class="brand-mark">LC</span><span>Link Cordoba Hostel</span></a>
     <div class="login-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to home</a></div>
@@ -19,19 +19,21 @@
   <main class="login-main">
     <section class="login-panel">
       <div class="login-intro"><p class="eyebrow">Welcome back</p><h1>Your next story<br><em>starts here.</em></h1><p>Log in to manage your booking, see your stay details and keep in touch with the Link community.</p></div>
-      <form class="login-form" action="#" method="post" data-backend="guest-authentication">
+      <form class="login-form" data-auth-role="Guest">
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
         <div class="password-label"><label for="password">Password</label><a href="#">Forgot password?</a></div>
         <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
         <label class="remember"><input type="checkbox" name="remember"><span>Keep me signed in</span></label>
         <button class="button button-primary button-full" type="submit">Log in <span aria-hidden="true">→</span></button>
+        <p class="auth-feedback" role="status" aria-live="polite" hidden></p>
       </form>
-      <p class="signup-prompt">New to Link Cordoba Hostel? <a href="#">Create an account</a></p>
+      <p class="signup-prompt">New to Link Cordoba Hostel? <a href="guest-register.html">Create an account</a></p>
       <a class="staff-access" href="employee-login.html">Are you a team member? Staff login <span aria-hidden="true">↗</span></a>
     </section>
     <aside class="login-aside"><div class="aside-image"></div><div class="aside-quote"><span>“</span><p>The best journeys<br>bring us home.</p><small>— Link Cordoba Hostel guestbook</small></div></aside>
   </main>
 </body>
+<script src="auth.js"></script>
 <script src="language.js"></script>
 </html>

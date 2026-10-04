@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run APIHostel Development",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"APIHostel/APIHostel.csproj",
+				"--launch-profile",
+				"http"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Build APIHostel",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"APIHostel/APIHostel.csproj"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": "build"
+		}
+	]
+}

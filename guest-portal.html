@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your stays at Link Cordoba Hostel.">
+  <title>Guest portal | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="guest-portal-page" data-page="guestPortal">
+  <header class="site-header guest-portal-header">
+    <a class="brand" href="index.html" aria-label="Link Cordoba Hostel home"><span class="brand-mark">LC</span><span>Link Cordoba Hostel</span></a>
+    <div class="guest-portal-actions">
+      <button class="language-toggle" type="button" data-language-toggle>ES</button>
+      <button class="guest-signout" type="button" data-guest-signout>Sign out <span aria-hidden="true">↗</span></button>
+    </div>
+  </header>
+  <main class="guest-portal-main">
+    <section class="guest-portal-welcome">
+      <div>
+        <p class="eyebrow">Guest portal</p>
+        <h1>Welcome back, <span data-guest-first-name>guest</span></h1>
+        <p class="guest-portal-intro">Your stay details, all in one place.</p>
+      </div>
+      <div class="guest-account-summary">
+        <span data-guest-country></span>
+        <strong data-guest-email></strong>
+        <span data-guest-phone></span>
+      </div>
+    </section>
+    <div class="guest-portal-feedback" data-portal-feedback role="status" aria-live="polite" hidden>
+      <span data-portal-feedback-text></span>
+      <button type="button" data-portal-retry>Try again</button>
+    </div>
+    <section class="guest-portal-section" aria-labelledby="upcoming-title">
+      <div class="guest-portal-section-heading">
+        <div><p class="eyebrow">Your bookings</p><h2 id="upcoming-title" data-upcoming-title>Upcoming stays</h2></div>
+      </div>
+      <div class="guest-stay-list" data-upcoming-stays aria-live="polite">
+        <p class="guest-portal-loading" data-loading-upcoming>Loading your stays...</p>
+      </div>
+    </section>
+    <section class="guest-portal-section guest-history-section" aria-labelledby="history-title">
+      <div class="guest-portal-section-heading">
+        <div><p class="eyebrow">Your history</p><h2 id="history-title" data-history-title>Past stays</h2></div>
+      </div>
+      <div class="guest-stay-list" data-past-stays aria-live="polite">
+        <p class="guest-portal-loading" data-loading-history>Loading your history...</p>
+      </div>
+    </section>
+  </main>
+  <script src="language.js"></script>
+  <script src="guest-portal.js"></script>
+</body>
+</html>

@@ -112,6 +112,9 @@ em { color: var(--coral); font-style: normal; }
 .remember { display: flex !important; justify-content: start !important; align-items: center; gap: 9px; margin: 19px 0 27px; color: var(--muted); font-size: 11px !important; font-weight: 500 !important; }
 .remember input { accent-color: var(--coral); }
 .button-full { width: 100%; }
+.auth-feedback { margin: 14px 0 0; font-size: 12px; line-height: 1.5; }
+.auth-feedback[data-state="error"] { color: #b33d36; }
+.auth-feedback[data-state="success"] { color: #456c55; }
 .signup-prompt { margin: 22px 0 0; color: var(--muted); font-size: 12px; }
 .signup-prompt a { color: var(--coral); font-weight: 700; }
 .login-aside { position: relative; min-height: 620px; overflow: hidden; background: var(--sage); }
@@ -124,6 +127,63 @@ em { color: var(--coral); font-style: normal; }
 .back-link span { margin-right: 8px; color: var(--coral); }
 .staff-access { display: block; max-width: 380px; margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
 .staff-access span { margin-left: 5px; color: var(--coral); }
+.registration-main { align-items: stretch; }
+.registration-panel { justify-content: flex-start; padding-top: 48px; padding-bottom: 48px; }
+.registration-panel .login-intro > p:last-child { margin-bottom: 24px; }
+.registration-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; margin-bottom: 21px; }
+.registration-grid > div { min-width: 0; }
+.registration-grid label { display: block; margin-bottom: 7px; font-size: 11px; font-weight: 700; }
+.registration-grid input, .registration-grid select { width: 100%; min-width: 0; height: 43px; padding: 0 11px; border: 1px solid var(--line); border-radius: 2px; outline: none; color: var(--ink); background: transparent; font: 12px var(--sans); }
+.registration-grid input:focus, .registration-grid select:focus { border-color: var(--coral); }
+.registration-field-full { grid-column: 1 / -1; }
+.registration-hint { grid-column: 1 / -1; margin: -8px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.employee-register-dialog { position: fixed; width: min(560px, calc(100% - 32px)); max-height: calc(100vh - 32px); padding: 34px; overflow-y: auto; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(20, 32, 26, .24); }
+.employee-register-dialog::backdrop { background: rgba(19, 29, 24, .58); backdrop-filter: blur(2px); }
+.employee-register-dialog h2 { margin: 0 35px 8px 0; font: 600 28px/1.15 var(--sans); }
+.employee-register-intro { margin: 0 0 22px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.dialog-close { position: absolute; top: 17px; right: 17px; display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); color: var(--ink); background: transparent; font-size: 21px; cursor: pointer; }
+.employee-register-submit { min-height: 45px; padding: 0 18px; border: 0; cursor: pointer; }
+.dashboard-register-button { min-height: 38px; padding: 0 13px; border: 0; font-size: 11px; cursor: pointer; }
+.dashboard-register-button[hidden] { display: none; }
+/* Guest portal: account summary and booking history remain an unframed, scannable workspace. */
+.guest-portal-page { min-height: 100vh; background: var(--paper); }
+.guest-portal-header { width: min(1160px, calc(100% - 80px)); border-bottom: 1px solid var(--line); }
+.guest-portal-actions { display: flex; align-items: center; gap: 20px; }
+.guest-signout { padding: 7px 0; border: 0; color: var(--muted); background: transparent; font: 600 12px var(--sans); cursor: pointer; }
+.guest-signout span { margin-left: 5px; color: var(--coral); }
+.guest-portal-main { width: min(1160px, calc(100% - 80px)); margin: 0 auto; padding: 55px 0 100px; }
+.guest-portal-welcome { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(250px, .6fr); align-items: end; gap: 50px; padding-bottom: 40px; border-bottom: 1px solid var(--line); }
+.guest-portal-welcome .eyebrow { margin-bottom: 15px; }
+.guest-portal-welcome h1 { max-width: 720px; margin: 0 0 15px; font-size: 58px; }
+.guest-portal-intro { margin: 0; color: var(--muted); font-size: 14px; }
+.guest-account-summary { display: grid; gap: 5px; padding: 5px 0 5px 23px; border-left: 2px solid var(--coral); color: var(--muted); font-size: 11px; }
+.guest-account-summary strong { overflow-wrap: anywhere; color: var(--ink); font-size: 13px; }
+.guest-portal-section { padding-top: 46px; }
+.guest-history-section { padding-top: 54px; }
+.guest-portal-section-heading { display: flex; align-items: end; justify-content: space-between; margin-bottom: 20px; }
+.guest-portal-section-heading .eyebrow { margin-bottom: 8px; }
+.guest-portal-section-heading h2 { margin: 0; font-size: 32px; }
+.guest-stay-list { display: grid; }
+.guest-stay { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px 30px; padding: 21px 0; border-top: 1px solid var(--line); }
+.guest-stay-heading { display: flex; align-items: center; gap: 14px; }
+.guest-stay-heading h3 { margin: 0; font: 600 16px var(--sans); }
+.guest-stay-status { padding: 3px 8px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); font-size: 10px; font-weight: 700; }
+.status-confirmed { border-color: #8aa594; color: #456c55; }
+.status-pending { border-color: #c9a45d; color: #8a6728; }
+.status-cancelled { color: #8a554d; }
+.guest-stay-details { display: grid; grid-template-columns: repeat(4, minmax(90px, 1fr)); gap: 12px; margin-top: 14px; }
+.guest-stay-detail { display: grid; gap: 3px; }
+.guest-stay-detail span { color: var(--muted); font-size: 10px; }
+.guest-stay-detail strong { font-size: 12px; font-weight: 600; }
+.guest-stay-rooms { grid-column: 1; margin: 0; color: var(--muted); font-size: 11px; }
+.guest-cancel-button { grid-column: 2; grid-row: 1 / span 3; padding: 9px 12px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink); background: transparent; font: 600 11px var(--sans); cursor: pointer; }
+.guest-cancel-button:hover { border-color: var(--coral); color: var(--coral); }
+.guest-cancel-button:disabled { opacity: .55; cursor: wait; }
+.guest-portal-empty, .guest-portal-loading { margin: 0; padding: 22px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+.guest-portal-feedback { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 23px; padding: 12px 14px; border-left: 3px solid #b33d36; color: #8d332e; background: rgba(179, 61, 54, .08); font-size: 12px; }
+.guest-portal-feedback[hidden] { display: none; }
+.guest-portal-feedback[data-state="success"] { border-color: #456c55; color: #456c55; background: rgba(69, 108, 85, .08); }
+.guest-portal-feedback button { flex: 0 0 auto; padding: 5px 8px; border: 1px solid currentColor; color: inherit; background: transparent; font: 600 11px var(--sans); cursor: pointer; }
 /* Componentes de autenticación del personal y del dashboard privado. */
 .employee-login-page { min-height: 100vh; color: #24312e; background: #e7ece8; }
 .employee-login-shell { display: grid; grid-template-columns: minmax(440px, 560px) minmax(420px, 1fr); width: min(1180px, calc(100% - 80px)); min-height: 700px; margin: 0 auto; padding: 52px 0; }
@@ -372,7 +432,17 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px 20px; }
   .footer-grid > div:first-child { grid-column: 1 / -1; }
   .login-main { display: block; }
+  .guest-portal-header, .guest-portal-main { width: min(100% - 40px, 600px); }
+  .guest-portal-main { padding-top: 40px; }
+  .guest-portal-welcome { grid-template-columns: 1fr; gap: 24px; }
+  .guest-portal-welcome h1 { font-size: 45px; }
+  .guest-account-summary { grid-template-columns: 1fr 1fr; padding-left: 15px; }
+  .guest-account-summary strong { grid-column: 1 / -1; }
+  .guest-stay { grid-template-columns: 1fr; }
+  .guest-stay-details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guest-stay-rooms, .guest-cancel-button { grid-column: 1; grid-row: auto; justify-self: start; }
   .login-panel { padding: 65px 30px 75px; }
+  .registration-panel { padding-top: 48px; padding-bottom: 45px; }
   .login-aside { min-height: 430px; }
   .employee-login-shell { grid-template-columns: 1fr; width: min(100% - 40px, 560px); padding: 20px 0; }
   .employee-login-card { min-height: 650px; padding: 42px 38px; }
@@ -398,6 +468,7 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
 }
 @media (max-width: 450px) {
   .site-header, .section-shell, .login-header, .login-main { width: calc(100% - 32px); }
+  .guest-portal-header, .guest-portal-main { width: calc(100% - 32px); }
   .site-header { padding: 20px 0; }
   .nav-login { padding: 8px 10px; font-size: 11px; }
   .hero { padding-top: 42px; }
@@ -411,6 +482,22 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
   .login-header .back-link { font-size: 0; }
   .login-header .back-link span { font-size: 20px; }
   .login-panel { padding: 55px 22px 65px; }
+  .guest-portal-header { align-items: flex-start; gap: 12px; padding: 18px 0; }
+  .guest-portal-header .brand { gap: 7px; font-size: 11px; }
+  .guest-portal-header .brand-mark { width: 30px; height: 30px; }
+  .guest-portal-actions { gap: 10px; }
+  .guest-portal-actions .theme-language-controls { gap: 4px; }
+  .guest-portal-main { padding-top: 30px; }
+  .guest-portal-welcome h1 { font-size: 37px; }
+  .guest-portal-section { padding-top: 35px; }
+  .guest-portal-section-heading h2 { font-size: 27px; }
+  .guest-stay-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .guest-portal-feedback { align-items: flex-start; flex-direction: column; }
+  .registration-panel { padding: 38px 18px 40px; }
+  .registration-grid { gap: 12px 9px; }
+  .registration-grid input, .registration-grid select { padding: 0 8px; font-size: 11px; }
+  .employee-register-dialog { padding: 28px 20px 22px; }
+  .employee-register-dialog h2 { font-size: 24px; }
   .employee-login-shell { width: calc(100% - 24px); padding: 12px 0; }
   .employee-login-card { min-height: 630px; padding: 32px 25px; }
   .employee-login-aside { min-height: 300px; padding: 25px; }
@@ -419,6 +506,7 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
   .dashboard-header { padding: 20px 18px; }
   .dashboard-header h1 { font-size: 19px; }
   .dashboard-header-actions { gap: 8px; }.dashboard-help { display: none; }
+  .dashboard-register-button { min-height: 34px; padding: 0 9px; font-size: 10px; }
   .dashboard-content { padding: 22px 18px 40px; }
   .module-content { padding: 22px 18px 45px; }
   .module-heading { align-items: flex-start; flex-direction: column; }

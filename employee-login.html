@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="employee-login-page">
-  <!-- Acceso del personal. Sustituir la navegación del prototipo por un endpoint POST seguro. -->
+  <!-- El acceso valida el rol del personal con POST /api/Auth/Login antes de abrir el panel. -->
   <main class="employee-login-shell">
     <button class="language-toggle employee-language-toggle" type="button" data-language-toggle>ES</button>
     <section class="employee-login-card">
@@ -21,17 +21,17 @@
         <h1>Welcome back.</h1>
         <p>Sign in to manage the hostel, your team and today&apos;s operations.</p>
       </div>
-      <form class="employee-form" action="/account/staff/login" method="post" data-backend="staff-authentication">
+      <form class="employee-form" data-auth-role="staff">
         <label for="employee-email">Work email</label>
-        <input id="employee-email" name="user" type="email" placeholder="name@linkcordoba.com" autocomplete="username" required>
+        <input id="employee-email" name="email" type="email" placeholder="name@linkcordoba.com" autocomplete="username" required>
         <label for="employee-password">Password</label>
-        <input id="employee-password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+        <input id="employee-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
         <div class="employee-form-options">
           <label class="employee-remember"><input type="checkbox"><span>Remember me</span></label>
           <a href="#">Forgot password?</a>
         </div>
-        <!-- Solo para el prototipo. En ASP.NET será un botón submit cuando exista la autenticación. -->
-        <a class="button employee-button" href="employee-dashboard.html">Sign in <span aria-hidden="true">→</span></a>
+        <button class="button employee-button" type="submit">Sign in <span aria-hidden="true">→</span></button>
+        <p class="auth-feedback" role="status" aria-live="polite" hidden></p>
       </form>
       <a class="employee-back" href="index.html"><span aria-hidden="true">←</span> Back to public site</a>
     </section>
@@ -41,6 +41,7 @@
       <div class="employee-aside-footer"><span>LC / 01</span><span>Staff only</span></div>
     </aside>
   </main>
+  <script src="auth.js"></script>
   <script src="language.js"></script>
 </body>
 </html>
