@@ -1,6 +1,6 @@
 # Arquitectura inicial de Link Cordoba Hostel
 
-Este proyecto es un prototipo estático. Las páginas HTML están en `frontend/`, los estilos compartidos en `frontend/css/styles.css` y los scripts del navegador en `frontend/js/`. La autenticación, los datos y las reglas de negocio todavía no están implementados.
+El proyecto combina las páginas HTML de `frontend/`, los estilos compartidos en `frontend/css/styles.css`, los scripts del navegador en `frontend/js/`, una API ASP.NET Core en `APIHostel/` y SQL Server. Ya están conectados el inicio de sesión por roles, el registro de huéspedes y empleados, el catálogo de países y el portal privado de huéspedes. Las operaciones de reservas y el inventario del panel de personal todavía son demostrativos y no están conectados a la API.
 
 ## Mapa de pantallas
 
@@ -35,14 +35,22 @@ El prototipo separa el alta manual y el calendario mensual de reservas en pantal
 
 ### Autenticación
 
-- `frontend/login.html`: enviar correo y contraseña al endpoint de huéspedes.
-- `frontend/employee-login.html`: enviar credenciales al endpoint `/account/staff/login`.
-- Recordar sesión, cierre de sesión, recuperación de contraseña y autorización por rol.
-- No enviar credenciales mediante enlaces ni parámetros en la URL. El enlace actual de acceso del personal es solo una demostración visual.
+Ya implementado:
+
+- `frontend/login.html` y `frontend/employee-login.html` usan `POST /api/Auth/Login`, que comprueba la cuenta y su rol y devuelve un JWT.
+- `frontend/guest-register.html` consulta `GET /api/Auth/Countries` y crea la cuenta mediante `POST /api/Auth/RegisterGuest`.
+- El panel consulta `GET /api/Auth/Me`; un administrador puede crear cuentas de personal con `POST /api/Auth/RegisterEmployee`.
+- El portal de huéspedes consulta `GET /api/GuestPortal`. La cancelación de reservas futuras permitidas usa `POST /api/GuestPortal/Reservations/{id}/Cancel`.
+
+Pendiente:
+
+- Recuperación y cambio de contraseña, y persistencia de sesión mediante la opción “Recordarme”.
+- Definir y documentar la creación segura de la primera cuenta administradora.
+- No enviar credenciales mediante enlaces ni parámetros en la URL.
 
 ### Dashboard
 
-Los elementos marcados con `data-backend` son datos dinámicos:
+La identidad y el rol de la persona que inició sesión se cargan desde `GET /api/Auth/Me`. Las métricas operativas siguen siendo estáticas y deben conectarse:
 
 - `dashboard-statistics`: ocupación, llegadas, salidas e ingresos.
 - `daily-summary`: resumen y alertas del día.
@@ -94,14 +102,14 @@ Hostel/
     └── js/language.js
 ```
 
-## Prioridad de implementación
+## Próximas prioridades
 
-1. Crear la base de datos y las entidades `Employee`, `Guest`, `Reservation`, `Room` y `Bed`.
-2. Implementar autenticación y autorización separando huéspedes y empleados.
-3. Conectar reservas, habitaciones y huéspedes.
+1. Definir y documentar el alta segura de la primera cuenta administradora.
+2. Implementar endpoints y pantallas para crear, consultar y actualizar reservas, y asignar camas con disponibilidad real.
+3. Conectar el inventario de habitaciones, camas, limpieza y mantenimiento a SQL Server.
 4. Reemplazar las estadísticas estáticas del dashboard por consultas reales.
-5. Añadir roles: administrador, recepción y limpieza.
-6. Migrar las traducciones a recursos `.resx` o al sistema de localización de ASP.NET Core.
+5. Completar los módulos de huéspedes, equipo, informes y configuración, así como la gestión de contraseñas y la opción “Recordarme”.
+6. Endurecer la configuración para producción y migrar las traducciones a recursos `.resx` o al sistema de localización de ASP.NET Core.
 
 ## Convención para continuar el frontend
 
