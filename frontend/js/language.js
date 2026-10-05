@@ -93,9 +93,13 @@
           'label[for="guest-password"]': ['Password', 'Contraseña'],
           'label[for="guest-confirm-password"]': ['Confirm password', 'Confirma la contraseña'],
           'label[for="guest-country"]': ['Country', 'País'],
-          'label[for="guest-dni"]': ['National ID', 'DNI'],
-          'label[for="guest-passport"]': ['Passport', 'Pasaporte'],
-          '.registration-hint': ['Enter a national ID or passport; one is required.', 'Introduce tu DNI o pasaporte; uno de los dos es obligatorio.'],
+          '#guest-country option[value=""]': ['Select your country', 'Selecciona tu país'],
+          'label[for="guest-document-type"]': ['Document type', 'Tipo de documento'],
+          '#guest-document-type option[value=""]': ['Select document type', 'Selecciona tipo de documento'],
+          '#guest-document-type option[value="dni"]': ['National ID (DNI)', 'DNI / Documento nacional de identidad'],
+          '#guest-document-type option[value="passport"]': ['Passport', 'Pasaporte'],
+          'label[for="guest-document-number"]': ['Document number', 'Número de documento'],
+          '.registration-hint': ['Choose a document type and enter its number.', 'Elige el tipo de documento e introduce su número.'],
           'label[for="guest-phone"]': ['Phone (optional)', 'Teléfono (opcional)'],
           '.registration-form button': ['Create account <span aria-hidden="true">→</span>', 'Crear cuenta <span aria-hidden="true">→</span>'],
           '.registration-panel .signup-prompt': ['Already have an account? <a href="login.html">Sign in</a>', '¿Ya tienes una cuenta? <a href="login.html">Inicia sesión</a>'],
@@ -261,6 +265,7 @@
         if (roomName && roomName.value === 'Room 102') roomName.value = 'Habitación 102';
       }
       document.title = titles[pageName][1];
+      window.dispatchEvent(new Event('hostel-language-change'));
     } else {
       document.documentElement.lang = 'en';
       document.title = titles[pageName][0];

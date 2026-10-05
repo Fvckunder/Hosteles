@@ -1,20 +1,20 @@
 # Arquitectura inicial de Link Cordoba Hostel
 
-Este proyecto es un prototipo estático. Los archivos HTML muestran las pantallas y `styles.css` concentra la presentación. La autenticación, los datos y las reglas de negocio todavía no están implementados.
+Este proyecto es un prototipo estático. Las páginas HTML están en `frontend/`, los estilos compartidos en `frontend/css/styles.css` y los scripts del navegador en `frontend/js/`. La autenticación, los datos y las reglas de negocio todavía no están implementados.
 
 ## Mapa de pantallas
 
 | Archivo | Responsabilidad | Próximo destino en .NET |
 | --- | --- | --- |
-| `index.html` | Landing pública del hostel | `Views/Home/Index.cshtml` o `Pages/Index.cshtml` |
-| `login.html` | Acceso de huéspedes | `Views/Account/Login.cshtml` |
-| `employee-login.html` | Acceso separado para empleados | `Views/Staff/Login.cshtml` |
-| `employee-dashboard.html` | Inicio del área privada | `Views/Staff/Dashboard.cshtml` |
-| `employee-reservation-new.html` | Alta manual de reserva | `Views/Staff/Reservations/Create.cshtml` |
-| `employee-reservation-calendar.html` | Calendario mensual de reservas | `Views/Staff/Reservations/Calendar.cshtml` |
-| `employee-rooms.html` | Edición e inventario de habitaciones | `Views/Staff/Rooms/Index.cshtml` |
-| `styles.css` | Estilos compartidos | `wwwroot/css/site.css` |
-| `language.js` | Cambio de idioma del prototipo | Servicio de localización de ASP.NET Core |
+| `frontend/index.html` | Landing pública del hostel | `Views/Home/Index.cshtml` o `Pages/Index.cshtml` |
+| `frontend/login.html` | Acceso de huéspedes | `Views/Account/Login.cshtml` |
+| `frontend/employee-login.html` | Acceso separado para empleados | `Views/Staff/Login.cshtml` |
+| `frontend/employee-dashboard.html` | Inicio del área privada | `Views/Staff/Dashboard.cshtml` |
+| `frontend/employee-reservation-new.html` | Alta manual de reserva | `Views/Staff/Reservations/Create.cshtml` |
+| `frontend/employee-reservation-calendar.html` | Calendario mensual de reservas | `Views/Staff/Reservations/Calendar.cshtml` |
+| `frontend/employee-rooms.html` | Edición e inventario de habitaciones | `Views/Staff/Rooms/Index.cshtml` |
+| `frontend/css/styles.css` | Estilos compartidos | `wwwroot/css/site.css` |
+| `frontend/js/language.js` | Cambio de idioma del prototipo | Servicio de localización de ASP.NET Core |
 
 ## Dónde deben ir los módulos
 
@@ -35,8 +35,8 @@ El prototipo separa el alta manual y el calendario mensual de reservas en pantal
 
 ### Autenticación
 
-- `login.html`: enviar correo y contraseña al endpoint de huéspedes.
-- `employee-login.html`: enviar credenciales al endpoint `/account/staff/login`.
+- `frontend/login.html`: enviar correo y contraseña al endpoint de huéspedes.
+- `frontend/employee-login.html`: enviar credenciales al endpoint `/account/staff/login`.
 - Recordar sesión, cierre de sesión, recuperación de contraseña y autorización por rol.
 - No enviar credenciales mediante enlaces ni parámetros en la URL. El enlace actual de acceso del personal es solo una demostración visual.
 

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="login-page" data-page="guestRegister">
   <header class="site-header login-header">
@@ -26,9 +26,9 @@
           <div><label for="guest-password">Password</label><input id="guest-password" name="password" type="password" minlength="8" maxlength="100" autocomplete="new-password" required></div>
           <div><label for="guest-confirm-password">Confirm password</label><input id="guest-confirm-password" name="confirmPassword" type="password" minlength="8" maxlength="100" autocomplete="new-password" required></div>
           <div class="registration-field-full"><label for="guest-country">Country</label><select id="guest-country" name="countryId" required><option value="">Loading countries...</option></select></div>
-          <div><label for="guest-dni">National ID</label><input id="guest-dni" name="dni" type="text" maxlength="20" autocomplete="off"></div>
-          <div><label for="guest-passport">Passport</label><input id="guest-passport" name="passport" type="text" maxlength="20" autocomplete="off"></div>
-          <p class="registration-hint registration-field-full">Enter a national ID or passport; one is required.</p>
+          <div class="registration-field-full"><label for="guest-document-type">Document type</label><select id="guest-document-type" name="documentType" required><option value="">Select document type</option><option value="dni">National ID (DNI)</option><option value="passport">Passport</option></select></div>
+          <div class="registration-field-full" data-document-number-field hidden><label for="guest-document-number">Document number</label><input id="guest-document-number" name="documentNumber" type="text" maxlength="20" autocomplete="off" disabled></div>
+          <p class="registration-hint registration-field-full">Choose a document type and enter its number.</p>
           <div class="registration-field-full"><label for="guest-phone">Phone (optional)</label><input id="guest-phone" name="phone" type="tel" maxlength="30" autocomplete="tel"></div>
         </div>
         <button class="button button-primary button-full" type="submit">Create account <span aria-hidden="true">→</span></button>
@@ -38,7 +38,7 @@
     </section>
     <aside class="login-aside"><div class="aside-image"></div><div class="aside-quote"><span>“</span><p>The best journeys<br>bring us home.</p><small>— Link Cordoba Hostel guestbook</small></div></aside>
   </main>
-  <script src="registration.js"></script>
-  <script src="language.js"></script>
+  <script src="js/language.js"></script>
+  <script src="js/registration.js"></script>
 </body>
 </html>
