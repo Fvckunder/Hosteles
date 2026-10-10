@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Request a stay at Link Cordoba Hostel.">
+  <title>Request a reservation | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="guest-reservation-page" data-page="guestReservation">
+  <header class="site-header guest-reservation-header">
+    <a class="brand" href="index.html" aria-label="Link Cordoba Hostel home"><span class="brand-mark">LC</span><span>Link Cordoba Hostel</span></a>
+    <div class="login-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="back-link" href="login.html"><span aria-hidden="true">←</span> Back to login</a></div>
+  </header>
+  <main class="guest-reservation-main">
+    <section class="guest-reservation-intro">
+      <p class="eyebrow">Guest services</p>
+      <h1>Plan your <em>stay.</em></h1>
+      <p>Share a few details so our team can check your request and prepare for your arrival.</p>
+    </section>
+    <form class="module-form guest-reservation-form" id="guest-reservation-form" action="#" method="post" data-backend="guest-reservation-request">
+      <fieldset class="module-fieldset">
+        <legend>Guest details</legend>
+        <div class="module-form-grid">
+          <label for="first-name"><span>First name</span><input id="first-name" name="firstName" type="text" autocomplete="given-name" required></label>
+          <label for="last-name"><span>Last name</span><input id="last-name" name="lastName" type="text" autocomplete="family-name" required></label>
+          <label for="document-type"><span>Document type</span><select id="document-type" name="documentType" required><option value="">Select document type</option><option value="dni">National ID (DNI)</option><option value="nie">Foreigner ID (NIE)</option><option value="passport">Passport</option></select></label>
+          <label for="document-number"><span>Document number</span><input id="document-number" name="documentNumber" type="text" autocomplete="off" required></label>
+          <label for="phone"><span>Phone number</span><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+34 600 000 000" pattern="[+0-9() -]{7,20}" required></label>
+          <label for="guest-email"><span>Email address</span><input id="guest-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+          <label for="residence-city"><span>City of residence</span><input id="residence-city" name="residenceCity" type="text" autocomplete="address-level2" required></label>
+          <label for="residence-country"><span>Country of residence</span><input id="residence-country" name="residenceCountry" type="text" autocomplete="country-name" placeholder="e.g. Spain" required></label>
+        </div>
+      </fieldset>
+      <fieldset class="module-fieldset">
+        <legend>Stay details</legend>
+        <div class="module-form-grid">
+          <label for="check-in"><span>Check-in</span><input id="check-in" name="checkIn" type="date" required></label>
+          <label for="check-out"><span>Check-out</span><input id="check-out" name="checkOut" type="date" required></label>
+          <label for="guest-count"><span>Number of guests</span><input id="guest-count" name="guestCount" type="number" min="1" max="20" value="1" required></label>
+          <label for="room-preference"><span>Room preference</span><select id="room-preference" name="roomPreference"><option value="any">No preference</option><option value="private">Private room</option><option value="shared">Shared room</option></select></label>
+          <label for="arrival-time"><span>Estimated arrival time</span><input id="arrival-time" name="arrivalTime" type="time"></label>
+        </div>
+      </fieldset>
+      <fieldset class="module-fieldset">
+        <legend>Vehicle and requests</legend>
+        <div class="module-form-grid">
+          <fieldset class="vehicle-choice">
+            <legend>Will you arrive by vehicle?</legend>
+            <div class="vehicle-options">
+              <label class="vehicle-option"><input type="radio" name="hasVehicle" value="yes" required><span>Yes</span></label>
+              <label class="vehicle-option"><input type="radio" name="hasVehicle" value="no" required><span>No</span></label>
+            </div>
+          </fieldset>
+          <label class="vehicle-plate-field module-field-full" for="vehicle-plate" data-vehicle-plate hidden><span>License plate</span><input id="vehicle-plate" name="vehiclePlate" type="text" autocomplete="off" placeholder="Vehicle registration" disabled></label>
+          <label class="module-field-full" for="special-requests"><span>Special requests or accessibility needs</span><textarea id="special-requests" name="specialRequests" rows="3" placeholder="Arrival notes, accessibility needs or other details"></textarea></label>
+          <label class="privacy-consent"><input name="privacyConsent" type="checkbox" required><span>I agree to the use of these details to manage my reservation request.</span></label>
+          <p class="guest-reservation-status" data-reservation-status role="status" aria-live="polite"></p>
+        </div>
+      </fieldset>
+      <div class="module-form-actions">
+        <button class="button button-primary guest-reservation-submit" type="submit">Send reservation request <span aria-hidden="true">→</span></button>
+        <a class="module-cancel guest-reservation-cancel" href="login.html">Cancel <span aria-hidden="true">←</span></a>
+        <span class="module-form-note">Your request is not confirmed until the team contacts you.</span>
+      </div>
+    </form>
+  </main>
+  <script src="language.js"></script>
+  <script>
+    const reservationForm = document.querySelector('#guest-reservation-form');
+    const checkInField = reservationForm.querySelector('#check-in');
+    const checkOutField = reservationForm.querySelector('#check-out');
+    const vehicleRadios = reservationForm.querySelectorAll('[name="hasVehicle"]');
+    const vehiclePlateField = reservationForm.querySelector('#vehicle-plate');
+    const vehiclePlateLabel = reservationForm.querySelector('[data-vehicle-plate]');
+    const reservationStatus = reservationForm.querySelector('[data-reservation-status]');
+
+    const formatDate = (date) => {
+      const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      return localDate.toISOString().slice(0, 10);
+    };
+    const nextDate = (value) => {
+      const date = new Date(`${value}T12:00:00`);
+      date.setDate(date.getDate() + 1);
+      return formatDate(date);
+    };
+    const today = formatDate(new Date());
+    checkInField.min = today;
+    checkOutField.min = nextDate(today);
+
+    function updateDateValidity() {
+      checkOutField.min = checkInField.value ? nextDate(checkInField.value) : nextDate(today);
+      checkOutField.setCustomValidity(checkInField.value && checkOutField.value && checkOutField.value <= checkInField.value
+        ? document.documentElement.lang === 'es' ? 'La salida debe ser posterior a la llegada.' : 'Check-out must be after check-in.'
+        : '');
+    }
+    checkInField.addEventListener('change', updateDateValidity);
+    checkOutField.addEventListener('change', updateDateValidity);
+
+    function updateVehicleFields() {
+      const hasVehicle = reservationForm.querySelector('[name="hasVehicle"]:checked')?.value === 'yes';
+      vehiclePlateLabel.hidden = !hasVehicle;
+      vehiclePlateField.disabled = !hasVehicle;
+      vehiclePlateField.required = hasVehicle;
+    }
+    vehicleRadios.forEach((radio) => radio.addEventListener('change', updateVehicleFields));
+
+    reservationForm.addEventListener('input', () => {
+      reservationStatus.textContent = '';
+    });
+    reservationForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      reservationStatus.textContent = document.documentElement.lang === 'es'
+        ? 'El servicio de reservas todavía no está conectado. No se ha enviado ni confirmado la solicitud.'
+        : 'The reservation service is not connected yet. Your request has not been sent or confirmed.';
+    });
+  </script>
+</body>
+</html>
