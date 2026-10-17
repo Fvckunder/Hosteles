@@ -1,8 +1,9 @@
 namespace APIHostel.DTOs
 {
     /// <summary>
-    /// Guest-facing profile and stay data. The controller builds this from the authenticated
-    /// guest relationship so one account can never request another guest's reservations.
+    /// Datos del perfil y de las estancias visibles para el huésped. El controlador los obtiene
+    /// de la relación con el huésped autenticado, de modo que una cuenta nunca pueda solicitar
+    /// las reservas de otro huésped.
     /// </summary>
     public class GuestPortalResponseDTO
     {
@@ -15,7 +16,7 @@ namespace APIHostel.DTOs
         public List<GuestReservationDTO> Reservations { get; set; } = new();
     }
 
-    /// <summary>Only the reservation details needed for a guest to review their stays.</summary>
+    /// <summary>Solo los datos de la reserva que necesita el huésped para consultar sus estancias.</summary>
     public class GuestReservationDTO
     {
         public int ReservationId { get; set; }

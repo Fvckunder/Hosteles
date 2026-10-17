@@ -2,7 +2,7 @@
 
 namespace APIHostel.DTOs
 {
-    /// <summary>Credentials accepted by the shared guest and employee login endpoint.</summary>
+    /// <summary>Credenciales aceptadas por el endpoint de acceso compartido para huéspedes y empleados.</summary>
     public class LoginRequestDTO
     {
         [Required, EmailAddress, StringLength(255)]

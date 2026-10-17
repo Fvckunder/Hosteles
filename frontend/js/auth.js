@@ -1,10 +1,28 @@
 (() => {
-  // Keep this URL aligned with the HTTP profile in APIHostel/Properties/launchSettings.json.
-  const loginEndpoint = 'http://localhost:5159/api/Auth/Login';
+  // Mantener esta URL alineada con el perfil HTTP de APIHostel/Properties/launchSettings.json.
+  const apiBaseUrl = 'http://localhost:5159/api/Auth';
 
   document.querySelectorAll('form[data-auth-role]').forEach((form) => {
     const feedback = form.querySelector('.auth-feedback');
     const submitButton = form.querySelector('button[type="submit"]');
+    const resetLink = document.querySelector('[data-reset-password]');
+    const resetDialog = resetLink ? createPasswordResetDialog() : null;
+
+    if (resetLink && resetDialog) {
+      resetLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        resetDialog.querySelector('#password-reset-email').value = form.elements.namedItem('email').value.trim();
+        resetDialog.querySelectorAll('[data-reset-step]').forEach((step) => {
+          step.hidden = step.dataset.resetStep !== 'email';
+        });
+        resetDialog.querySelectorAll('[data-reset-feedback]').forEach((message) => {
+          message.hidden = true;
+          message.textContent = '';
+        });
+        resetDialog.showModal();
+        resetDialog.querySelector('#password-reset-email').focus();
+      });
+    }
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -18,7 +36,7 @@
       const isSpanish = language === 'es';
 
       try {
-        const response = await fetch(loginEndpoint, {
+        const response = await fetch(`${apiBaseUrl}/Login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
@@ -32,8 +50,11 @@
           result = { message: responseText };
         }
 
+        if (typeof result === 'string') {
+          result = { message: result };
+        }
+
         if (!response.ok) {
-          // Development API exceptions can include stack traces; show a safe message for 5xx responses.
           const message = response.status >= 500
             ? (isSpanish
               ? 'El servidor no pudo completar el acceso. Comprueba la conexión con la base de datos.'
@@ -46,7 +67,7 @@
 
         const roleName = result.roleName || result.RoleName;
         const expectedRole = form.dataset.authRole;
-        // Match the account type to the form; this is a UI check, not server-side authorization.
+        // Comprueba que el tipo de cuenta coincida con el formulario; esto es una validación de interfaz, no una autorización del servidor.
         const roleMatches = expectedRole === 'staff'
           ? ['Admin', 'Receptionist'].includes(roleName)
           : roleName === expectedRole;
@@ -90,5 +111,206 @@
       feedback.dataset.state = state;
       feedback.hidden = false;
     }
+
+    if (resetDialog) {
+      resetDialog.querySelectorAll('form[data-reset-step]').forEach((resetForm) => {
+        resetForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const isSpanish = document.documentElement.lang === 'es';
+          const step = resetForm.dataset.resetStep;
+          const message = resetForm.querySelector('[data-reset-feedback]');
+          const button = resetForm.querySelector('button[type="submit"]');
+          const email = resetDialog.querySelector('#password-reset-email').value.trim();
+          message.hidden = true;
+          button.disabled = true;
+
+          try {
+            if (step === 'email') {
+              const response = await fetch(`${apiBaseUrl}/PasswordReset/CheckEmail`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+              });
+              await readResponse(response, isSpanish);
+              showResetStep('code');
+            } else if (step === 'code') {
+              const code = resetForm.elements.namedItem('code').value.trim();
+              if (!/^\d{4}$/.test(code)) {
+                throw new Error(isSpanish ? 'El código debe tener 4 dígitos.' : 'The code must contain 4 digits.');
+              }
+              showResetStep('password');
+            } else {
+              const newPassword = resetForm.elements.namedItem('newPassword').value;
+              const confirmPassword = resetForm.elements.namedItem('confirmPassword').value;
+              if (newPassword !== confirmPassword) {
+                throw new Error(isSpanish ? 'Las contraseñas no coinciden.' : 'Passwords do not match.');
+              }
+
+              const response = await fetch(`${apiBaseUrl}/PasswordReset`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  email,
+                  code: resetDialog.querySelector('[name="code"]').value.trim(),
+                  newPassword
+                })
+              });
+              await readResponse(response, isSpanish);
+              showResetStep('success');
+            }
+          } catch (error) {
+            const errorMessage = error instanceof TypeError
+              ? (isSpanish
+                ? 'No se pudo conectar con el servidor. Comprueba que la API esté en ejecución.'
+                : 'Could not reach the server. Check that the API is running.')
+              : error.message;
+            message.textContent = errorMessage || (isSpanish
+              ? 'No se pudo restablecer la contraseña.'
+              : 'Could not reset the password.');
+            message.dataset.state = 'error';
+            message.hidden = false;
+          } finally {
+            button.disabled = false;
+          }
+        });
+      });
+
+      resetDialog.querySelector('[data-reset-close]').addEventListener('click', () => resetDialog.close());
+      resetDialog.querySelector('[data-reset-success-close]').addEventListener('click', () => resetDialog.close());
+
+      const updateResetLanguage = (language) => {
+        const spanish = language === 'es';
+        const copy = spanish
+          ? {
+            title: 'Restablecer contraseña',
+            close: 'Cerrar',
+            emailLabel: 'Correo electrónico',
+            emailPlaceholder: 'tu@correo.com',
+            emailSubmit: 'Continuar',
+            codeInstruction: 'Ingresa el codigo que te mandamos a tu mail',
+            codeLabel: 'Código de 4 dígitos',
+            codePlaceholder: '1234',
+            codeSubmit: 'Verificar código',
+            passwordLabel: 'Nueva contraseña',
+            passwordPlaceholder: 'Mínimo 8 caracteres',
+            confirmLabel: 'Confirma la nueva contraseña',
+            confirmPlaceholder: 'Repite la contraseña',
+            passwordSubmit: 'Cambiar contraseña',
+            success: 'Tu contraseña se actualizó correctamente.',
+            successClose: 'Cerrar'
+          }
+          : {
+            title: 'Reset password',
+            close: 'Close',
+            emailLabel: 'Email address',
+            emailPlaceholder: 'you@example.com',
+            emailSubmit: 'Continue',
+            codeInstruction: 'Enter the code we sent to your email',
+            codeLabel: '4-digit code',
+            codePlaceholder: '1234',
+            codeSubmit: 'Verify code',
+            passwordLabel: 'New password',
+            passwordPlaceholder: 'At least 8 characters',
+            confirmLabel: 'Confirm new password',
+            confirmPlaceholder: 'Repeat your password',
+            passwordSubmit: 'Change password',
+            success: 'Your password was updated successfully.',
+            successClose: 'Close'
+          };
+
+        resetDialog.querySelector('[data-reset-title]').textContent = copy.title;
+        resetDialog.querySelector('[data-reset-close]').setAttribute('aria-label', copy.close);
+        resetDialog.querySelector('[data-reset-email-label]').textContent = copy.emailLabel;
+        resetDialog.querySelector('#password-reset-email').placeholder = copy.emailPlaceholder;
+        resetDialog.querySelector('[data-reset-email-submit]').textContent = copy.emailSubmit;
+        resetDialog.querySelector('[data-reset-code-instruction]').textContent = copy.codeInstruction;
+        resetDialog.querySelector('[data-reset-code-label]').textContent = copy.codeLabel;
+        resetDialog.querySelector('#password-reset-code').placeholder = copy.codePlaceholder;
+        resetDialog.querySelector('[data-reset-code-submit]').textContent = copy.codeSubmit;
+        resetDialog.querySelector('[data-reset-password-label]').textContent = copy.passwordLabel;
+        resetDialog.querySelector('#password-reset-new-password').placeholder = copy.passwordPlaceholder;
+        resetDialog.querySelector('[data-reset-confirm-label]').textContent = copy.confirmLabel;
+        resetDialog.querySelector('#password-reset-confirm-password').placeholder = copy.confirmPlaceholder;
+        resetDialog.querySelector('[data-reset-password-submit]').textContent = copy.passwordSubmit;
+        resetDialog.querySelector('[data-reset-success]').textContent = copy.success;
+        resetDialog.querySelector('[data-reset-success-close]').textContent = copy.successClose;
+      };
+
+      function showResetStep(stepName) {
+        resetDialog.querySelectorAll('[data-reset-step]').forEach((step) => {
+          step.hidden = step.dataset.resetStep !== stepName;
+        });
+        if (stepName === 'code') {
+          resetDialog.querySelector('#password-reset-code').focus();
+        } else if (stepName === 'password') {
+          resetDialog.querySelector('#password-reset-new-password').focus();
+        } else if (stepName === 'success') {
+          resetDialog.querySelector('[data-reset-success-close]').focus();
+        }
+      }
+
+      updateResetLanguage(localStorage.getItem('hostel-language') || document.documentElement.lang);
+      window.addEventListener('hostel-language-change', () => {
+        updateResetLanguage(document.documentElement.lang);
+      });
+    }
   });
+
+  function createPasswordResetDialog() {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'password-reset-dialog';
+    dialog.setAttribute('aria-labelledby', 'password-reset-title');
+    dialog.innerHTML = `
+      <button class="dialog-close" type="button" data-reset-close aria-label="Close">&times;</button>
+      <h2 id="password-reset-title" data-reset-title>Reset password</h2>
+      <form data-reset-step="email">
+        <label for="password-reset-email" data-reset-email-label>Email address</label>
+        <input id="password-reset-email" name="email" type="email" autocomplete="email" required>
+        <p class="auth-feedback" data-reset-feedback role="status" aria-live="polite" hidden></p>
+        <button class="button button-primary password-reset-submit" type="submit" data-reset-email-submit>Continue</button>
+      </form>
+      <form data-reset-step="code" hidden>
+        <p class="password-reset-instruction" data-reset-code-instruction>Enter the code we sent to your email</p>
+        <label for="password-reset-code" data-reset-code-label>4-digit code</label>
+        <input id="password-reset-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{4}" maxlength="4" required>
+        <p class="auth-feedback" data-reset-feedback role="status" aria-live="polite" hidden></p>
+        <button class="button button-primary password-reset-submit" type="submit" data-reset-code-submit>Verify code</button>
+      </form>
+      <form data-reset-step="password" hidden>
+        <label for="password-reset-new-password" data-reset-password-label>New password</label>
+        <input id="password-reset-new-password" name="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="100" required>
+        <label for="password-reset-confirm-password" data-reset-confirm-label>Confirm new password</label>
+        <input id="password-reset-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" maxlength="100" required>
+        <p class="auth-feedback" data-reset-feedback role="status" aria-live="polite" hidden></p>
+        <button class="button button-primary password-reset-submit" type="submit" data-reset-password-submit>Change password</button>
+      </form>
+      <section data-reset-step="success" hidden>
+        <p data-reset-success>Your password was updated successfully.</p>
+        <button class="button button-primary password-reset-submit" type="button" data-reset-success-close>Close</button>
+      </section>`;
+    document.body.append(dialog);
+    return dialog;
+  }
+
+  async function readResponse(response, isSpanish) {
+    const responseText = await response.text();
+    let result = {};
+
+    try {
+      result = responseText ? JSON.parse(responseText) : {};
+    } catch {
+      result = { message: responseText };
+    }
+
+    if (!response.ok) {
+      const message = response.status >= 500
+        ? (isSpanish
+          ? 'El servidor no pudo completar la operación. Comprueba la conexión con la base de datos.'
+          : 'The server could not complete the request. Check the database connection.')
+        : (result.message || result.title || (isSpanish
+          ? 'No se pudo restablecer la contraseña.'
+          : 'Could not reset the password.'));
+      throw new Error(message);
+    }
+  }
 })();
