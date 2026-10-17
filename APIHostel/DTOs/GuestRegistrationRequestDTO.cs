@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 namespace APIHostel.DTOs
 {
     /// <summary>
-    /// Public guest signup data. The API always assigns the Guest role and requires a country
-    /// plus at least one identity document to satisfy the database constraints.
+    /// Datos del registro público de huéspedes. La API siempre asigna el rol Guest y requiere
+    /// un país y al menos un documento de identidad para cumplir las restricciones de la base
+    /// de datos.
     /// </summary>
     public class GuestRegistrationRequestDTO
     {

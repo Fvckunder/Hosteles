@@ -8,12 +8,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Agrega los servicios al contenedor.
 
 builder.Services.AddControllers();
-// Development can use a per-process signing key so local setup does not require committing
-// a secret; restarting the API invalidates those development tokens. Other environments
-// must provide a stable Authentication:SigningKey secret of at least 32 bytes.
+// En desarrollo se puede usar una clave de firma por proceso para no tener que incluir
+// un secreto en el repositorio; al reiniciar la API, esos tokens dejan de ser válidos.
+// Los demás entornos deben proporcionar un secreto estable en Authentication:SigningKey,
+// de al menos 32 bytes.
 var configuredSigningKey = builder.Configuration["Authentication:SigningKey"];
 var signingKeyText = string.IsNullOrWhiteSpace(configuredSigningKey)
     ? builder.Environment.IsDevelopment()
@@ -41,10 +42,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
-// The frontend is served separately during development and can use the opaque "null"
-// origin when opened as a local file. This policy permits its JSON requests and CORS
-// preflight checks; it is intentionally registered and applied only in Development.
-// Do not add AllowCredentials here: the API does not use cookie-based authentication.
+// Durante el desarrollo, el frontend se sirve por separado y puede usar el origen opaco
+// "null" si se abre como archivo local. Esta política permite sus solicitudes JSON y las
+// solicitudes de comprobación previa de CORS; se registra y aplica solo en desarrollo.
+// No agregues AllowCredentials aquí: la API no usa autenticación basada en cookies.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("DevelopmentFrontend", policy =>
@@ -52,22 +53,23 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Más información sobre cómo configurar Swagger/OpenAPI: https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// DbContext
+// Contexto de la base de datos
 builder.Services.AddDbContext<HostelDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HostelConnection")));
 
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configura la canalización de solicitudes HTTP.
 if (app.Environment.IsDevelopment())
 {
-    // Apply CORS before controller endpoints so browser preflight requests are handled
-    // without reaching the action. This middleware is omitted from production below.
+    // Aplica CORS antes de los endpoints de los controladores para atender las solicitudes
+    // de comprobación previa del navegador sin que lleguen a la acción. Este middleware
+    // no se incluye en producción.
     app.UseCors("DevelopmentFrontend");
     app.UseSwagger();
     app.UseSwaggerUI();

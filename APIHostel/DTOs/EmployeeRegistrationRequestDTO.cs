@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 namespace APIHostel.DTOs
 {
     /// <summary>
-    /// Admin-only employee signup data. The controller limits RoleName to employee roles,
-    /// so this contract cannot be used to create guest accounts.
+    /// Datos de registro de empleados exclusivos para administradores. El controlador limita
+    /// RoleName a los roles de empleado, por lo que este contrato no puede usarse para crear
+    /// cuentas de huéspedes.
     /// </summary>
     public class EmployeeRegistrationRequestDTO
     {

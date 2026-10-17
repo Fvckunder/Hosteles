@@ -140,12 +140,21 @@ em { color: var(--coral); font-style: normal; }
 .employee-register-dialog { position: fixed; width: min(560px, calc(100% - 32px)); max-height: calc(100vh - 32px); padding: 34px; overflow-y: auto; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(20, 32, 26, .24); }
 .employee-register-dialog::backdrop { background: rgba(19, 29, 24, .58); backdrop-filter: blur(2px); }
 .employee-register-dialog h2 { margin: 0 35px 8px 0; font: 600 28px/1.15 var(--sans); }
+.password-reset-dialog { position: fixed; width: min(440px, calc(100% - 32px)); max-height: calc(100vh - 32px); padding: 34px; overflow-y: auto; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(20, 32, 26, .24); }
+.password-reset-dialog::backdrop { background: rgba(19, 29, 24, .58); backdrop-filter: blur(2px); }
+.password-reset-dialog h2 { margin: 0 35px 20px 0; font: 600 26px/1.15 var(--sans); }
+.password-reset-dialog label { display: block; margin: 0 0 7px; font-size: 12px; font-weight: 700; }
+.password-reset-dialog input { width: 100%; height: 46px; margin-bottom: 17px; padding: 0 13px; border: 1px solid var(--line); border-radius: 3px; outline: none; color: var(--ink); background: transparent; font: 13px var(--sans); }
+.password-reset-dialog input:focus { border-color: var(--coral); }
+.password-reset-instruction, .password-reset-dialog section > p { color: var(--muted); font-size: 13px; }
+.password-reset-submit { width: 100%; min-height: 45px; }
+.password-reset-dialog .auth-feedback[data-state="error"] { color: #b33d36; }
 .employee-register-intro { margin: 0 0 22px; color: var(--muted); font-size: 13px; line-height: 1.5; }
 .dialog-close { position: absolute; top: 17px; right: 17px; display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); color: var(--ink); background: transparent; font-size: 21px; cursor: pointer; }
 .employee-register-submit { min-height: 45px; padding: 0 18px; border: 0; cursor: pointer; }
 .dashboard-register-button { min-height: 38px; padding: 0 13px; border: 0; font-size: 11px; cursor: pointer; }
 .dashboard-register-button[hidden] { display: none; }
-/* Guest portal: account summary and booking history remain an unframed, scannable workspace. */
+/* Portal del huésped: el resumen de la cuenta y el historial de reservas se muestran en un espacio sencillo y fácil de recorrer. */
 .guest-portal-page { min-height: 100vh; background: var(--paper); }
 .guest-portal-header { width: min(1160px, calc(100% - 80px)); border-bottom: 1px solid var(--line); }
 .guest-portal-actions { display: flex; align-items: center; gap: 20px; }
@@ -498,6 +507,7 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
   .registration-grid input, .registration-grid select { padding: 0 8px; font-size: 11px; }
   .employee-register-dialog { padding: 28px 20px 22px; }
   .employee-register-dialog h2 { font-size: 24px; }
+  .password-reset-dialog { padding: 28px 20px 22px; }
   .employee-login-shell { width: calc(100% - 24px); padding: 12px 0; }
   .employee-login-card { min-height: 630px; padding: 32px 25px; }
   .employee-login-aside { min-height: 300px; padding: 25px; }

@@ -29,8 +29,9 @@ namespace APIHostel.Controllers
             _signingKey = signingKey;
         }
 
-        // POST: api/Auth/Login. A successful login returns a short-lived signed token so
-        // protected dashboard actions can verify the account and role on every API request.
+        // POST: api/Auth/Login. Si el inicio de sesión es correcto, devuelve un token firmado
+        // de corta duración para que las acciones protegidas del panel puedan verificar la
+        // cuenta y el rol en cada solicitud a la API.
         [HttpPost("Login")]
         public async Task<ActionResult<LoginResponseDTO>> Login(LoginRequestDTO dto)
         {
@@ -48,9 +49,10 @@ namespace APIHostel.Controllers
             }
             catch (BCrypt.Net.SaltParseException exception)
             {
-                // A malformed stored hash is a data-integrity problem. Log it for operators,
-                // but return the same generic response as other invalid credentials and never
-                // expose the hash, password, or exception details through the login response.
+                // Un hash almacenado con formato incorrecto indica un problema de integridad
+                // de datos. Regístralo para el equipo operador, pero devuelve la misma respuesta
+                // genérica que para otras credenciales no válidas y nunca expongas el hash,
+                // la contraseña ni los detalles de la excepción en la respuesta de acceso.
                 _logger.LogError(exception, "User {UserId} has a malformed BCrypt password hash.", user.UserId);
                 return Unauthorized("Email o clave incorrectos.");
             }
@@ -78,8 +80,43 @@ namespace APIHostel.Controllers
             });
         }
 
-        // GET: api/Auth/Countries. The public signup form uses database IDs instead of
-        // hard-coded country options, keeping submitted values aligned with the FK catalog.
+        // POST: api/Auth/PasswordReset/CheckEmail. Verifica que haya una cuenta activa con el correo indicado.
+        [AllowAnonymous]
+        [HttpPost("PasswordReset/CheckEmail")]
+        public async Task<ActionResult> CheckPasswordResetEmail(PasswordResetEmailRequestDTO dto)
+        {
+            var email = dto.Email.Trim();
+            var accountExists = await _context.Users
+                .AnyAsync(user => user.Active && user.Email.ToLower() == email.ToLower());
+
+            if (!accountExists)
+                return NotFound("No hay una cuenta activa registrada con ese correo electrónico.");
+
+            return Ok();
+        }
+
+        // POST: api/Auth/PasswordReset. El código es de prueba: se valida el formato de cuatro
+        // dígitos, pero no se compara con un código enviado mientras no esté habilitado el correo.
+        [AllowAnonymous]
+        [HttpPost("PasswordReset")]
+        public async Task<ActionResult> ResetPassword(PasswordResetRequestDTO dto)
+        {
+            var email = dto.Email.Trim();
+            var account = await _context.Users
+                .FirstOrDefaultAsync(user => user.Active && user.Email.ToLower() == email.ToLower());
+
+            if (account == null)
+                return NotFound("No hay una cuenta activa registrada con ese correo electrónico.");
+
+            account.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // GET: api/Auth/Countries. El formulario público de registro usa los identificadores
+        // de la base de datos en lugar de opciones de país escritas directamente, para que los
+        // valores enviados coincidan con el catálogo de claves foráneas.
         [AllowAnonymous]
         [HttpGet("Countries")]
         public async Task<ActionResult> GetCountries()
@@ -92,8 +129,9 @@ namespace APIHostel.Controllers
             return Ok(countries);
         }
 
-        // POST: api/Auth/RegisterGuest. Public registration always assigns the Guest role,
-        // hashes the password, and creates the linked USERS/GUESTS rows in one EF save.
+        // POST: api/Auth/RegisterGuest. El registro público siempre asigna el rol Guest,
+        // genera el hash de la contraseña y crea las filas relacionadas de USERS y GUESTS
+        // en una sola operación de guardado de Entity Framework.
         [AllowAnonymous]
         [HttpPost("RegisterGuest")]
         public async Task<ActionResult> RegisterGuest(GuestRegistrationRequestDTO dto)
@@ -158,8 +196,8 @@ namespace APIHostel.Controllers
             });
         }
 
-        // GET: api/Auth/Me. The dashboard calls this with its bearer token to confirm the
-        // account is still active and render its real identity and role instead of demo data.
+        // GET: api/Auth/Me. El panel llama a este endpoint con su token bearer para confirmar
+        // que la cuenta siga activa y mostrar su identidad y rol reales, en lugar de datos de muestra.
         [Authorize]
         [HttpGet("Me")]
         public async Task<ActionResult> Me()
@@ -183,9 +221,10 @@ namespace APIHostel.Controllers
             return user == null ? Unauthorized() : Ok(user);
         }
 
-        // POST: api/Auth/RegisterEmployee. The role claim is checked by ASP.NET authorization,
-        // then rechecked against SQL so a deactivated or demoted admin cannot keep provisioning
-        // accounts until their token expires. Only Admin and Receptionist employee roles exist.
+        // POST: api/Auth/RegisterEmployee. La autorización de ASP.NET comprueba la declaración
+        // del rol y luego este se vuelve a comprobar en SQL, para impedir que un administrador
+        // desactivado o degradado siga creando cuentas hasta que venza su token. Los únicos
+        // roles de empleado existentes son Admin y Receptionist.
         [Authorize(Roles = "Admin")]
         [HttpPost("RegisterEmployee")]
         public async Task<ActionResult> RegisterEmployee(EmployeeRegistrationRequestDTO dto)

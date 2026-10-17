@@ -22,16 +22,18 @@ namespace APIHostel.Controllers
             _logger = logger;
         }
 
-        // GET: api/GuestPortal. The role and user ID come from the signed token, then the
-        // database relationship limits every returned profile and reservation to that guest.
+        // GET: api/GuestPortal. El rol y el identificador del usuario se obtienen del token
+        // firmado; la relación en la base de datos limita los perfiles y las reservas devueltos
+        // a los que pertenecen a ese huésped.
         [HttpGet]
         public async Task<ActionResult<GuestPortalResponseDTO>> GetPortal()
         {
             if (!TryGetUserId(out var userId))
                 return Unauthorized();
 
-            // Tokens expire after 30 minutes, so also recheck account activity and role in SQL
-            // to apply deactivation or role changes immediately to this private portal.
+            // Los tokens vencen después de 30 minutos; también se vuelven a comprobar en SQL
+            // la actividad de la cuenta y su rol para aplicar de inmediato las desactivaciones
+            // o los cambios de rol en este portal privado.
             var guest = await _context.Guests
                 .Include(item => item.Country)
                 .Include(item => item.User)
@@ -85,9 +87,10 @@ namespace APIHostel.Controllers
             return Ok(response);
         }
 
-        // POST: api/GuestPortal/Reservations/{id}/Cancel. A guest can cancel only their own
-        // future Pending or Confirmed reservation; the server changes the catalog status rather
-        // than deleting the reservation, preserving booking history and database references.
+        // POST: api/GuestPortal/Reservations/{id}/Cancel. El huésped solo puede cancelar sus
+        // propias reservas futuras en estado Pending o Confirmed; el servidor cambia el estado
+        // del catálogo en vez de eliminar la reserva, para conservar el historial y las
+        // referencias de la base de datos.
         [HttpPost("Reservations/{reservationId:int}/Cancel")]
         public async Task<IActionResult> CancelReservation(int reservationId)
         {
