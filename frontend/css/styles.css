@@ -315,6 +315,26 @@ em { color: var(--coral); font-style: normal; }
 .room-status { display: inline-block; padding: 4px 7px; border-radius: 2px; font-size: 9px; }
 .status-available { color: #62816e; background: #e5f0e7; }.status-occupied { color: #7a8190; background: #edf0f4; }.status-maintenance { color: #9a8240; background: #f7f0d8; }
 .room-list-note { margin: 13px 0 0; }
+.module-feedback { margin: 0 0 18px; padding: 12px 14px; border-left: 3px solid #b33d36; color: #8d332e; background: rgba(179,61,54,.08); font-size: 12px; }
+.module-feedback[hidden] { display: none; }
+.module-feedback[data-state="success"] { border-color: #456c55; color: #456c55; background: rgba(69,108,85,.08); }
+.module-delete-button { min-height: 38px; padding: 0 13px; border: 1px solid #d9a49d; border-radius: 3px; color: #a74a40; background: transparent; font: 600 11px var(--sans); cursor: pointer; }
+.module-delete-button:hover { border-color: #b33d36; background: rgba(179,61,54,.06); }
+.module-delete-button:disabled { opacity: .55; cursor: wait; }
+.room-edit-button { padding: 5px 8px; border: 1px solid #dce4de; border-radius: 3px; color: #547361; background: transparent; font: 600 10px var(--sans); cursor: pointer; }
+.room-edit-button:hover { border-color: #7d998b; }
+.guest-booking-section { padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.guest-booking-form { max-width: 760px; }
+.guest-availability-note { min-height: 20px; margin: 13px 0; color: var(--muted); font-size: 11px; }
+.reservation-request-list { display: grid; gap: 14px; }
+.reservation-request-card { padding: 21px 23px; }
+.reservation-request-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.reservation-request-heading h3 { margin: 0; color: #34453c; font: 600 16px var(--sans); }
+.reservation-request-email { margin: 6px 0 0; color: #839087; font-size: 11px; }
+.reservation-request-card .guest-stay-details { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); margin-bottom: 18px; }
+.reservation-request-actions { display: flex; align-items: center; gap: 10px; padding-top: 15px; border-top: 1px solid #edf1ee; }
+.reservation-request-actions .button { min-height: 38px; padding: 0 13px; font-size: 11px; }
+.reservation-request-actions .module-delete-button { min-height: 38px; }
 .dashboard-alert { display: flex; align-items: center; gap: 14px; min-height: 65px; padding: 12px 17px; border: 1px solid #dce9df; border-radius: 4px; background: #f0f7f1; }
 .alert-symbol { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; color: #5f806d; background: #d9eadd; font-size: 12px; font-weight: 700; }
 .dashboard-alert strong { color: #496152; font-size: 11px; }
@@ -405,8 +425,10 @@ html[data-theme="dark"] .module-form-grid label,
 html[data-theme="dark"] .calendar-legend { color: #a2afa5; }
 html[data-theme="dark"] .module-form,
 html[data-theme="dark"] .module-panel { border-color: #35443b; background: #202b26; }
+html[data-theme="dark"] .reservation-request-heading h3 { color: #d5e2d7; }
 html[data-theme="dark"] .module-fieldset + .module-fieldset,
 html[data-theme="dark"] .module-form-actions,
+html[data-theme="dark"] .reservation-request-actions,
 html[data-theme="dark"] .calendar-weekdays,
 html[data-theme="dark"] .room-table th,
 html[data-theme="dark"] .room-table td,
@@ -416,6 +438,12 @@ html[data-theme="dark"] .room-table td strong { color: #d5e2d7; }
 html[data-theme="dark"] .module-form-grid input,
 html[data-theme="dark"] .module-form-grid select,
 html[data-theme="dark"] .module-form-grid textarea { border-color: #45564b; color: #edf1e8; background: #18221e; }
+html[data-theme="dark"] .room-edit-button { border-color: #45564b; color: #bfd2c4; }
+html[data-theme="dark"] .module-feedback[data-state="success"] { color: #a8c8b1; }
+html[data-theme="dark"] .module-feedback[data-state="error"] { color: #e2a39b; }
+html[data-theme="dark"] .guest-availability-note,
+html[data-theme="dark"] .reservation-request-email { color: #a2afa5; }
+html[data-theme="dark"] .module-delete-button { border-color: #875952; color: #e2a39b; }
 html[data-theme="dark"] .calendar-weekdays { background: #26332c; }
 html[data-theme="dark"] .calendar-weekdays span,
 html[data-theme="dark"] .calendar-date,
@@ -500,6 +528,8 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
   .guest-portal-welcome h1 { font-size: 37px; }
   .guest-portal-section { padding-top: 35px; }
   .guest-portal-section-heading h2 { font-size: 27px; }
+  .reservation-request-card { padding: 17px 15px; }
+  .reservation-request-heading { align-items: flex-start; }
   .guest-stay-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
   .guest-portal-feedback { align-items: flex-start; flex-direction: column; }
   .registration-panel { padding: 38px 18px 40px; }

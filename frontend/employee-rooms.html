@@ -17,6 +17,7 @@
       <p class="dashboard-nav-label">Workspace</p>
       <a class="dashboard-nav-link" href="employee-dashboard.html"><span class="nav-icon">▦</span> Overview</a>
       <a class="dashboard-nav-link" href="employee-reservation-new.html"><span class="nav-icon">＋</span> New reservation</a>
+      <a class="dashboard-nav-link" href="employee-reservation-requests.html"><span class="nav-icon">✓</span> Reservation requests</a>
       <a class="dashboard-nav-link" href="employee-reservation-calendar.html"><span class="nav-icon">▦</span> Booking calendar</a>
       <a class="dashboard-nav-link" href="#guests" data-module="guests"><span class="nav-icon">○</span> Guests</a>
       <a class="dashboard-nav-link active" href="employee-rooms.html" aria-current="page"><span class="nav-icon">◇</span> Rooms &amp; beds</a>
@@ -25,21 +26,56 @@
       <a class="dashboard-nav-link" href="#reports" data-module="reports"><span class="nav-icon">≡</span> Reports</a>
       <a class="dashboard-nav-link" href="#settings" data-module="settings"><span class="nav-icon">⚙</span> Settings</a>
     </nav>
-    <div class="sidebar-bottom"><div class="profile-mini"><span class="profile-avatar">MG</span><span><strong>María Gómez</strong><small>Administrator</small></span><span class="profile-more">•••</span></div><a class="logout-link" href="employee-login.html">Sign out <span aria-hidden="true">↗</span></a></div>
+    <div class="sidebar-bottom">
+      <div class="profile-mini"><span class="profile-avatar" data-employee-avatar>--</span><span><strong data-employee-name>Employee</strong><small data-employee-role>Staff</small></span></div>
+      <a class="logout-link" href="employee-login.html">Sign out <span aria-hidden="true">↗</span></a>
+    </div>
   </aside>
   <main class="dashboard-main">
-    <header class="dashboard-header module-header"><div><p class="module-kicker">Inventory</p><h1>Rooms &amp; beds</h1></div><div class="dashboard-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="dashboard-help" href="employee-reservation-calendar.html">View calendar</a></div></header>
+    <header class="dashboard-header module-header">
+      <div><p class="module-kicker">Inventory</p><h1>Rooms &amp; beds</h1></div>
+      <div class="dashboard-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="dashboard-help" href="employee-reservation-requests.html">Reservation requests</a></div>
+    </header>
     <section class="module-content">
-      <div class="module-heading"><div><p class="module-kicker">Property setup</p><h2>Manage rooms</h2><p>Edit capacity, room type and operational status.</p></div><span class="module-status">12 rooms</span></div>
+      <div class="module-heading">
+        <div><p class="module-kicker">Property setup</p><h2>Manage rooms</h2><p>Create rooms, adjust bed capacity and keep inventory up to date.</p></div>
+        <span class="module-status" data-room-count>Loading...</span>
+      </div>
+      <p class="module-feedback" data-room-feedback role="status" aria-live="polite" hidden></p>
       <div class="module-columns">
-        <form class="module-form module-panel room-edit-form" action="#" method="post" data-backend="room-management">
-          <fieldset class="module-fieldset"><legend>Edit room</legend><div class="module-form-grid"><label class="module-field-full"><span>Select room</span><select name="roomId"><option>Room 102</option><option>Room 204</option><option>Room 306</option></select></label><label><span>Room name or number</span><input name="name" type="text" value="Room 102" required></label><label><span>Room type</span><select name="type"><option>Shared dorm</option><option>Private double</option><option>Private single</option></select></label><label><span>Bed capacity</span><input name="capacity" type="number" min="1" value="6" required></label><label><span>Floor</span><input name="floor" type="number" min="0" value="1"></label><label><span>Nightly rate (€)</span><input name="rate" type="number" min="0" step="0.01" value="28.00"></label><label><span>Status</span><select name="status"><option>Available</option><option>Maintenance</option><option>Out of service</option></select></label><label class="module-field-full"><span>Notes</span><textarea name="notes" rows="3" placeholder="Room details or maintenance notes"></textarea></label></div></fieldset>
-          <div class="module-form-actions"><button class="button button-primary" type="submit">Save room <span aria-hidden="true">→</span></button><span class="module-form-note">Backend connection pending</span></div>
+        <form class="module-form module-panel room-edit-form" data-room-form>
+          <fieldset class="module-fieldset">
+            <legend data-room-form-title>Create room</legend>
+            <div class="module-form-grid">
+              <label class="module-field-full"><span>Select room to edit</span><select name="roomId" data-room-select><option value="">Create a new room</option></select></label>
+              <label><span>Room number</span><input name="roomNumber" type="text" maxlength="10" required></label>
+              <label><span>Room type</span><select name="roomTypeId" required data-room-types></select></label>
+              <label><span>Bed capacity</span><input name="bedCount" type="number" min="1" max="32767" value="1" required></label>
+              <label><span>Floor</span><input name="floor" type="number" min="0" max="32767" value="0" required></label>
+              <label><span>Nightly rate</span><input name="pricePerNight" type="number" min="0.01" step="0.01" required></label>
+              <label><span>Operational status</span><select name="active"><option value="true">Active</option><option value="false">Inactive</option></select></label>
+              <label class="module-field-full"><span>Amenities</span><select name="amenityIds" multiple size="4" data-room-amenities aria-label="Room amenities"></select></label>
+            </div>
+          </fieldset>
+          <div class="module-form-actions">
+            <button class="button button-primary" type="submit" data-room-submit>Create room <span aria-hidden="true">→</span></button>
+            <button class="module-delete-button" type="button" data-room-delete hidden>Deactivate room</button>
+            <button class="module-cancel" type="button" data-room-reset>Clear form</button>
+          </div>
         </form>
-        <section class="module-panel room-list-panel"><div class="panel-heading"><div><p class="module-kicker">Room inventory</p><h2>Current rooms</h2></div></div><div class="room-table-wrap"><table class="room-table"><thead><tr><th>Room</th><th>Type</th><th>Beds</th><th>Status</th></tr></thead><tbody><tr><td><strong>102</strong><small>First floor</small></td><td>Shared dorm</td><td>6</td><td><span class="room-status status-available">Available</span></td></tr><tr><td><strong>204</strong><small>Second floor</small></td><td>Private double</td><td>2</td><td><span class="room-status status-occupied">Occupied</span></td></tr><tr><td><strong>306</strong><small>Third floor</small></td><td>Private single</td><td>1</td><td><span class="room-status status-maintenance">Maintenance</span></td></tr><tr><td><strong>101</strong><small>First floor</small></td><td>Shared dorm</td><td>8</td><td><span class="room-status status-available">Available</span></td></tr></tbody></table></div><p class="module-form-note room-list-note">Showing sample inventory</p></section>
+        <section class="module-panel room-list-panel">
+          <div class="panel-heading"><div><p class="module-kicker">Room inventory</p><h2>Current rooms</h2></div></div>
+          <div class="room-table-wrap">
+            <table class="room-table">
+              <thead><tr><th>Room</th><th>Type</th><th>Beds</th><th>Floor</th><th>Rate</th><th>Status</th><th></th></tr></thead>
+              <tbody data-room-list><tr><td colspan="7">Loading rooms...</td></tr></tbody>
+            </table>
+          </div>
+        </section>
       </div>
     </section>
   </main>
   <script src="js/language.js"></script>
+  <script src="js/room-management.js"></script>
 </body>
 </html>

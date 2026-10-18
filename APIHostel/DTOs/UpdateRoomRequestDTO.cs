@@ -1,15 +1,27 @@
 ﻿namespace APIHostel.DTOs
 {
-    // Input model for editing an existing room. Includes the amenities list so the
-    // admin can add or remove them; the room type can be changed but the room number
-    // must remain unique across the property.
+    using System.ComponentModel.DataAnnotations;
+
     public class UpdateRoomRequestDTO
     {
+        [Required, StringLength(10)]
         public string RoomNumber { get; set; } = string.Empty;
+
+        [Range(1, int.MaxValue)]
         public int RoomTypeId { get; set; }
+
+        [Range(0, short.MaxValue)]
         public short Floor { get; set; }
+
+        [Range(typeof(decimal), "0.01", "99999999.99")]
         public decimal PricePerNight { get; set; }
+
+        [Range(1, short.MaxValue)]
+        public int BedCount { get; set; }
+
         public bool Active { get; set; }
+
+        [Required]
         public List<int> AmenityIds { get; set; } = new List<int>();
     }
 }

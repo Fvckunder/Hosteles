@@ -35,6 +35,23 @@
       <span data-portal-feedback-text></span>
       <button type="button" data-portal-retry>Try again</button>
     </div>
+    <section class="guest-portal-section guest-booking-section" aria-labelledby="booking-title">
+      <div class="guest-portal-section-heading">
+        <div><p class="eyebrow">Plan your stay</p><h2 id="booking-title">Request a reservation</h2></div>
+      </div>
+      <form class="module-form guest-booking-form" data-guest-booking-form>
+        <div class="module-form-grid">
+          <label><span>Check-in</span><input name="checkIn" type="date" required data-booking-check-in></label>
+          <label><span>Check-out</span><input name="checkOut" type="date" required data-booking-check-out></label>
+          <label class="module-field-full"><span>Available room</span><select name="roomId" required data-available-rooms><option value="">Select dates to check availability</option></select></label>
+          <label><span>Number of beds</span><input name="bedCount" type="number" min="1" max="32767" value="1" required data-booking-bed-count></label>
+        </div>
+        <p class="guest-availability-note" data-availability-note aria-live="polite"></p>
+        <div class="module-form-actions">
+          <button class="button button-primary" type="submit" data-booking-submit>Send reservation request <span aria-hidden="true">→</span></button>
+        </div>
+      </form>
+    </section>
     <section class="guest-portal-section" aria-labelledby="upcoming-title">
       <div class="guest-portal-section-heading">
         <div><p class="eyebrow">Your bookings</p><h2 id="upcoming-title" data-upcoming-title>Upcoming stays</h2></div>

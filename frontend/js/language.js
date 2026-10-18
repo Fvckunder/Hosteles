@@ -111,7 +111,8 @@
           '.guest-portal-welcome .eyebrow': ['Guest portal', 'Portal de huésped'],
           '.guest-portal-welcome h1': ['Welcome back, <span data-guest-first-name>guest</span>', 'Te damos la bienvenida, <span data-guest-first-name>huésped</span>'],
           '.guest-portal-intro': ['Your stay details, all in one place.', 'Los detalles de tu estancia, en un solo lugar.'],
-          '.guest-portal-section-heading .eyebrow': ['Your bookings', 'Tus reservas', 'Your history', 'Tu historial'],
+          '.guest-portal-section-heading .eyebrow': ['Plan your stay', 'Prepara tu estancia', 'Your bookings', 'Tus reservas', 'Your history', 'Tu historial'],
+          '#booking-title': ['Request a reservation', 'Solicitar una reserva'],
           '[data-upcoming-title]': ['Upcoming stays', 'Próximas estancias'],
           '[data-history-title]': ['Past stays', 'Estancias anteriores'],
           '[data-loading-upcoming]': ['Loading your stays...', 'Cargando tus estancias...'],
@@ -151,7 +152,7 @@
           'label[for="new-employee-role"]': ['Role', 'Rol'],
           '.employee-register-submit': ['Create employee', 'Crear empleado'],
           '.dashboard-nav-label': ['Workspace', 'Espacio de trabajo', 'Management', 'Gestión'],
-          '.dashboard-nav-link': ['<span class="nav-icon">▦</span> Overview', '<span class="nav-icon">▦</span> Resumen', '<span class="nav-icon">＋</span> New reservation', '<span class="nav-icon">＋</span> Nueva reserva', '<span class="nav-icon">▦</span> Booking calendar <span class="nav-count" data-backend="reservation-count">12</span>', '<span class="nav-icon">▦</span> Calendario de reservas <span class="nav-count" data-backend="reservation-count">12</span>', '<span class="nav-icon">○</span> Guests', '<span class="nav-icon">○</span> Huéspedes', '<span class="nav-icon">◇</span> Rooms &amp; beds', '<span class="nav-icon">◇</span> Habitaciones y camas', '<span class="nav-icon">△</span> Team', '<span class="nav-icon">△</span> Equipo', '<span class="nav-icon">≡</span> Reports', '<span class="nav-icon">≡</span> Informes', '<span class="nav-icon">⚙</span> Settings', '<span class="nav-icon">⚙</span> Ajustes'],
+          '.dashboard-nav-link': ['<span class="nav-icon">▦</span> Overview', '<span class="nav-icon">▦</span> Resumen', '<span class="nav-icon">＋</span> New reservation', '<span class="nav-icon">＋</span> Nueva reserva', '<span class="nav-icon">✓</span> Reservation requests', '<span class="nav-icon">✓</span> Solicitudes de reserva', '<span class="nav-icon">▦</span> Booking calendar <span class="nav-count" data-backend="reservation-count">12</span>', '<span class="nav-icon">▦</span> Calendario de reservas <span class="nav-count" data-backend="reservation-count">12</span>', '<span class="nav-icon">○</span> Guests', '<span class="nav-icon">○</span> Huéspedes', '<span class="nav-icon">◇</span> Rooms &amp; beds', '<span class="nav-icon">◇</span> Habitaciones y camas', '<span class="nav-icon">△</span> Team', '<span class="nav-icon">△</span> Equipo', '<span class="nav-icon">≡</span> Reports', '<span class="nav-icon">≡</span> Informes', '<span class="nav-icon">⚙</span> Settings', '<span class="nav-icon">⚙</span> Ajustes'],
           '.profile-mini strong': ['María Gómez', 'María Gómez'],
           '.profile-mini small': ['Administrator', 'Administradora'],
           '.dashboard-alert strong': ["Today's focus", 'Prioridad de hoy'],
@@ -205,7 +206,8 @@
       dashboard: ['Dashboard | Link Cordoba Hostel', 'Panel | Link Cordoba Hostel'],
       newReservation: ['New reservation | Link Cordoba Hostel', 'Nueva reserva | Link Cordoba Hostel'],
       reservationCalendar: ['Booking calendar | Link Cordoba Hostel', 'Calendario de reservas | Link Cordoba Hostel'],
-      rooms: ['Rooms & beds | Link Cordoba Hostel', 'Habitaciones y camas | Link Cordoba Hostel']
+      rooms: ['Rooms & beds | Link Cordoba Hostel', 'Habitaciones y camas | Link Cordoba Hostel'],
+      reservationRequests: ['Reservation requests | Link Cordoba Hostel', 'Solicitudes de reserva | Link Cordoba Hostel']
     };
     if (language === 'es') {
       // Los selectores relacionan el contenido con su traducción sin duplicar las páginas HTML.
@@ -230,7 +232,7 @@
       if (document.body.dataset.page) {
         const moduleTranslations = {
           'Workspace': 'Espacio de trabajo', 'Management': 'Gestión', 'Overview': 'Resumen', 'New reservation': 'Nueva reserva', '＋ New reservation': '＋ Nueva reserva',
-          'Booking calendar': 'Calendario de reservas', 'Guests': 'Huéspedes', 'Rooms & beds': 'Habitaciones y camas', 'Team': 'Equipo', 'Reports': 'Informes', 'Settings': 'Ajustes', 'Sign out': 'Cerrar sesión',
+          'Booking calendar': 'Calendario de reservas', 'Reservation requests': 'Solicitudes de reserva', 'Guests': 'Huéspedes', 'Rooms & beds': 'Habitaciones y camas', 'Team': 'Equipo', 'Reports': 'Informes', 'Settings': 'Ajustes', 'Sign out': 'Cerrar sesión',
           'Reservations': 'Reservas', 'Front desk': 'Recepción', 'Enter booking details': 'Datos de la reserva', 'Create a walk-in or phone reservation. This form is a visual placeholder.': 'Formulario provisional para reservas presenciales o por teléfono.',
           'Draft': 'Borrador', 'Guest details': 'Datos del huésped', 'Stay details': 'Datos de la estancia', 'Full name': 'Nombre completo', 'Email address': 'Correo electrónico', 'Phone number': 'Teléfono',
           'Number of guests': 'Número de huéspedes', 'Check-in': 'Entrada', 'Check-out': 'Salida', 'Room or bed': 'Habitación o cama', 'Select availability': 'Seleccionar disponibilidad',
@@ -240,6 +242,16 @@
           'Reservation calendar · all rooms': 'Calendario de reservas · todas las habitaciones', 'Today': 'Hoy', 'Mon': 'Lun', 'Tue': 'Mar', 'Wed': 'Mié', 'Thu': 'Jue', 'Fri': 'Vie', 'Sat': 'Sáb', 'Sun': 'Dom',
           'Confirmed': 'Confirmada', 'Checked in': 'Registrada', 'Pending': 'Pendiente', 'Online': 'En línea', 'Sample bookings · calendar data pending': 'Reservas de ejemplo · datos pendientes',
           'Inventory': 'Inventario', 'View calendar': 'Ver calendario', 'Property setup': 'Gestión del alojamiento', 'Manage rooms': 'Gestionar habitaciones',
+          'Create rooms, adjust bed capacity and keep inventory up to date.': 'Crea habitaciones, ajusta la capacidad de camas y mantén actualizado el inventario.',
+          'Select room to edit': 'Seleccionar habitación para editar', 'Create a new room': 'Crear habitación nueva', 'Create room': 'Crear habitación',
+          'Room number': 'Número de habitación', 'Operational status': 'Estado operativo', 'Active': 'Activa', 'Inactive': 'Inactiva', 'Amenities': 'Comodidades',
+          'Nightly rate': 'Tarifa por noche', 'Rate': 'Tarifa', 'Edit': 'Editar',
+          'Clear form': 'Limpiar formulario', 'Deactivate room': 'Dar de baja', 'Current rooms': 'Habitaciones actuales', 'Loading rooms...': 'Cargando habitaciones...',
+          'Requests to review': 'Solicitudes para revisar', 'Guest bookings': 'Reservas de huéspedes',
+          'Confirm or reject reservations submitted from the guest portal.': 'Confirma o rechaza las solicitudes enviadas desde el portal de huéspedes.',
+          'Loading requests...': 'Cargando solicitudes...',
+          'Check-in': 'Entrada', 'Check-out': 'Salida', 'Available room': 'Habitación disponible', 'Select dates to check availability': 'Selecciona fechas para consultar disponibilidad',
+          'Number of beds': 'Cantidad de camas', 'Send reservation request': 'Enviar solicitud de reserva',
           'Edit capacity, room type and operational status.': 'Modifica la capacidad, el tipo de habitación y el estado operativo.', '12 rooms': '12 habitaciones', 'Edit room': 'Editar habitación',
           'Select room': 'Seleccionar habitación', 'Room name or number': 'Nombre o número', 'Room type': 'Tipo de habitación', 'Shared dorm': 'Dormitorio compartido',
           'Private double': 'Doble privada', 'Private single': 'Individual privada', 'Bed capacity': 'Capacidad de camas', 'Floor': 'Planta', 'Nightly rate (€)': 'Tarifa por noche (€)',

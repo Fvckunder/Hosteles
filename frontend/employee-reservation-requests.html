@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review guest reservation requests.">
+  <title>Reservation requests | Link Cordoba Hostel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="dashboard-page" data-page="reservationRequests">
+  <aside class="dashboard-sidebar">
+    <a class="employee-brand" href="employee-dashboard.html"><span class="brand-mark">LC</span><span>Link Cordoba<br>Hostel</span></a>
+    <nav class="dashboard-nav" aria-label="Employee modules">
+      <p class="dashboard-nav-label">Workspace</p>
+      <a class="dashboard-nav-link" href="employee-dashboard.html"><span class="nav-icon">▦</span> Overview</a>
+      <a class="dashboard-nav-link" href="employee-reservation-new.html"><span class="nav-icon">＋</span> New reservation</a>
+      <a class="dashboard-nav-link active" href="employee-reservation-requests.html" aria-current="page"><span class="nav-icon">✓</span> Reservation requests</a>
+      <a class="dashboard-nav-link" href="employee-reservation-calendar.html"><span class="nav-icon">▦</span> Booking calendar</a>
+      <a class="dashboard-nav-link" href="#guests" data-module="guests"><span class="nav-icon">○</span> Guests</a>
+      <a class="dashboard-nav-link" href="employee-rooms.html"><span class="nav-icon">◇</span> Rooms &amp; beds</a>
+      <p class="dashboard-nav-label dashboard-nav-label-spaced">Management</p>
+      <a class="dashboard-nav-link" href="#team" data-module="team"><span class="nav-icon">△</span> Team</a>
+      <a class="dashboard-nav-link" href="#reports" data-module="reports"><span class="nav-icon">≡</span> Reports</a>
+      <a class="dashboard-nav-link" href="#settings" data-module="settings"><span class="nav-icon">⚙</span> Settings</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="profile-mini"><span class="profile-avatar" data-employee-avatar>--</span><span><strong data-employee-name>Employee</strong><small data-employee-role>Staff</small></span></div>
+      <a class="logout-link" href="employee-login.html">Sign out <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+  <main class="dashboard-main">
+    <header class="dashboard-header module-header">
+      <div><p class="module-kicker">Reservations</p><h1>Reservation requests</h1></div>
+      <div class="dashboard-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><a class="dashboard-help" href="employee-rooms.html">Manage rooms</a></div>
+    </header>
+    <section class="module-content">
+      <div class="module-heading">
+        <div><p class="module-kicker">Guest bookings</p><h2>Requests to review</h2><p>Confirm or reject reservations submitted from the guest portal.</p></div>
+        <span class="module-status" data-request-count>Loading...</span>
+      </div>
+      <p class="module-feedback" data-request-feedback role="status" aria-live="polite" hidden></p>
+      <div class="reservation-request-list" data-request-list aria-live="polite">
+        <p class="guest-portal-loading">Loading requests...</p>
+      </div>
+    </section>
+  </main>
+  <script src="js/language.js"></script>
+  <script src="js/reservation-requests.js"></script>
+</body>
+</html>

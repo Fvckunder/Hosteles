@@ -21,9 +21,7 @@ namespace APIHostel.Controllers
             _logger = logger;
         }
 
-        // GET: api/Rooms. Lists every active room with its type and amenities. The
-        // dashboard uses this to render the inventory table; deactivated rooms are
-        // intentionally excluded so historic references stay untouched.
+        // GET: api/Rooms. Lists every active room with its type, beds and amenities.
         [HttpGet]
         public async Task<ActionResult<List<RoomResponseDTO>>> ObtenerTodos()
         {
@@ -41,7 +39,9 @@ namespace APIHostel.Controllers
                     RoomTypeName = room.RoomType.TypeName,
                     Floor = room.Floor,
                     PricePerNight = room.PricePerNight,
+                    BedCount = room.Beds.Count(bed => bed.Active),
                     Active = room.Active,
+                    AmenityIds = room.Amenities.Select(a => a.AmenityId).ToList(),
                     Amenities = room.Amenities.Select(a => a.AmenityName).ToList()
                 })
                 .ToListAsync();
@@ -66,7 +66,9 @@ namespace APIHostel.Controllers
                     RoomTypeName = r.RoomType.TypeName,
                     Floor = r.Floor,
                     PricePerNight = r.PricePerNight,
+                    BedCount = r.Beds.Count(bed => bed.Active),
                     Active = r.Active,
+                    AmenityIds = r.Amenities.Select(a => a.AmenityId).ToList(),
                     Amenities = r.Amenities.Select(a => a.AmenityName).ToList()
                 })
                 .SingleOrDefaultAsync();
@@ -75,6 +77,33 @@ namespace APIHostel.Controllers
                 return NotFound();
 
             return Ok(room);
+        }
+
+        [HttpGet("Lookups")]
+        public async Task<ActionResult<RoomCatalogResponseDTO>> ObtenerCatalogos()
+        {
+            var response = new RoomCatalogResponseDTO
+            {
+                RoomTypes = await _context.RoomTypes
+                    .OrderBy(type => type.TypeName)
+                    .Select(type => new RoomTypeOptionDTO
+                    {
+                        RoomTypeId = type.RoomTypeId,
+                        TypeName = type.TypeName
+                    })
+                    .ToListAsync(),
+                Amenities = await _context.Amenities
+                    .Where(amenity => amenity.Active)
+                    .OrderBy(amenity => amenity.AmenityName)
+                    .Select(amenity => new AmenityOptionDTO
+                    {
+                        AmenityId = amenity.AmenityId,
+                        AmenityName = amenity.AmenityName
+                    })
+                    .ToListAsync()
+            };
+
+            return Ok(response);
         }
 
         // POST: api/Rooms. Creates a new room. The room number is pre-checked for
@@ -98,23 +127,35 @@ namespace APIHostel.Controllers
             if (roomType == null)
                 return BadRequest("El tipo de habitación no existe.");
 
+            var amenities = await GetActiveAmenities(dto.AmenityIds);
+            if (amenities == null)
+                return BadRequest("Una o más comodidades no existen o están inactivas.");
+
+            var availableBedStatus = await _context.BedStatuses
+                .SingleOrDefaultAsync(status => status.StatusName == "Available");
+            if (availableBedStatus == null)
+            {
+                _logger.LogError("Available bed status is missing from the catalog.");
+                return Problem("No se pudo completar el alta de la habitación.");
+            }
+
             var room = new Room
             {
                 RoomNumber = roomNumber,
                 RoomTypeId = dto.RoomTypeId,
                 Floor = dto.Floor,
                 PricePerNight = dto.PricePerNight,
-                Active = true
+                Active = true,
+                Amenities = amenities,
+                Beds = Enumerable.Range(1, dto.BedCount)
+                    .Select(number => new Bed
+                    {
+                        BedNumber = checked((short)number),
+                        BedStatusId = availableBedStatus.BedStatusId,
+                        Active = true
+                    })
+                    .ToList()
             };
-
-            // Attach the selected amenities so EF links them through ROOM_AMENITIES.
-            if (dto.AmenityIds.Any())
-            {
-                var amenities = await _context.Amenities
-                    .Where(a => dto.AmenityIds.Contains(a.AmenityId) && a.Active)
-                    .ToListAsync();
-                room.Amenities = amenities;
-            }
 
             _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
@@ -127,7 +168,9 @@ namespace APIHostel.Controllers
                 RoomTypeName = roomType.TypeName,
                 Floor = room.Floor,
                 PricePerNight = room.PricePerNight,
+                BedCount = dto.BedCount,
                 Active = room.Active,
+                AmenityIds = room.Amenities.Select(a => a.AmenityId).ToList(),
                 Amenities = room.Amenities.Select(a => a.AmenityName).ToList()
             };
 
@@ -141,6 +184,9 @@ namespace APIHostel.Controllers
         {
             var room = await _context.Rooms
                 .Include(r => r.Amenities)
+                .Include(r => r.Beds)
+                    .ThenInclude(bed => bed.Reservations)
+                        .ThenInclude(reservation => reservation.ReservationStatus)
                 .SingleOrDefaultAsync(r => r.RoomId == id);
             if (room == null)
                 return NotFound();
@@ -161,26 +207,72 @@ namespace APIHostel.Controllers
             if (roomType == null)
                 return BadRequest("El tipo de habitación no existe.");
 
+            var amenities = await GetActiveAmenities(dto.AmenityIds);
+            if (amenities == null)
+                return BadRequest("Una o más comodidades no existen o están inactivas.");
+
+            var activeBeds = room.Beds.Where(bed => bed.Active).ToList();
+            var bedsToRemove = activeBeds.Count - dto.BedCount;
+            if (bedsToRemove > 0)
+            {
+                var removableBeds = activeBeds
+                    .Where(bed => !bed.Reservations.Any(reservation =>
+                        reservation.ReservationStatus.StatusName is "Pending" or "Confirmed"))
+                    .OrderByDescending(bed => bed.BedNumber)
+                    .Take(bedsToRemove)
+                    .ToList();
+                if (removableBeds.Count != bedsToRemove)
+                    return Conflict("No se puede reducir la capacidad porque hay camas asignadas a reservas pendientes o confirmadas.");
+
+                foreach (var bed in removableBeds)
+                    bed.Active = false;
+            }
+            else if (bedsToRemove < 0)
+            {
+                var availableBedStatus = await _context.BedStatuses
+                    .SingleOrDefaultAsync(status => status.StatusName == "Available");
+                if (availableBedStatus == null)
+                {
+                    _logger.LogError("Available bed status is missing from the catalog.");
+                    return Problem("No se pudo completar la modificación de la habitación.");
+                }
+
+                var nextBedNumber = room.Beds.Count == 0 ? 1 : room.Beds.Max(bed => (int)bed.BedNumber) + 1;
+                if (nextBedNumber + -bedsToRemove - 1 > short.MaxValue)
+                    return Conflict("No se pueden agregar más camas: se alcanzó el máximo de numeración de la habitación.");
+
+                for (var index = 0; index < -bedsToRemove; index++)
+                {
+                    room.Beds.Add(new Bed
+                    {
+                        BedNumber = checked((short)(nextBedNumber + index)),
+                        BedStatusId = availableBedStatus.BedStatusId,
+                        Active = true
+                    });
+                }
+            }
+
             room.RoomNumber = roomNumber;
             room.RoomTypeId = dto.RoomTypeId;
             room.Floor = dto.Floor;
             room.PricePerNight = dto.PricePerNight;
             room.Active = dto.Active;
-
-            // Replace amenities: clear the current collection and assign the new one.
             room.Amenities.Clear();
-            if (dto.AmenityIds.Any())
-            {
-                var amenities = await _context.Amenities
-                    .Where(a => dto.AmenityIds.Contains(a.AmenityId) && a.Active)
-                    .ToListAsync();
-                foreach (var amenity in amenities)
-                    room.Amenities.Add(amenity);
-            }
+            foreach (var amenity in amenities)
+                room.Amenities.Add(amenity);
 
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        private async Task<List<Amenity>?> GetActiveAmenities(List<int> amenityIds)
+        {
+            var ids = amenityIds.Distinct().ToArray();
+            var amenities = await _context.Amenities
+                .Where(amenity => ids.Contains(amenity.AmenityId) && amenity.Active)
+                .ToListAsync();
+            return amenities.Count == ids.Length ? amenities : null;
         }
 
         // DELETE: api/Rooms/5. Logical delete: the room is marked inactive so

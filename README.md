@@ -35,6 +35,8 @@ Ejecuta [`database/DBHostel.sql`](database/DBHostel.sql) **una sola vez** en SQL
 
 Para completar el catálogo de países, ejecuta después [`database/SeedMissingCountries.sql`](database/SeedMissingCountries.sql). Este segundo script se puede repetir: omite los nombres ya existentes.
 
+Para cargar datos de prueba de tipos, comodidades, habitaciones y camas, ejecuta [`database/SeedRoomsAndBeds.sql`](database/SeedRoomsAndBeds.sql) después de crear la base. El script completa los catálogos faltantes y se puede ejecutar varias veces sin duplicar registros.
+
 La API usa por defecto la conexión local integrada definida en `APIHostel/appsettings.json`:
 
 ```text
@@ -69,6 +71,8 @@ Páginas principales:
 | Portal de huéspedes | `frontend/guest-portal.html` |
 | Acceso del personal | `frontend/employee-login.html` |
 | Panel del personal | `frontend/employee-dashboard.html` |
+| Gestión de habitaciones | `frontend/employee-rooms.html` |
+| Solicitudes de reserva | `frontend/employee-reservation-requests.html` |
 
 El acceso al panel requiere iniciar sesión con una cuenta de personal válida. El script SQL crea los roles, pero no inserta usuarios ni contraseñas; no se crean credenciales de prueba automáticamente.
 
@@ -93,6 +97,12 @@ El acceso al panel requiere iniciar sesión con una cuenta de personal válida. 
 | `POST /api/Auth/RegisterEmployee` | Permite a un administrador crear cuentas de personal con rol de administrador o recepción. |
 | `GET /api/GuestPortal` | Devuelve el perfil y las reservas del huésped autenticado. |
 | `POST /api/GuestPortal/Reservations/{id}/Cancel` | Cancela reservas futuras pendientes o confirmadas del propio huésped, conservando el historial. |
+| `GET /api/GuestPortal/Availability?checkIn=...&checkOut=...` | Consulta habitaciones activas y camas disponibles para las fechas solicitadas. |
+| `POST /api/GuestPortal/Reservations` | Crea una solicitud pendiente y asigna camas disponibles a la cuenta autenticada. |
+| `GET /api/Rooms` y `GET /api/Rooms/Lookups` | Lista habitaciones activas y catálogos para el módulo del personal. |
+| `POST /api/Rooms`; `PUT` y `DELETE /api/Rooms/{id}` | Crea, modifica o da de baja habitaciones; las bajas son lógicas y conservan el historial. |
+| `GET /api/Reservations` | Devuelve las solicitudes pendientes para el personal autorizado. |
+| `POST /api/Reservations/{id}/Decision` | Confirma o rechaza una solicitud pendiente. |
 
 Los tokens de acceso duran 30 minutos y se guardan en `sessionStorage`. El acceso al portal está restringido por rol en la API, y las operaciones del panel vuelven a validar la cuenta en el servidor.
 
@@ -100,10 +110,16 @@ Los tokens de acceso duran 30 minutos y se guardan en `sessionStorage`. El acces
 
 El esquema incluye usuarios y roles, huéspedes y países, habitaciones, camas y estados, servicios, reservas, estados de reserva y la relación entre reservas y camas. Incluye claves foráneas, restricciones e índices. El total de una reserva se calcula mediante la vista `dbo.V_RESERVATION_TOTALS`.
 
+## Funcionalidades conectadas
+
+- **Habitaciones del personal:** la pantalla de gestión permite crear, editar y dar de baja habitaciones. La capacidad se gestiona creando o desactivando camas; no se puede reducir si están asignadas a reservas pendientes o confirmadas.
+- **Solicitud de huéspedes:** el portal permite consultar disponibilidad por fechas y enviar solicitudes para una habitación y cantidad de camas. La API asigna las camas y deja la reserva pendiente de revisión.
+- **Gestión de solicitudes:** el personal puede confirmar o rechazar solicitudes pendientes desde `frontend/employee-reservation-requests.html`.
+
 ## Pendiente de implementar
 
-- **Operación de reservas del personal:** crear y editar reservas, consultar disponibilidad real y asignar habitaciones o camas. El alta manual y el calendario muestran contenido de ejemplo.
-- **Gestión de habitaciones y camas:** persistir cambios de inventario, capacidad, precios, estados y mantenimiento; la pantalla actual usa datos estáticos.
+- **Operación de reservas del personal:** el formulario de alta manual y el calendario todavía muestran contenido de ejemplo.
+- **Gestión de camas:** administrar individualmente estados como mantenimiento o fuera de servicio desde una pantalla del personal.
 - **Dashboard operativo:** sustituir estadísticas, agenda, ocupación, llegadas y salidas de ejemplo por datos de la API.
 - **Módulos del panel:** búsqueda y administración de huéspedes, equipo, informes y configuración. Algunos aparecen como opciones de navegación, pero todavía no tienen una implementación funcional completa.
 - **Cuenta y autenticación:** implementar recuperación y cambio de contraseña. La casilla “Recordarme” y otros enlaces de acceso/ayuda todavía no gestionan esas acciones.
