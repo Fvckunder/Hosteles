@@ -2,14 +2,7 @@
 
 ## 1. Niveles de prueba
 
-El sistema se verificará mediante los siguientes niveles:
-
-- **Pruebas unitarias:** validan funciones y componentes aislados.
-- **Pruebas de integración:** comprueban la comunicación entre frontend, API y SQL Server.
-- **Pruebas de sistema:** validan los procesos completos desde la perspectiva del usuario.
-- **Pruebas de aceptación:** verifican que el sistema cumpla las necesidades de administradores, recepcionistas y huéspedes.
-- **Pruebas de seguridad:** controlan autenticación, autorización y protección de datos.
-- **Pruebas de regresión:** garantizan que los cambios no afecten las funciones existentes.
+El sistema se verificará mediante pruebas unitarias, de integración, de sistema, de aceptación, de seguridad y de regresión.
 
 ## 2. Datos de prueba
 
@@ -34,123 +27,105 @@ Los datos iniciales se encuentran en `database/TestRoomTypesAmenitiesRoomsUsers.
 
 ## 3. Lote de pruebas unitarias
 
-| ID | Prueba | Resultado esperado |
-|---|---|---|
-| UT-01 | Validar campos obligatorios del login | Se informa el error correspondiente |
-| UT-02 | Ingresar con credenciales válidas | Se genera un token JWT |
-| UT-03 | Ingresar con credenciales incorrectas | Se rechaza el acceso |
-| UT-04 | Validar el formato del correo | Se aceptan únicamente correos válidos |
-| UT-05 | Registrar un huésped con datos válidos | Se crea la cuenta |
-| UT-06 | Registrar un correo o documento duplicado | Se rechaza el registro |
-| UT-07 | Buscar una habitación existente | Se devuelven sus datos |
-| UT-08 | Consultar camas disponibles | Solo se muestran camas disponibles |
-| UT-09 | Intentar utilizar una cama en mantenimiento | La operación es rechazada |
+| ID | Caso de prueba | Entrada | Resultado esperado | Resultado obtenido |
+|---|---|---|---|---|
+| UT-01 | Validar campos obligatorios del login | Correo o contraseña vacíos | Se informa el campo faltante | Pendiente |
+| UT-02 | Ingresar con credenciales válidas | Usuario y contraseña correctos | Se genera un token JWT | Pendiente |
+| UT-03 | Ingresar con credenciales incorrectas | Contraseña inválida | Se rechaza el acceso | Pendiente |
+| UT-04 | Validar formato del correo | `usuario-invalido` | Se rechaza el formato | Pendiente |
+| UT-05 | Registrar huésped válido | Datos personales completos | Se crea la cuenta | Pendiente |
+| UT-06 | Registrar datos duplicados | Email o documento existente | Se rechaza el registro | Pendiente |
+| UT-07 | Buscar habitación existente | Número `101` | Se devuelven sus datos | Pendiente |
+| UT-08 | Consultar camas disponibles | Habitación con camas libres | Solo se muestran camas disponibles | Pendiente |
+| UT-09 | Usar cama en mantenimiento | Cama con estado `Maintenance` | La operación es rechazada | Pendiente |
 
 ## 4. Lote de pruebas de integración
 
-| ID | Prueba | Resultado esperado |
-|---|---|---|
-| IT-01 | `POST /api/Auth/Login` | Valida el usuario y devuelve JWT |
-| IT-02 | `GET /api/Auth/Countries` | Devuelve los países de SQL Server |
-| IT-03 | `POST /api/Auth/RegisterGuest` | Guarda el usuario y perfil del huésped |
-| IT-04 | `GET /api/Auth/Me` | Devuelve los datos del usuario autenticado |
-| IT-05 | `POST /api/Auth/RegisterEmployee` | Crea empleados solo para administradores |
-| IT-06 | `GET /api/GuestPortal` | Devuelve perfil y reservas del huésped |
-| IT-07 | Consultar un endpoint sin token | Devuelve HTTP 401 |
-| IT-08 | Ejecutar los scripts de base de datos | Crea y carga correctamente la información |
-| IT-09 | Ejecutar dos veces el script de prueba | No duplica los registros |
-| IT-10 | Detener la API y cargar el frontend | Se muestra un mensaje de conexión |
+| ID | Caso de prueba | Entrada | Resultado esperado | Resultado obtenido |
+|---|---|---|---|---|
+| IT-01 | Ejecutar login | `POST /api/Auth/Login` con credenciales válidas | La API valida el usuario y devuelve JWT | Pendiente |
+| IT-02 | Consultar países | `GET /api/Auth/Countries` | Se devuelve la información de SQL Server | Pendiente |
+| IT-03 | Registrar huésped | `POST /api/Auth/RegisterGuest` con datos válidos | Se guardan el usuario y su perfil | Pendiente |
+| IT-04 | Consultar usuario autenticado | `GET /api/Auth/Me` con JWT válido | Se devuelven los datos del usuario | Pendiente |
+| IT-05 | Registrar empleado | `POST /api/Auth/RegisterEmployee` como administrador | Se crea el empleado con su rol | Pendiente |
+| IT-06 | Consultar portal del huésped | `GET /api/GuestPortal` con JWT de huésped | Se devuelve el perfil y sus reservas | Pendiente |
+| IT-07 | Consultar endpoint protegido sin token | Petición sin encabezado Authorization | Se devuelve HTTP 401 | Pendiente |
+| IT-08 | Ejecutar scripts de base de datos | `DBHostel.sql` y script de datos | Se crea y carga correctamente la base | Pendiente |
+| IT-09 | Repetir carga de datos | Ejecutar dos veces el script de prueba | No se duplican los registros | Pendiente |
+| IT-10 | Probar frontend sin API | Detener el backend y abrir el portal | Se muestra un mensaje de conexión | Pendiente |
 
 ## 5. Lote de pruebas de sistema
 
-### Acceso y roles
-
-- El administrador puede acceder al panel administrativo.
-- El personal de recepción puede gestionar huéspedes y reservas.
-- Un usuario sin credenciales válidas no puede iniciar sesión.
-- Un usuario sin sesión es redirigido a la pantalla de login.
-- Un huésped no puede acceder a funciones administrativas.
-
-### Registro de huéspedes
-
-- Se permite registrar un huésped con datos válidos.
-- Se rechazan campos obligatorios vacíos.
-- Se rechazan emails y documentos duplicados.
-- Las contraseñas se almacenan protegidas mediante hash.
-
-### Gestión de reservas
-
-- Se puede crear una reserva con fechas y camas disponibles.
-- Una reserva nueva queda en estado `Pending`.
-- Se puede confirmar, cancelar y completar una reserva.
-- No se permite reservar una cama ocupada, en mantenimiento o fuera de servicio.
-- No se aceptan fechas inválidas ni reservas superpuestas.
-- El huésped puede cancelar reservas futuras cuando las reglas lo permiten.
-
-### Habitaciones y camas
-
-- Se pueden consultar habitaciones y camas.
-- Se pueden crear y modificar habitaciones.
-- No se permiten números de habitación duplicados.
-- Una habitación o cama desactivada no debe aparecer como disponible.
-- Las amenities asociadas deben visualizarse correctamente.
-
-### Portal del huésped
-
-- El huésped puede consultar sus datos personales.
-- Puede visualizar próximas estadías y reservas anteriores.
-- Si no tiene reservas, se muestra un mensaje informativo.
-- No puede consultar información de otros huéspedes.
-- El cierre de sesión elimina el token almacenado.
+| ID | Módulo | Caso de prueba | Entrada o procedimiento | Resultado esperado | Resultado obtenido |
+|---|---|---|---|---|---|
+| ST-01 | Acceso | Login de administrador | Ingresar como `admin@hostel.com` | Se muestra el panel administrativo | Pendiente |
+| ST-02 | Acceso | Login de recepción | Ingresar como `recepcion@hostel.com` | Se muestra el panel de recepción | Pendiente |
+| ST-03 | Acceso | Login inválido | Usar credenciales incorrectas | Se rechaza el acceso | Pendiente |
+| ST-04 | Acceso | Acceso sin sesión | Abrir una pantalla protegida | Se redirige al login | Pendiente |
+| ST-05 | Roles | Acceso de huésped a administración | Intentar abrir una función administrativa | Se deniega el acceso | Pendiente |
+| ST-06 | Registro | Registrar huésped válido | Completar todos los campos requeridos | Se crea la cuenta | Pendiente |
+| ST-07 | Registro | Registro incompleto | Dejar campos obligatorios vacíos | Se muestran mensajes de validación | Pendiente |
+| ST-08 | Registro | Email o documento duplicado | Utilizar datos ya registrados | Se rechaza el registro | Pendiente |
+| ST-09 | Registro | Protección de contraseña | Registrar una contraseña | Se almacena mediante hash | Pendiente |
+| ST-10 | Reservas | Crear reserva | Seleccionar fechas y cama disponible | Se crea una reserva `Pending` | Pendiente |
+| ST-11 | Reservas | Confirmar reserva | Cambiar una reserva pendiente | El estado pasa a `Confirmed` | Pendiente |
+| ST-12 | Reservas | Cancelar reserva | Cancelar una reserva permitida | El estado pasa a `Cancelled` | Pendiente |
+| ST-13 | Reservas | Completar reserva | Registrar la salida del huésped | El estado pasa a `Completed` | Pendiente |
+| ST-14 | Reservas | Reservar cama no disponible | Seleccionar cama ocupada o fuera de servicio | El sistema impide la reserva | Pendiente |
+| ST-15 | Reservas | Fechas inválidas | Usar salida anterior a la entrada | Se rechaza la reserva | Pendiente |
+| ST-16 | Reservas | Reservas superpuestas | Reservar la misma cama y fechas | Se impide la duplicación | Pendiente |
+| ST-17 | Habitaciones | Consultar inventario | Abrir el módulo de habitaciones | Se muestran habitaciones y camas | Pendiente |
+| ST-18 | Habitaciones | Crear habitación | Cargar número, tipo, piso y precio | Se guarda la habitación | Pendiente |
+| ST-19 | Habitaciones | Número duplicado | Crear otra habitación `101` | Se rechaza el duplicado | Pendiente |
+| ST-20 | Habitaciones | Cambiar estado de cama | Marcar una cama como mantenimiento | Deja de estar disponible | Pendiente |
+| ST-21 | Portal | Consultar perfil | Ingresar como huésped | Se muestran sus datos personales | Pendiente |
+| ST-22 | Portal | Consultar reservas | Ingresar con reservas registradas | Se muestran próximas y anteriores | Pendiente |
+| ST-23 | Portal | Huésped sin reservas | Ingresar con una cuenta sin reservas | Se muestra un mensaje informativo | Pendiente |
+| ST-24 | Portal | Consultar datos ajenos | Intentar modificar el identificador | No se permite acceder a otro huésped | Pendiente |
+| ST-25 | Sesión | Cerrar sesión | Presionar el botón de salida | Se elimina el token y se vuelve al login | Pendiente |
 
 ## 6. Lote de pruebas de aceptación
 
-### Administrador
-
-- Puede gestionar empleados, habitaciones, camas, reservas e informes.
-- Puede modificar estados y consultar la información operativa.
-
-### Recepcionista
-
-- Puede iniciar sesión.
-- Puede consultar disponibilidad.
-- Puede registrar, modificar y cancelar reservas.
-- Puede consultar los datos de los huéspedes.
-- No puede realizar funciones exclusivas del administrador.
-
-### Huésped
-
-- Puede registrarse e iniciar sesión.
-- Puede consultar sus reservas.
-- Puede cancelar una reserva permitida.
-- No puede acceder a información de otros usuarios.
+| ID | Perfil | Criterio de aceptación | Entrada o procedimiento | Resultado esperado | Resultado obtenido |
+|---|---|---|---|---|---|
+| AT-01 | Administrador | Gestionar empleados | Crear y consultar usuarios | Puede administrar empleados | Pendiente |
+| AT-02 | Administrador | Gestionar habitaciones y camas | Crear o modificar inventario | Los cambios se guardan correctamente | Pendiente |
+| AT-03 | Administrador | Consultar información operativa | Abrir reservas e informes | Se muestra la información disponible | Pendiente |
+| AT-04 | Recepcionista | Iniciar sesión | Usar credenciales de recepción | Accede a su panel | Pendiente |
+| AT-05 | Recepcionista | Gestionar reservas | Crear, modificar o cancelar una reserva | La operación se completa correctamente | Pendiente |
+| AT-06 | Recepcionista | Consultar huéspedes | Buscar un huésped registrado | Se muestran sus datos autorizados | Pendiente |
+| AT-07 | Recepcionista | Restringir funciones administrativas | Intentar administrar empleados | Se deniega la operación | Pendiente |
+| AT-08 | Huésped | Registrarse e iniciar sesión | Completar el registro y acceder | Ingresa al portal | Pendiente |
+| AT-09 | Huésped | Consultar reservas | Abrir el portal | Visualiza sus reservas | Pendiente |
+| AT-10 | Huésped | Cancelar reserva permitida | Cancelar una reserva futura | La reserva se cancela | Pendiente |
+| AT-11 | Huésped | Proteger información | Intentar consultar otro usuario | El acceso es rechazado | Pendiente |
 
 ## 7. Lote de pruebas de seguridad
 
-| ID | Prueba | Resultado esperado |
-|---|---|---|
-| SEC-01 | Acceder sin JWT | HTTP 401 |
-| SEC-02 | Utilizar un JWT inválido o vencido | Acceso denegado |
-| SEC-03 | Usar un JWT de huésped en una función administrativa | HTTP 403 |
-| SEC-04 | Introducir código SQL en formularios | No se ejecuta como SQL |
-| SEC-05 | Consultar datos de otro huésped | La información permanece protegida |
-| SEC-06 | Modificar el rol desde el navegador | El backend mantiene los permisos reales |
-| SEC-07 | Registrar un email duplicado | La operación es rechazada |
+| ID | Caso de prueba | Entrada | Resultado esperado | Resultado obtenido |
+|---|---|---|---|---|
+| SEC-01 | Acceso sin JWT | Petición a endpoint protegido sin token | Se devuelve HTTP 401 | Pendiente |
+| SEC-02 | JWT inválido o vencido | Token incorrecto o expirado | Se deniega el acceso | Pendiente |
+| SEC-03 | Rol insuficiente | JWT de huésped en función administrativa | Se devuelve HTTP 403 | Pendiente |
+| SEC-04 | Inyección SQL | Código SQL en campos del formulario | No se ejecuta como SQL | Pendiente |
+| SEC-05 | Acceso a datos ajenos | Solicitar información de otro huésped | La información permanece protegida | Pendiente |
+| SEC-06 | Modificar rol en el navegador | Alterar datos del frontend | El backend conserva los permisos reales | Pendiente |
+| SEC-07 | Email duplicado | Registrar un correo existente | La operación es rechazada | Pendiente |
 
 ## 8. Lote de pruebas de regresión
 
-Después de cada modificación se deben repetir, como mínimo, las siguientes pruebas:
-
-1. Inicio de sesión correcto e incorrecto.
-2. Registro de huésped.
-3. Consulta de países.
-4. Consulta del usuario autenticado.
-5. Acceso al portal del huésped.
-6. Cierre de sesión.
-7. Consulta de habitaciones y camas.
-8. Creación y cancelación de reservas.
-9. Validación de permisos de administrador y recepción.
-10. Verificación de la comunicación entre frontend, API y base de datos.
+| ID | Funcionalidad | Entrada o procedimiento | Resultado esperado | Resultado obtenido |
+|---|---|---|---|---|
+| REG-01 | Autenticación | Login correcto e incorrecto | Se mantienen las validaciones | Pendiente |
+| REG-02 | Registro | Registrar un huésped | La cuenta se crea correctamente | Pendiente |
+| REG-03 | Países | Consultar la lista de países | Se muestran los países disponibles | Pendiente |
+| REG-04 | Usuario autenticado | Consultar `/api/Auth/Me` | Se devuelve el usuario correcto | Pendiente |
+| REG-05 | Portal | Abrir el portal del huésped | Se cargan perfil y reservas | Pendiente |
+| REG-06 | Cierre de sesión | Eliminar la sesión | Se borra el token | Pendiente |
+| REG-07 | Habitaciones | Consultar habitaciones y camas | Se muestra el inventario correcto | Pendiente |
+| REG-08 | Reservas | Crear y cancelar una reserva | Se actualizan los estados | Pendiente |
+| REG-09 | Permisos | Probar roles de administrador y recepción | Se respetan las restricciones | Pendiente |
+| REG-10 | Integración | Verificar frontend, API y base de datos | La comunicación continúa funcionando | Pendiente |
 
 ## 9. Criterios de aprobación
 
