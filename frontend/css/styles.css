@@ -137,9 +137,22 @@ em { color: var(--coral); font-style: normal; }
 .registration-grid input:focus, .registration-grid select:focus { border-color: var(--coral); }
 .registration-field-full { grid-column: 1 / -1; }
 .registration-hint { grid-column: 1 / -1; margin: -8px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
-.employee-register-dialog { position: fixed; width: min(560px, calc(100% - 32px)); max-height: calc(100vh - 32px); padding: 34px; overflow-y: auto; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(20, 32, 26, .24); }
+.employee-register-dialog { position: fixed; width: min(820px, calc(100% - 32px)); max-height: calc(100vh - 32px); padding: 34px; overflow-y: auto; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(20, 32, 26, .24); }
 .employee-register-dialog::backdrop { background: rgba(19, 29, 24, .58); backdrop-filter: blur(2px); }
 .employee-register-dialog h2 { margin: 0 35px 8px 0; font: 600 28px/1.15 var(--sans); }
+.user-management-toolbar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0 0 20px; }
+.user-filter-group { display: grid; gap: 6px; }
+.user-filter-group label { font-size: 11px; font-weight: 700; }
+.user-filter-group select, .user-management-table input, .user-management-table select { width: 100%; min-height: 38px; padding: 0 10px; border: 1px solid var(--line); background: transparent; color: var(--ink); font: 12px var(--sans); }
+.user-management-form { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.user-management-list-wrap { overflow: auto; }
+.user-management-table { width: 100%; border-collapse: collapse; }
+.user-management-table th, .user-management-table td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; font-size: 12px; }
+.user-management-table th { color: var(--muted); font-size: 10px; letter-spacing: .09em; text-transform: uppercase; }
+.user-management-table td:last-child, .user-management-table th:last-child { text-align: right; }
+.user-management-row button { margin-left: 8px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; padding: 6px 10px; font: 600 11px var(--sans); }
+.user-management-row button:first-child { margin-left: 0; }
+.user-management-row button.danger { color: #b33d36; }
 .password-reset-dialog { position: fixed; width: min(440px, calc(100% - 32px)); max-height: calc(100vh - 32px); padding: 34px; overflow-y: auto; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--paper); box-shadow: 0 24px 80px rgba(20, 32, 26, .24); }
 .password-reset-dialog::backdrop { background: rgba(19, 29, 24, .58); backdrop-filter: blur(2px); }
 .password-reset-dialog h2 { margin: 0 35px 20px 0; font: 600 26px/1.15 var(--sans); }
@@ -152,8 +165,6 @@ em { color: var(--coral); font-style: normal; }
 .employee-register-intro { margin: 0 0 22px; color: var(--muted); font-size: 13px; line-height: 1.5; }
 .dialog-close { position: absolute; top: 17px; right: 17px; display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); color: var(--ink); background: transparent; font-size: 21px; cursor: pointer; }
 .employee-register-submit { min-height: 45px; padding: 0 18px; border: 0; cursor: pointer; }
-.dashboard-register-button { min-height: 38px; padding: 0 13px; border: 0; font-size: 11px; cursor: pointer; }
-.dashboard-register-button[hidden] { display: none; }
 /* Portal del huésped: el resumen de la cuenta y el historial de reservas se muestran en un espacio sencillo y fácil de recorrer. */
 .guest-portal-page { min-height: 100vh; background: var(--paper); }
 .guest-portal-header { width: min(1160px, calc(100% - 80px)); border-bottom: 1px solid var(--line); }
@@ -214,6 +225,8 @@ em { color: var(--coral); font-style: normal; }
 .employee-remember input { width: 13px; height: 13px; margin: 0; accent-color: #6e9480; }
 .employee-button { width: 100%; color: #fff; background: #30463e; border-radius: 3px; }
 .employee-button:hover { background: #6f947f; }
+.employee-initial-admin-button { margin-top: 14px; }
+.employee-initial-admin-button[hidden] { display: none; }
 .employee-back { margin-top: auto; color: #87928c; font-size: 11px; }
 .employee-back span { margin-right: 6px; color: #6e9480; }
 .employee-login-aside { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 596px; padding: 33px 38px; overflow: hidden; color: #f5f7f3; background: #30463e; }
@@ -236,6 +249,7 @@ em { color: var(--coral); font-style: normal; }
 .dashboard-nav-label { margin: 0 13px 12px; color: #a0aca5; font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .dashboard-nav-label-spaced { margin-top: 36px; }
 .dashboard-nav-link { display: flex; align-items: center; gap: 12px; min-height: 42px; padding: 0 13px; border-radius: 4px; color: #89958e; font-size: 12px; font-weight: 600; }
+.dashboard-nav-link[hidden] { display: none; }
 .dashboard-nav-link:hover, .dashboard-nav-link.active { color: #375447; background: #edf3ee; }
 .dashboard-nav-link.active { font-weight: 700; }
 .nav-icon { display: inline-grid; place-items: center; width: 16px; color: #829a8b; font-size: 18px; font-weight: 400; }
@@ -546,7 +560,6 @@ html[data-theme="dark"] .module-cancel { color: #bac7bd; }
   .dashboard-header { padding: 20px 18px; }
   .dashboard-header h1 { font-size: 19px; }
   .dashboard-header-actions { gap: 8px; }.dashboard-help { display: none; }
-  .dashboard-register-button { min-height: 34px; padding: 0 9px; font-size: 10px; }
   .dashboard-content { padding: 22px 18px 40px; }
   .module-content { padding: 22px 18px 45px; }
   .module-heading { align-items: flex-start; flex-direction: column; }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -27,6 +28,66 @@ namespace APIHostel.Controllers
             _context = context;
             _logger = logger;
             _signingKey = signingKey;
+        }
+
+        // GET: api/Auth/HasAdministrator. El acceso de empleados muestra el formulario
+        // inicial de alta solo cuando no queda ninguna cuenta administradora activa.
+        [AllowAnonymous]
+        [HttpGet("HasAdministrator")]
+        public async Task<ActionResult> HasAdministrator()
+        {
+            var exists = await _context.Users
+                .AnyAsync(user => user.Active && user.Role.RoleName == "Admin");
+
+            return Ok(new { exists });
+        }
+
+        // POST: api/Auth/RegisterInitialAdministrator. El nivel Serializable evita que
+        // solicitudes simultáneas creen más de una cuenta administradora inicial.
+        [AllowAnonymous]
+        [HttpPost("RegisterInitialAdministrator")]
+        public async Task<ActionResult> RegisterInitialAdministrator(InitialAdministratorRegistrationRequestDTO dto)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
+
+            var administratorExists = await _context.Users
+                .AnyAsync(user => user.Active && user.Role.RoleName == "Admin");
+            if (administratorExists)
+                return Conflict("Ya existe una cuenta administradora activa.");
+
+            var email = dto.Email.Trim();
+            if (await _context.Users.AnyAsync(user => user.Email == email))
+                return Conflict("Ya existe una cuenta con ese correo electrónico.");
+
+            var role = await _context.Roles.SingleOrDefaultAsync(item => item.RoleName == "Admin");
+            if (role == null)
+            {
+                _logger.LogError("Admin role is missing from the roles catalog.");
+                return Problem("No se pudo completar el registro.");
+            }
+
+            var administrator = new User
+            {
+                RoleId = role.RoleId,
+                FirstName = dto.FirstName.Trim(),
+                LastName = dto.LastName.Trim(),
+                Email = email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Active = true
+            };
+
+            _context.Users.Add(administrator);
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return StatusCode(StatusCodes.Status201Created, new
+            {
+                userId = administrator.UserId,
+                firstName = administrator.FirstName,
+                lastName = administrator.LastName,
+                email = administrator.Email,
+                roleName = role.RoleName
+            });
         }
 
         // POST: api/Auth/Login. Si el inicio de sesión es correcto, devuelve un token firmado

@@ -39,13 +39,14 @@ Ya implementado:
 
 - `frontend/login.html` y `frontend/employee-login.html` usan `POST /api/Auth/Login`, que comprueba la cuenta y su rol y devuelve un JWT.
 - `frontend/guest-register.html` consulta `GET /api/Auth/Countries` y crea la cuenta mediante `POST /api/Auth/RegisterGuest`.
-- El panel consulta `GET /api/Auth/Me`; un administrador puede crear cuentas de personal con `POST /api/Auth/RegisterEmployee`.
+- `frontend/employee-login.html` consulta `GET /api/Auth/HasAdministrator` y permite crear la primera cuenta con `POST /api/Auth/RegisterInitialAdministrator` solo cuando no existe ningún administrador activo.
+- El panel consulta `GET /api/Auth/Me`; las vistas de Equipo y Huéspedes usan `api/Users` para las operaciones de gestión de cuentas.
+- En el dashboard, los módulos Equipo y Huéspedes separan la gestión de cuentas de personal y de huéspedes; sus operaciones CRUD usan `api/Users`, protegido para administradores.
 - El portal de huéspedes consulta `GET /api/GuestPortal`. La cancelación de reservas futuras permitidas usa `POST /api/GuestPortal/Reservations/{id}/Cancel`.
 
 Pendiente:
 
 - Recuperación y cambio de contraseña, y persistencia de sesión mediante la opción “Recordarme”.
-- Definir y documentar la creación segura de la primera cuenta administradora.
 - No enviar credenciales mediante enlaces ni parámetros en la URL.
 
 ### Dashboard
@@ -66,7 +67,7 @@ La identidad y el rol de la persona que inició sesión se cargan desde `GET /ap
 - Registrar check-in y check-out.
 - Asignar habitaciones y camas.
 - Actualizar estados de limpieza y mantenimiento.
-- Gestionar huéspedes y sus datos de contacto.
+- Completar informes y configuración del panel.
 - Gestionar empleados, roles y permisos.
 - Generar informes de ocupación, ingresos y actividad.
 

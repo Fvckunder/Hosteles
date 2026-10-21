@@ -2,6 +2,8 @@
   // Mantener esta URL alineada con el perfil HTTP de APIHostel/Properties/launchSettings.json.
   const apiBaseUrl = 'http://localhost:5159/api/Auth';
 
+  initializeInitialAdministrator();
+
   document.querySelectorAll('form[data-auth-role]').forEach((form) => {
     const feedback = form.querySelector('.auth-feedback');
     const submitButton = form.querySelector('button[type="submit"]');
@@ -255,6 +257,110 @@
       });
     }
   });
+
+  function initializeInitialAdministrator() {
+    const button = document.querySelector('[data-open-initial-admin]');
+    const dialog = document.querySelector('[data-initial-admin-dialog]');
+    const form = document.querySelector('[data-initial-admin-registration]');
+    const status = document.querySelector('[data-admin-status]');
+    if (!button || !dialog || !form || !status) return;
+
+    let requestSequence = 0;
+    let administratorExists = true;
+    const isSpanish = () => document.documentElement.lang === 'es';
+
+    button.addEventListener('click', () => {
+      if (administratorExists) {
+        refreshAdministratorStatus();
+        return;
+      }
+      dialog.showModal();
+    });
+    dialog.querySelector('[data-close-initial-admin]').addEventListener('click', () => dialog.close());
+    form.addEventListener('submit', registerInitialAdministrator);
+    window.addEventListener('focus', refreshAdministratorStatus);
+    refreshAdministratorStatus();
+
+    async function refreshAdministratorStatus() {
+      const currentRequest = ++requestSequence;
+      try {
+        const response = await fetch(`${apiBaseUrl}/HasAdministrator`);
+        if (!response.ok) throw new Error(await readInitialAdminError(response));
+        const result = await response.json();
+        if (typeof result.exists !== 'boolean') throw new Error('Invalid administrator status response.');
+        if (currentRequest !== requestSequence) return;
+
+        administratorExists = result.exists;
+        button.hidden = administratorExists;
+        status.hidden = true;
+        status.textContent = '';
+      } catch (error) {
+        if (currentRequest !== requestSequence) return;
+        button.hidden = true;
+        status.textContent = error instanceof TypeError
+          ? (isSpanish()
+            ? 'No se pudo verificar si existe una cuenta administradora. Comprueba que la API esté en ejecución.'
+            : 'Could not verify whether an administrator account exists. Check that the API is running.')
+          : error.message;
+        status.dataset.state = 'error';
+        status.hidden = false;
+      }
+    }
+
+    async function registerInitialAdministrator(event) {
+      event.preventDefault();
+      const feedback = form.querySelector('.auth-feedback');
+      const submitButton = form.querySelector('button[type="submit"]');
+      const spanish = isSpanish();
+      feedback.hidden = true;
+      submitButton.disabled = true;
+
+      try {
+        const response = await fetch(`${apiBaseUrl}/RegisterInitialAdministrator`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: form.elements.namedItem('firstName').value.trim(),
+            lastName: form.elements.namedItem('lastName').value.trim(),
+            email: form.elements.namedItem('email').value.trim(),
+            password: form.elements.namedItem('password').value
+          })
+        });
+        if (!response.ok) throw new Error(await readInitialAdminError(response));
+
+        requestSequence++;
+        administratorExists = true;
+        button.hidden = true;
+        form.reset();
+        dialog.close();
+        status.textContent = spanish
+          ? 'Cuenta administradora creada. Ya puedes iniciar sesión.'
+          : 'Administrator account created. You can now sign in.';
+        status.dataset.state = 'success';
+        status.hidden = false;
+      } catch (error) {
+        feedback.textContent = error instanceof TypeError
+          ? (spanish ? 'No se pudo conectar con el servidor.' : 'Could not reach the server.')
+          : error.message;
+        feedback.dataset.state = 'error';
+        feedback.hidden = false;
+        await refreshAdministratorStatus();
+      } finally {
+        submitButton.disabled = false;
+      }
+    }
+
+    async function readInitialAdminError(response) {
+      const responseText = await response.text();
+      try {
+        const body = JSON.parse(responseText);
+        return body.message || body.title || (typeof body === 'string' ? body : null)
+          || (isSpanish() ? 'No se pudo completar el alta.' : 'Could not create the account.');
+      } catch {
+        return responseText || (isSpanish() ? 'No se pudo completar el alta.' : 'Could not create the account.');
+      }
+    }
+  }
 
   function createPasswordResetDialog() {
     const dialog = document.createElement('dialog');

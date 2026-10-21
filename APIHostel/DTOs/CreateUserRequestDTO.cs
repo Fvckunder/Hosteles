@@ -9,5 +9,9 @@
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string RoleName { get; set; } = string.Empty;
+        public int? CountryId { get; set; }
+        public string? Dni { get; set; }
+        public string? Passport { get; set; }
+        public string? Phone { get; set; }
     }
 }

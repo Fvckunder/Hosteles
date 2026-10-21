@@ -21,10 +21,10 @@
       <a class="dashboard-nav-link" href="employee-reservation-new.html" data-module="reservations"><span class="nav-icon">＋</span> New reservation</a>
       <a class="dashboard-nav-link" href="employee-reservation-requests.html"><span class="nav-icon">✓</span> Reservation requests</a>
       <a class="dashboard-nav-link" href="employee-reservation-calendar.html" data-module="reservation-calendar"><span class="nav-icon">▦</span> Booking calendar <span class="nav-count" data-backend="reservation-count">12</span></a>
-      <a class="dashboard-nav-link" href="#guests" data-module="guests"><span class="nav-icon">○</span> Guests</a>
+      <a class="dashboard-nav-link" href="#guests" data-user-module="guests" hidden><span class="nav-icon">○</span> Guests</a>
       <a class="dashboard-nav-link" href="employee-rooms.html" data-module="rooms"><span class="nav-icon">◇</span> Rooms &amp; beds</a>
       <p class="dashboard-nav-label dashboard-nav-label-spaced">Management</p>
-      <a class="dashboard-nav-link" href="#team" data-module="team"><span class="nav-icon">△</span> Team</a>
+      <a class="dashboard-nav-link" href="#team" data-user-module="team" hidden><span class="nav-icon">△</span> Team</a>
       <a class="dashboard-nav-link" href="#reports" data-module="reports"><span class="nav-icon">≡</span> Reports</a>
       <a class="dashboard-nav-link" href="#settings" data-module="settings"><span class="nav-icon">⚙</span> Settings</a>
     </nav>
@@ -32,7 +32,7 @@
   </aside>
   <main class="dashboard-main">
     <!-- Cabecera del dashboard: fecha, notificaciones y acciones de cuenta/ayuda. -->
-    <header class="dashboard-header"><div><p class="dashboard-kicker" data-backend="dashboard-date">Saturday, September 5, 2026</p><h1>Good morning, María.</h1></div><div class="dashboard-header-actions"><button class="button button-primary dashboard-register-button" type="button" data-open-employee-registration hidden>Register employee</button><button class="language-toggle" type="button" data-language-toggle>ES</button><button class="icon-button" type="button" aria-label="Notifications" data-backend="notifications">♧<span class="notification-dot"></span></button><a class="dashboard-help" href="#">Help centre</a></div></header>
+    <header class="dashboard-header"><div><p class="dashboard-kicker" data-backend="dashboard-date">Saturday, September 5, 2026</p><h1>Good morning, María.</h1></div><div class="dashboard-header-actions"><button class="language-toggle" type="button" data-language-toggle>ES</button><button class="icon-button" type="button" aria-label="Notifications" data-backend="notifications">♧<span class="notification-dot"></span></button><a class="dashboard-help" href="#">Help centre</a></div></header>
     <section class="dashboard-content">
       <!-- Datos del resumen: estos valores deben venir de consultas del dashboard. -->
       <div class="dashboard-alert" data-backend="daily-summary"><div class="alert-symbol">!</div><div><strong>Today&apos;s focus</strong><p>High turnover day. 18 check-ins and 14 check-outs are expected.</p></div><a href="employee-reservation-calendar.html">View schedule <span aria-hidden="true">→</span></a></div>
@@ -51,20 +51,49 @@
   </main>
   <dialog class="employee-register-dialog" data-employee-dialog aria-labelledby="employee-register-title">
     <button class="dialog-close" type="button" aria-label="Close" data-close-employee-dialog>&times;</button>
-    <p class="dashboard-kicker">Admin only</p>
-    <h2 id="employee-register-title">Register employee</h2>
-    <p class="employee-register-intro">Create an account for a member of the hostel team.</p>
-    <form data-employee-registration>
-      <div class="registration-grid">
-        <div><label for="new-employee-first-name">First name</label><input id="new-employee-first-name" name="firstName" type="text" maxlength="100" autocomplete="given-name" required></div>
-        <div><label for="new-employee-last-name">Last name</label><input id="new-employee-last-name" name="lastName" type="text" maxlength="100" autocomplete="family-name" required></div>
-        <div class="registration-field-full"><label for="new-employee-email">Email address</label><input id="new-employee-email" name="email" type="email" maxlength="255" autocomplete="email" required></div>
-        <div><label for="new-employee-password">Temporary password</label><input id="new-employee-password" name="password" type="password" minlength="8" maxlength="100" autocomplete="new-password" required></div>
-        <div><label for="new-employee-role">Role</label><select id="new-employee-role" name="roleName" required><option value="Receptionist">Receptionist</option><option value="Admin">Admin</option></select></div>
+    <section data-user-view="team" hidden>
+      <p class="dashboard-kicker">Team</p>
+      <h2 id="employee-register-title">Manage administrators and employees</h2>
+      <p class="employee-register-intro">Create and manage staff accounts.</p>
+      <div class="user-management-toolbar">
+        <div class="user-filter-group"><label for="team-sort">Sort by</label><select id="team-sort" data-user-sort="team"><option value="name-asc">Name A–Z</option><option value="name-desc">Name Z–A</option></select></div>
       </div>
-      <button class="button employee-button employee-register-submit" type="submit">Create employee</button>
-      <p class="auth-feedback" role="status" aria-live="polite" hidden></p>
-    </form>
+      <form data-employee-registration class="user-management-form">
+        <div class="registration-grid">
+          <div><label for="new-employee-first-name">First name</label><input id="new-employee-first-name" name="firstName" type="text" maxlength="100" autocomplete="given-name" required></div>
+          <div><label for="new-employee-last-name">Last name</label><input id="new-employee-last-name" name="lastName" type="text" maxlength="100" autocomplete="family-name" required></div>
+          <div class="registration-field-full"><label for="new-employee-email">Email address</label><input id="new-employee-email" name="email" type="email" maxlength="255" autocomplete="email" required></div>
+          <div><label for="new-employee-password">Temporary password</label><input id="new-employee-password" name="password" type="password" minlength="8" maxlength="100" autocomplete="new-password" required></div>
+          <div><label for="new-employee-role">Role</label><select id="new-employee-role" name="roleName" required><option value="Receptionist">Employee</option><option value="Admin">Admin</option></select></div>
+        </div>
+        <button class="button employee-button employee-register-submit" type="submit">Create account</button>
+        <p class="auth-feedback" role="status" aria-live="polite" hidden></p>
+      </form>
+      <div class="user-management-list-wrap"><table class="user-management-table"><thead><tr><th>Name</th><th>Role</th><th>Email</th><th>Actions</th></tr></thead><tbody data-user-table-body="team"></tbody></table></div>
+    </section>
+    <section data-user-view="guests" hidden>
+      <p class="dashboard-kicker">Guests</p>
+      <h2 id="guest-management-title">Manage guests</h2>
+      <p class="employee-register-intro">Create and manage guest accounts.</p>
+      <div class="user-management-toolbar">
+        <div class="user-filter-group"><label for="guest-sort">Sort by</label><select id="guest-sort" data-user-sort="guests"><option value="name-asc">Name A–Z</option><option value="name-desc">Name Z–A</option></select></div>
+      </div>
+      <form data-guest-registration class="user-management-form">
+        <div class="registration-grid">
+          <div><label for="new-guest-first-name">First name</label><input id="new-guest-first-name" name="firstName" type="text" maxlength="100" autocomplete="given-name" required></div>
+          <div><label for="new-guest-last-name">Last name</label><input id="new-guest-last-name" name="lastName" type="text" maxlength="100" autocomplete="family-name" required></div>
+          <div class="registration-field-full"><label for="new-guest-email">Email address</label><input id="new-guest-email" name="email" type="email" maxlength="255" autocomplete="email" required></div>
+          <div><label for="new-guest-password">Temporary password</label><input id="new-guest-password" name="password" type="password" minlength="8" maxlength="100" autocomplete="new-password" required></div>
+          <div><label for="new-guest-country">Country</label><select id="new-guest-country" name="countryId" required data-guest-country><option value="">Select a country</option></select></div>
+          <div><label for="new-guest-document-type">Document type</label><select id="new-guest-document-type" name="documentType" required><option value="dni">DNI</option><option value="passport">Passport</option></select></div>
+          <div><label for="new-guest-document-number">Document number</label><input id="new-guest-document-number" name="documentNumber" type="text" maxlength="20" required></div>
+          <div class="registration-field-full"><label for="new-guest-phone">Phone</label><input id="new-guest-phone" name="phone" type="tel" maxlength="30" autocomplete="tel"></div>
+        </div>
+        <button class="button employee-button employee-register-submit" type="submit">Create guest</button>
+        <p class="auth-feedback" role="status" aria-live="polite" hidden></p>
+      </form>
+      <div class="user-management-list-wrap"><table class="user-management-table"><thead><tr><th>Name</th><th>Email</th><th>Actions</th></tr></thead><tbody data-user-table-body="guests"></tbody></table></div>
+    </section>
   </dialog>
   <script src="js/language.js"></script>
   <script src="js/dashboard.js"></script>

@@ -93,8 +93,12 @@ El acceso al panel requiere iniciar sesión con una cuenta de personal válida. 
 | `POST /api/Auth/Login` | Valida las credenciales y devuelve un JWT con el rol de la cuenta. |
 | `GET /api/Auth/Countries` | Devuelve los países guardados en SQL Server para el formulario de registro. |
 | `POST /api/Auth/RegisterGuest` | Crea la cuenta y el perfil de huésped; valida el país y los documentos, y guarda la contraseña con BCrypt. |
+| `GET /api/Auth/HasAdministrator` | Indica si existe una cuenta administradora activa. |
+| `POST /api/Auth/RegisterInitialAdministrator` | Crea la cuenta administradora inicial únicamente si no existe otra activa. |
 | `GET /api/Auth/Me` | Devuelve los datos de la cuenta autenticada que utiliza el panel. |
 | `POST /api/Auth/RegisterEmployee` | Permite a un administrador crear cuentas de personal con rol de administrador o recepción. |
+| `GET`, `POST /api/Users` | Lista las cuentas activas y permite a un administrador crear cuentas de equipo o huéspedes. |
+| `GET`, `PUT`, `DELETE /api/Users/{id}` | Consulta, modifica o da de baja cuentas; las contraseñas se guardan con BCrypt. |
 | `GET /api/GuestPortal` | Devuelve el perfil y las reservas del huésped autenticado. |
 | `POST /api/GuestPortal/Reservations/{id}/Cancel` | Cancela reservas futuras pendientes o confirmadas del propio huésped, conservando el historial. |
 | `GET /api/GuestPortal/Availability?checkIn=...&checkOut=...` | Consulta habitaciones activas y camas disponibles para las fechas solicitadas. |
@@ -115,15 +119,15 @@ El esquema incluye usuarios y roles, huéspedes y países, habitaciones, camas y
 - **Habitaciones del personal:** la pantalla de gestión permite crear, editar y dar de baja habitaciones. La capacidad se gestiona creando o desactivando camas; no se puede reducir si están asignadas a reservas pendientes o confirmadas.
 - **Solicitud de huéspedes:** el portal permite consultar disponibilidad por fechas y enviar solicitudes para una habitación y cantidad de camas. La API asigna las camas y deja la reserva pendiente de revisión.
 - **Gestión de solicitudes:** el personal puede confirmar o rechazar solicitudes pendientes desde `frontend/employee-reservation-requests.html`.
+- **Gestión de usuarios:** desde el sidebar, administradores y empleados se gestionan en Equipo, y los huéspedes en Huéspedes; ambos listados permiten ordenar por nombre y administrar las cuentas.
 
 ## Pendiente de implementar
 
 - **Operación de reservas del personal:** el formulario de alta manual y el calendario todavía muestran contenido de ejemplo.
 - **Gestión de camas:** administrar individualmente estados como mantenimiento o fuera de servicio desde una pantalla del personal.
 - **Dashboard operativo:** sustituir estadísticas, agenda, ocupación, llegadas y salidas de ejemplo por datos de la API.
-- **Módulos del panel:** búsqueda y administración de huéspedes, equipo, informes y configuración. Algunos aparecen como opciones de navegación, pero todavía no tienen una implementación funcional completa.
+- **Módulos del panel:** informes y configuración todavía no tienen una implementación funcional completa.
 - **Cuenta y autenticación:** implementar recuperación y cambio de contraseña. La casilla “Recordarme” y otros enlaces de acceso/ayuda todavía no gestionan esas acciones.
-- **Alta inicial de administración:** definir y documentar un proceso seguro para crear la primera cuenta administradora.
 - **Operación productiva:** definir una clave JWT estable mediante configuración segura, endurecer CORS, HTTPS y la gestión de secretos, y preparar despliegue, copias de seguridad y observabilidad.
 
 Para ver el mapa técnico y la propuesta de organización del backend, consulta [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md).

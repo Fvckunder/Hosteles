@@ -33,6 +33,8 @@
         <button class="button employee-button" type="submit">Sign in <span aria-hidden="true">→</span></button>
         <p class="auth-feedback" role="status" aria-live="polite" hidden></p>
       </form>
+      <button class="button employee-button employee-initial-admin-button" type="button" data-open-initial-admin hidden>Create the first admin account</button>
+      <p class="auth-feedback" data-admin-status role="status" aria-live="polite" hidden></p>
       <a class="employee-back" href="index.html"><span aria-hidden="true">←</span> Back to public site</a>
     </section>
     <aside class="employee-login-aside">
@@ -41,6 +43,22 @@
       <div class="employee-aside-footer"><span>LC / 01</span><span>Staff only</span></div>
     </aside>
   </main>
+  <dialog class="employee-register-dialog" data-initial-admin-dialog aria-labelledby="initial-admin-title">
+    <button class="dialog-close" type="button" aria-label="Close" data-close-initial-admin>&times;</button>
+    <p class="dashboard-kicker">Initial setup</p>
+    <h2 id="initial-admin-title">Create the first admin account</h2>
+    <p class="employee-register-intro">There is no active administrator account. Create one to manage the hostel.</p>
+    <form data-initial-admin-registration>
+      <div class="registration-grid">
+        <div><label for="initial-admin-first-name">First name</label><input id="initial-admin-first-name" name="firstName" type="text" maxlength="100" autocomplete="given-name" required></div>
+        <div><label for="initial-admin-last-name">Last name</label><input id="initial-admin-last-name" name="lastName" type="text" maxlength="100" autocomplete="family-name" required></div>
+        <div class="registration-field-full"><label for="initial-admin-email">Work email</label><input id="initial-admin-email" name="email" type="email" maxlength="255" autocomplete="email" required></div>
+        <div class="registration-field-full"><label for="initial-admin-password">Password</label><input id="initial-admin-password" name="password" type="password" minlength="8" maxlength="100" autocomplete="new-password" required></div>
+      </div>
+      <button class="button employee-button employee-register-submit" type="submit">Create administrator</button>
+      <p class="auth-feedback" role="status" aria-live="polite" hidden></p>
+    </form>
+  </dialog>
   <script src="js/auth.js"></script>
   <script src="js/language.js"></script>
 </body>
